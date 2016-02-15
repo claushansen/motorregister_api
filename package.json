@@ -1,0 +1,11 @@
+{
+  "name": "motorregister_api",
+  "version": "1.0.0",
+  "description": "node js express project for creating webservice on vehicledata from DMR",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Claus Hansen",
+  "license": "ISC"
+}
