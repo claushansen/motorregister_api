@@ -104,6 +104,7 @@ app.get('/api/vehicle/models/:brandid', function(req,res){
 });
 
 //Admintasks
+//TODO - protect
 app.get('/admin/createcollection/brands', function(req,res){
 	
 	var query = VehicleModel.aggregate([

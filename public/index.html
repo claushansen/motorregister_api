@@ -13,12 +13,19 @@
 <h1>Motorregister API</h1>
 <h2>{{welcome}}</h2>
 <div class="row">
-<select class="form-control">
+<select class="form-control" ng-model='brand_sel' ng-change="getModels()">
   <option ng-repeat="brand in brands" value={{brand.id}}>{{brand.name}}</option>
- 
+</select>
+</div>
+<div class="row">
+<select class="form-control" ng-model='model_sel' ng-show="models">
+	<option value="" default selected>select your beverage</option>
+	<option ng-repeat="model in models" value={{model.id}}>{{model.name}}</option>
 </select>
 </div>
 
+<div class="row">{{brand_sel}}</div>
+<div class="row">{{model_sel}}</div>
 </div>
 </body>
 </html>
