@@ -1,4 +1,9 @@
 #################
+## experiments
+#################
+public/experiments
+
+#################
 ## Webstorm
 #################
 .idea
