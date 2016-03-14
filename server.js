@@ -181,8 +181,75 @@ server.get('/admin/api/createcollection/brands',ensureAdmin, function(req,res){
             res.json(err);
         });
 });
+//retreving all users
+server.get('/admin/api/user',ensureAdmin, function(req,res){
+    User.getAllUsers()
+        .then(
+            function(data){
+                res.json(data);
+            },function(err){
+                res.json(err);
+            });
+});
 
+//creating new user
+server.post('/admin/api/user',ensureAdmin, function(req,res){
+    var newUser = req.body;
+    User.usernameExists(newUser.username,function(exists){
+            if(exists){
+                res.json({error:'username already exists'});
+            }
+            if(!exists){
+                User.model.create(newUser)
+                    .then(
+                        function (data) {
+                            res.json(data);
+                        }, function (err) {
+                            res.json(err);
+                    });
+            }
+    });
+});
+//getting specific user
+server.get('/admin/api/user/:id',ensureAdmin, function(req,res){
+    var userid = req.params.id;
+    User.getUserById(userid)
+        .then(
+            function(data){
+                res.json(data);
+            },function(err){
+                res.json(err);
+            });
+});
+//updating user
+server.put('/admin/api/user/:id',ensureAdmin, function(req,res){
+    var userid = req.params.id;
+    var updatedUser = req.body;
+    User.model.update({_id: userid},updatedUser)
+        .then(
+            User.getUserById(userid)
+                .then(function(data){
+                        res.json(data);
+                    },function(err){
+                        res.json(err);
+                    }),
+            function(err){
+                res.json(err);
+            });
+});
 
+//deleting specific user
+server.delete('/admin/api/user/:id',ensureAdmin, function(req,res){
+    var userid = req.params.id;
+    User.model.findById(userid)
+        .remove()
+        .then(
+            function(data){
+                res.json(data);
+            },function(err){
+                res.json(err);
+            });
+});
 
 
  
