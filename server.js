@@ -94,6 +94,8 @@ var vehicletypesToInclude = ['Personbil'];
 var brandsToExclude = ["15459","19999","0"];
 //var ModelsToInclude = ['Personbil']
 
+//Routes
+
 server.post('/login',
 	passport.authenticate('local'),
 	function(req, res) {
@@ -127,7 +129,7 @@ server.get('/api/vehicles', function(req,res){
 
 server.get('/api/vehicle/licensplate/:licensplate',
     //isloggedin,
-    ensureAdmin,
+    //ensureAdmin,
     function(req,res){
         var plate = req.params.licensplate;
         Vehicle.getVehicleByLicensplate(plate)
@@ -182,9 +184,10 @@ server.get('/api/vehicle/brands/nested', function(req,res){
 
 
 //Admintasks
-//TODO - protect
 
-server.get('/admin/createcollection/brands', function(req,res){
+//Protected - Only users with the role of admin has access
+
+server.get('/admin/createcollection/brands',ensureAdmin, function(req,res){
 
 	var query = Vehicle.aggregate([
 		{$group:{_id:{ name: '$Brand', id: '$BrandId',vehicletype:'$VehicleType' },
