@@ -12,6 +12,7 @@ module.exports = function(mongoose, db){
     );
     var BrandModel = mongoose.model('Brand', brandSchema);
     var api = {
+        model : BrandModel,
         getAllBrands : getAllBrands,
         getAllBrandsWithModels : getAllBrandsWithModels,
         getModelsByBrandId : getModelsByBrandId

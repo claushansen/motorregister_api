@@ -23,6 +23,7 @@ module.exports = function(mongoose, db){
     var VehicleModel = mongoose.model('Vehicle', vehicleSchema);
 
     var api = {
+        model : VehicleModel,
         getVehicleByLicensplate : getVehicleByLicensplate,
     };
 
