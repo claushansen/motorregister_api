@@ -101,11 +101,13 @@ server.post('/login',
 	function(req, res) {
 		// If this function gets called, authentication was successful.
 		// `req.user` contains the authenticated user.
-		console.log(req.user);
+		//console.log(req.user);
 		//console.log(req.body);
-		res.send('loggedin yahoo as'+req.user);
+        req.user.password = '*****' ;
+		res.json(req.user);
 		//res.redirect('/users/' + req.user.username);
 	});
+
 server.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
@@ -114,17 +116,6 @@ server.get('/logout', function(req, res){
 server.get('/api', function(req,res){
 res.json({apiname:'Motorregister API'})
 
-});
-
-server.get('/api/vehicles', function(req,res){
-	var query = VehicleModel.find().limit(10);
-	query.exec(function(err,data){
-		if (err) {
-			res.json(err);
-		}else{
-		res.json(data);
-		}
-	});
 });
 
 server.get('/api/vehicle/licensplate/:licensplate',
@@ -168,7 +159,6 @@ server.get('/api/vehicle/models/:brandid', function(req,res){
             });
 });
 
-
 //get models nested in brands
 server.get('/api/vehicle/brands/nested', function(req,res){
     Brand.getAllBrandsWithModels(vehicletypesToInclude,brandsToExclude)
@@ -178,47 +168,18 @@ server.get('/api/vehicle/brands/nested', function(req,res){
             },function(err){
                 res.json(err);
             });
-
-
 });
 
-
 //Admintasks
-
 //Protected - Only users with the role of admin has access
 
-server.get('/admin/createcollection/brands',ensureAdmin, function(req,res){
-
-	var query = Vehicle.aggregate([
-		{$group:{_id:{ name: '$Brand', id: '$BrandId',vehicletype:'$VehicleType' },
-				models: { $addToSet: {id:'$ModelId',name:'$Model'} }
-			},
-		},
-        {$project:{_id:0,models: '$models',id:'$_id.id',name: '$_id.name',vehicletype: '$_id.vehicletype'	}},
-		//unpacking models array
-		{$unwind: "$models"},
-		//Sorting models
-		{$sort:	{'models.name':1}},
-		//matching all with no empty values, removing unwanted records
-		{$match:{'models.name':{$ne:'-'}}},
-		{$match:{'models.name':{$ne:'UOPLYST'}}},
-		//grouping everything together again
-		{$group:{_id:{_id:"$_id",name:'$name',id:'$id',vehicletype:'$vehicletype'},models:{$push:"$models"}}},
-		{$project:{_id:0,id:'$_id.id',name:'$_id.name',vehicletype:'$_id.vehicletype',models:'$models'}},
-		//sorting by type and name on brand
-		{$sort :{'vehicletype':1,'name': 1}},
-		//matching all with no empty values, removing unwanted records
-		{$match:{name:{$ne:'-'},id:{$ne:'0'}}}
-		//outputting to new collection
-		,{$out:'brands'}
-	]);
-	query.exec(function(err,data){
-		if (err) {
-			res.json(err);
-		}else{
-			res.json({created:'collection',name:'brands'});
-		}
-	});
+server.get('/admin/api/createcollection/brands',ensureAdmin, function(req,res){
+    Vehicle.createBrandCollection().then(
+        function(data){
+            res.json(data);
+        },function(err){
+            res.json(err);
+        });
 });
 
 
