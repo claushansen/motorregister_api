@@ -16,5 +16,40 @@ module.exports = function(mongoose)
 
     var UserModel = mongoose.model("user", UserSchema);
 
-    return UserModel;
+    var api = {
+        model:UserModel,
+        makeExampleUsers:makeExampleUsers
+    };
+
+    return api;
+
+
+    function makeExampleUsers() {
+        var exampledata = [
+            {
+                username: "claus",
+                password: "ettepige",
+                email: "claus@multimedion.dk",
+                firstName: "Claus",
+                lastName: "Hansen",
+                roles: ["admin", "author"]
+            },
+            {
+                username: "claus",
+                password: "ettepige",
+                email: "claus@multimedion.dk",
+                firstName: "Claus",
+                lastName: "Hansen",
+                roles: ["admin", "author"]
+            }];
+
+        forEach(exampledata, function (exampleuser) {
+            UserModel.create(exampleuser, function (err, res) {
+                    console.log(err);
+                    console.log(res);
+                }
+            );
+        });
+    }
+
 }

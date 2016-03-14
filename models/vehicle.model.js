@@ -24,11 +24,6 @@ module.exports = function(mongoose, db){
 
     var api = {
         getVehicleByLicensplate : getVehicleByLicensplate,
-
-
-
-
-
     };
 
     return api;
