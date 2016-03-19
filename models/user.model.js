@@ -1,19 +1,32 @@
 var q = require("q");
+
 module.exports = function(mongoose)
 {
     var UserSchema = new mongoose.Schema(
         {
             username:  {type:String,required:true},
-            password:  {type:String,required:true},
+            password:  {type:String,required:true,bcrypt: true},
             email:     {type:String,required:true},
             firstName: {type:String,required:true},
             lastName:  {type:String,required:true},
-            roles:     {type:[String],default:['user']}
+            roles:     {type:[String],default:['registered']}
         }, {collection: "user"});
     UserSchema.methods.validPassword = function( pwd ) {
         // returns true or false!
         return ( this.password === pwd );
     };
+    UserSchema.methods.isAdmin = function() {
+        // returns true or false!
+        return (this.roles.indexOf('admin') > -1 );
+    };
+    // mongoose-bcrypt
+    //Adds encrypted password field with instance methods verifyPassword(password,callback)
+    // and verifyPasswordSync(password) and static method encryptPassword(password,callback)
+
+    UserSchema.plugin(require('mongoose-bcrypt'));
+
+
+
 
     var UserModel = mongoose.model("user", UserSchema);
 

@@ -25,9 +25,10 @@ passport.use(new LocalStrategy(
 			if (!user) {
 				return done(null, false, { message: 'Incorrect username.' });
 			}
-			if (!user.validPassword(password)) {
+			if (!user.verifyPasswordSync(password)) {
 				return done(null, false, { message: 'Incorrect password.' });
 			}
+
 			return done(null, user);
 		});
 	}
@@ -79,11 +80,27 @@ function ensureAdmin(req, res, next) {
     }
 }
 
+function isUserAdmin(username, callback)
+{
+    User.model.findOne({username: username}, function(err, foundUser)
+    {
+        if(foundUser.roles.indexOf('admin') > -1)
+        {
+            callback(foundUser);
+        }
+        else
+        {
+            callback('0');
+        }
+    });
+}
+
 //getting models
 var User = require("./models/user.model.js")(mongoose, db);
 var Brand = require("./models/brands.model.js")(mongoose, db);
 var Vehicle = require("./models/vehicle.model.js")(mongoose, db);
 
+var UserService = require("./services/user.service.server.js")(server, User.model, passport);
 
 //set up static
 server.use(express.static(__dirname + '/public'));
@@ -96,22 +113,6 @@ var brandsToExclude = ["15459","19999","0"];
 
 //Routes
 
-server.post('/login',
-	passport.authenticate('local'),
-	function(req, res) {
-		// If this function gets called, authentication was successful.
-		// `req.user` contains the authenticated user.
-		//console.log(req.user);
-		//console.log(req.body);
-        req.user.password = '*****' ;
-		res.json(req.user);
-		//res.redirect('/users/' + req.user.username);
-	});
-
-server.get('/logout', function(req, res){
-	req.logout();
-	res.redirect('/');
-});
 
 server.get('/api', function(req,res){
 res.json({apiname:'Motorregister API'})
@@ -181,75 +182,7 @@ server.get('/admin/api/createcollection/brands',ensureAdmin, function(req,res){
             res.json(err);
         });
 });
-//retreving all users
-server.get('/admin/api/user',ensureAdmin, function(req,res){
-    User.getAllUsers()
-        .then(
-            function(data){
-                res.json(data);
-            },function(err){
-                res.json(err);
-            });
-});
 
-//creating new user
-server.post('/admin/api/user',ensureAdmin, function(req,res){
-    var newUser = req.body;
-    User.usernameExists(newUser.username,function(exists){
-            if(exists){
-                res.json({error:'username already exists'});
-            }
-            if(!exists){
-                User.model.create(newUser)
-                    .then(
-                        function (data) {
-                            res.json(data);
-                        }, function (err) {
-                            res.json(err);
-                    });
-            }
-    });
-});
-//getting specific user
-server.get('/admin/api/user/:id',ensureAdmin, function(req,res){
-    var userid = req.params.id;
-    User.getUserById(userid)
-        .then(
-            function(data){
-                res.json(data);
-            },function(err){
-                res.json(err);
-            });
-});
-//updating user
-server.put('/admin/api/user/:id',ensureAdmin, function(req,res){
-    var userid = req.params.id;
-    var updatedUser = req.body;
-    User.model.update({_id: userid},updatedUser)
-        .then(
-            User.getUserById(userid)
-                .then(function(data){
-                        res.json(data);
-                    },function(err){
-                        res.json(err);
-                    }),
-            function(err){
-                res.json(err);
-            });
-});
-
-//deleting specific user
-server.delete('/admin/api/user/:id',ensureAdmin, function(req,res){
-    var userid = req.params.id;
-    User.model.findById(userid)
-        .remove()
-        .then(
-            function(data){
-                res.json(data);
-            },function(err){
-                res.json(err);
-            });
-});
 
 
  
