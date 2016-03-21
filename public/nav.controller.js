@@ -13,13 +13,9 @@
                 .success(function () {
                     $rootScope.currentUser = null;
                     messageCenterService.add('success', 'Du er nu logget ud', {status: messageCenterService.status.next})
-                    //$rootScope.successMessage = 'You are now logged out';
                     $location.path('/');
                 });
         }
-
-
-
 
     }
 })();
