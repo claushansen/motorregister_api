@@ -83,6 +83,7 @@
             <ol class="breadcrumb">
                 <li><a href="{{$location.url()}}">{{$location.url()}}</a></li>
             </ol>
+            <mc-messages></mc-messages>
             <div class="alert alert-danger" ng-show="errorMessage" >
                 <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 {{errorMessage}}
@@ -109,6 +110,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.15.0/angular-ui-tree.min.js"></script>
+<script src="https://cdn.rawgit.com/e0ipso/message-center/master/message-center.js"></script>
 <script src="app.js"></script>
 <script src="config.js"></script>
 <script src="nav.controller.js"></script>

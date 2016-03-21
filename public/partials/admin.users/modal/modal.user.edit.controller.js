@@ -1,5 +1,5 @@
 (function(){
-angular.module('MDRAPI').controller('ModalAdminUserEditCtrl', function ($scope, $uibModalInstance, user, userService) {
+angular.module('MDRAPI').controller('ModalAdminUserEditCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
     delete user.password;
     $scope.user = user;
     if(user._id){
@@ -19,7 +19,7 @@ angular.module('MDRAPI').controller('ModalAdminUserEditCtrl', function ($scope, 
             .then(function(result){
                 $uibModalInstance.close(result);
             },function(result){
-                $scope.errorMessage = result.message;
+                messageCenterService.add('danger', result.message, { timeout: 5000 });
             })
     };
 

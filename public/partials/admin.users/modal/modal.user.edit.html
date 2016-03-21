@@ -2,10 +2,7 @@
     <h3 class="modal-title">{{modaltitle}}</h3>
 </div>
 <div class="modal-body">
-    <div class="alert alert-danger" ng-show="errorMessage" >
-        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        {{errorMessage}}
-    </div>
+    <mc-messages></mc-messages>
     <div class="row">
         <form name="form" role="form">
             <div class="col-sm-12">

@@ -1,5 +1,5 @@
 (function(){
-angular.module('MDRAPI').controller('ModalAdminUserNewCtrl', function ($scope, $uibModalInstance, user, userService) {
+angular.module('MDRAPI').controller('ModalAdminUserNewCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
 
     $scope.user = user;
     $scope.modaltitle = 'Opret Ny Bruger';
@@ -14,7 +14,7 @@ angular.module('MDRAPI').controller('ModalAdminUserNewCtrl', function ($scope, $
             .then(function(result){
                 $uibModalInstance.close(result);
             },function(result){
-                $scope.errorMessage = result.message;
+                messageCenterService.add('danger', result.message, { timeout: 5000 });
             });
     }
 

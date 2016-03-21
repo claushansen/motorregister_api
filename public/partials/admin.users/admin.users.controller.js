@@ -2,7 +2,7 @@
     angular
         .module("MDRAPI")
         .controller("AdminUsersController",AdminUsersController);
-    function AdminUsersController($scope,$http,$uibModal,userService,$rootScope){
+    function AdminUsersController($scope,$http,$uibModal,userService,$rootScope,messageCenterService){
 
         getUsers();
         $scope.Message = {};
@@ -55,21 +55,12 @@
             });
 
             modalEditUser.result.then(function (result) {
-                if(result.success)
-                {
-                    $scope.Message.type = 'success';
-                }
-                else
-                {
-                    $scope.Message.type = 'danger';
-                }
-                $scope.Message.message = result.message;
+                messageCenterService.add('success', result.message, { timeout: 5000 });
                 getUsers();
             }, function () {
                 //reloading users if any change made in the form that reflects here
                 getUsers();
-                $scope.Message.message = 'Handlingen blev afbrudt';
-                $scope.Message.type = 'warning';
+                messageCenterService.add('warning', 'Handlingen blev afbrudt', { timeout: 5000 });
             });
         };
 
@@ -88,22 +79,12 @@
             });
 
             modalNewUser.result.then(function (result) {
-                $scope.returnuser = result;
-                if(result.success)
-                {
-                    $scope.Message.type = 'success';
-                }
-                else
-                {
-                    $scope.Message.type = 'danger';
-                }
-                $scope.Message.message = result.message;
+                messageCenterService.add('success', 'Brugeren blev oprettet', { timeout: 5000 });
                 getUsers();
             }, function () {
                 //reloading users if any change made in the form that reflects here
                 getUsers();
-                $scope.Message.message = 'Handlingen blev afbrudt';
-                $scope.Message.type = 'warning';
+                messageCenterService.add('warning', 'Handlingen blev afbrudt', { timeout: 5000 });
             });
         };
 

@@ -2,7 +2,7 @@
     angular
         .module("MDRAPI")
         .controller("navController",navController);
-    function navController($scope,userService,$location,$rootScope,$http){
+    function navController($scope,userService,$location,$rootScope,$http,messageCenterService){
         $scope.hello = "hi from navController";
 
         $scope.Logout = Logout;
@@ -12,7 +12,8 @@
             $http.get('/api/logout')
                 .success(function () {
                     $rootScope.currentUser = null;
-                    $rootScope.successMessage = 'You are now logged out';
+                    messageCenterService.add('success', 'Du er nu logget ud', {status: messageCenterService.status.next})
+                    //$rootScope.successMessage = 'You are now logged out';
                     $location.path('/');
                 });
         }
