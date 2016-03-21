@@ -47,11 +47,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/dashboard">Dashboard</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Kontrolpanel</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profil</a></li>
                 <li><a href="#">Hjælp</a></li>
-                <li ng-show="!currentUser" ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Login</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/login'}"><a ng-click="Logout()" href="#">Logout</a></li>
+                <li ng-show="!currentUser" ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Logind</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/login'}"><a ng-click="Logout()" href="#">Logud</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">
@@ -65,7 +65,12 @@
         <div ng-show="currentUser" class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar" ng-controller="navController">
                 
-                <li ng-class="{'active' : $location.url() == '/'}"><a href="#/home">Home</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Kontrolpanel</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/calculator/new'}">
+                    <ul class="nav nav-sub-item">
+                        <li ng-class="{'active' : $location.url() == '/calculator/new'}"><a href="#/calculator/new">Ny Prisberegner</a></li>
+                    </ul>
+                </li>
                 <li ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profil</a></li>
                 <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
                 <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}">
@@ -125,6 +130,7 @@
 <script src="partials/profile/profile.controller.js"></script>
 <script src="partials/dashboard/dashboard.controller.js"></script>
 <script src="partials/login/login.controller.js"></script>
+<script src="partials/calculator/calculator.new.controller.js"></script>
 
 
 

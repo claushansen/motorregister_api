@@ -17,6 +17,13 @@
                         loggedin: checkLoggedin
                     }
                 })
+                .when("/calculator/new",{
+                    templateUrl:"partials/calculator/calculator.new.view.html",
+                    controller: "CalculatorNewController",
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
                 .when("/login",{
                     templateUrl:"partials/login/login.view.html",
                     controller: "LoginController"

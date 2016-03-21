@@ -1,0 +1,129 @@
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content" data-nodrag>
+        <a class="btn btn-success btn-xs" ng-if="node.models && node.models.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+        {{node.name}}
+
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+                class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
+                class="glyphicon glyphicon-plus"></span></a>
+        <select ng-model="node.prisgruppe" ng-options="item.name for item in calculator.prisgrupper" class="pull-right prisgruppe-select">
+        </select>
+
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.models" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.models" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+
+
+<!--prisgruppe liste template-->
+
+<script type="text/ng-template" id="prisgruppe_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content">
+
+        {{node.name}}
+
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-show="calculator.prisgrupper.length > 1" ng-click="remove(this)"><span
+                class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newPrisgruppeItem(this)" style="margin-right: 8px;"><span
+                class="glyphicon glyphicon-plus"></span></a>
+        <input type="text" data-nodrag ng-model="node.name" required>
+        <input type="text" data-nodrag ng-model="node.pris" placeholder="F.eks 1000" required>
+
+    </div>
+
+</script>
+
+<h2>Prisberegner Setup</h2>
+<div class="row"></div>
+<form name="outerForm" class="tab-form-demo">
+
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Titel og beskrivelse">
+            <div class="row">
+                <div class="col-md-6">
+                    <ng-form name="step1">
+                        <div class="form-group">
+                            <label>Titel</label>
+                            <input type="text" name="title" class="form-control" required ng-model="calculator.title" uib-tooltip="Skriv en titel på din prisberegner her" ng-minlength="3"/>
+                            <p class="help-block">
+                                <span ng-show="outerForm.step1.title.$invalid && !outerForm.step1.title.$pristine">Dette felt er krævet.</span>
+                                <span ng-show="outerForm.step1.title.$error.minlength">Titlen er for kort(min 3).</span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label>Beskrivelse</label>
+                            <textarea class="form-control" ng-model="calculator.desc" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
+                        </div>
+                        <button class="btn btn-success" ng-disabled="outerForm.step1.title.$invalid" ng-click="setActive(1)">Næste</button>
+                    </ng-form>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Prisgrupper" disable="outerForm.step1.$invalid">
+            <div class="row">
+               <div class="col-sm-6">
+                    <ng-form name="step2">
+                        <div ui-tree id="tree-root2">
+                            <ol ui-tree-nodes ng-model="calculator.prisgrupper">
+                                <li ng-repeat="node in calculator.prisgrupper" ui-tree-node ng-include="'prisgruppe_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </ng-form>
+                    <button class="btn btn-success" ng-disabled="outerForm.step2.$invalid" ng-click="setActive(2); getBrands()">Næste</button>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="info">
+                        {{info}}
+                    </div>
+                    <pre class="code">{{ calculator | json }}</pre>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="mapping" disable="outerForm.step2.$invalid">
+
+
+<div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
+    <strong>Henter Data!</strong> vent venligst.
+</div>
+<section ng-show="calculator.brands">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Tildel prisgrupper til køretøjer</h3>
+
+            <button ng-click="expandAll()">Udvid alle</button>
+            <button ng-click="collapseAll()">Fold alle</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="calculator.brands">
+                    <li ng-repeat="node in calculator.brands" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="info">
+                {{info}}
+            </div>
+            <pre class="code">{{ brands | json }}</pre>
+        </div>
+    </div>
+</section>
+
+        </uib-tab>
+
+    </uib-tabset>
+</form>
