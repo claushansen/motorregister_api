@@ -154,6 +154,7 @@ module.exports = function(server, UserModel, passport)
     });
 
     //updating user only by admin or user owner
+    //TODO - check if username exists if it has changed
     server.put('/api/user/:id', function(req, res)
     {
         if(req.isAuthenticated()) {
@@ -163,23 +164,45 @@ module.exports = function(server, UserModel, passport)
                         //making sure only admin post in roles array
                         delete req.body.roles;
                     }
+                    //getting the user to be updated
                     UserModel.findById(req.params.id, function (err, foundUser) {
                         if (err) {
                             res.json({success:false,message:'no user to update!'});
                             return;
                         }
-                        var user = req.body;
-                        foundUser.update(req.body, function (err, count) {
-                            if (err) {
-                                res.json({success:false,message:'User not updated!'});
-                                return;
-                            }
-                            res.json({success:true,message:'User updated!'});
-                        });
+                        var updatedUser = req.body;
+                        // if a password is posted we need to encrypt it
+                        if(updatedUser.password) {
+                            UserModel.encryptPassword(updatedUser.password, function (err, encrypted) {
+                                if (err) {
+                                    res.json({success: false, message: 'cant encrypt password!'});
+                                    return;
+                                } else {
+                                    //replacing the posted password with the encrypted password
+                                    updatedUser.password = encrypted;
+                                    foundUser.update(updatedUser, function (err, count) {
+                                        if (err) {
+                                            res.json({success: false, message: 'User not updated!'});
+                                            return;
+                                        }
+                                        res.json({success: true, message: 'User updated!'});
+                                    });
+                                }
+                            });
+                        }
+                        //if no password is posted we just update the user
+                        else {
+                            foundUser.update(updatedUser, function (err, count) {
+                                if (err) {
+                                    res.json({success: false, message: 'User not updated!'});
+                                    return;
+                                }
+                                res.json({success: true, message: 'User updated!'});
+                            });
+                        }
                     });
                 }
-                else
-                {
+                else {
                     res.json({success: false, message: 'You dont have access to this resource!'});
                 }
             });
