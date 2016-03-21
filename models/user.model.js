@@ -4,12 +4,13 @@ module.exports = function(mongoose)
 {
     var UserSchema = new mongoose.Schema(
         {
-            username:  {type:String,required:true},
-            password:  {type:String,required:true,bcrypt: true},
-            email:     {type:String,required:true},
-            firstName: {type:String,required:true},
-            lastName:  {type:String,required:true},
-            roles:     {type:[String],default:['registered']}
+            username    :  {type:String,required:true},
+            password    :  {type:String,required:true,bcrypt: true},
+            email       :  {type:String,required:true},
+            firstName   :  {type:String,required:true},
+            lastName    :  {type:String,required:true},
+            dateCreated :  {type:Date,default : new Date()},
+            roles       :  {type:[String],default:['registered']}
         }, {collection: "user"});
     UserSchema.methods.validPassword = function( pwd ) {
         // returns true or false!
