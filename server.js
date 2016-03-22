@@ -99,6 +99,14 @@ function isUserAdmin(username, callback)
 var User = require("./models/user.model.js")(mongoose, db);
 var Brand = require("./models/brands.model.js")(mongoose, db);
 var Vehicle = require("./models/vehicle.model.js")(mongoose, db);
+var Calculator = require("./models/calculator.model.js")(mongoose, db);
+//Calculator.find({})
+//	.populate('user_id')
+//
+//	.exec(function(error, calcs) {
+//		console.log(JSON.stringify(calcs, null, "\t"))
+//	});
+//testing models
 
 var UserService = require("./services/user.service.server.js")(server, User.model, passport);
 
