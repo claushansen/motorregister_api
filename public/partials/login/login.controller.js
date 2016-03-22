@@ -13,7 +13,7 @@
                     messageCenterService.add('success', 'Velkommen '+ response.user.firstName, {status: messageCenterService.status.next});
                     $scope.dataLoading = false;
                     userService.SetCredentials(response.user);
-                    $location.path('/');
+                    $location.path('/dashboard');
                 } else {
                     messageCenterService.add('danger', response.message)
                     $scope.dataLoading = false;

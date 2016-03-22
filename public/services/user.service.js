@@ -16,6 +16,7 @@
         service.getAllUsers = getAllUsers;
         service.updateUser = updateUser;
         service.createUser = createUser;
+        service.registerUser = registerUser;
 
         return service;
 
@@ -84,6 +85,22 @@
 
             var deferred = $q.defer();
             $http.post(appConfig.apiPath+'/api/user',user)
+                .success(function (data) {
+                    if(data.success){
+                        deferred.resolve(data);
+                    }else{
+                        deferred.reject(data);
+                    }
+                });
+
+            return deferred.promise;
+
+        }
+
+        function registerUser(user){
+
+            var deferred = $q.defer();
+            $http.post(appConfig.apiPath+'/api/register',user)
                 .success(function (data) {
                     if(data.success){
                         deferred.resolve(data);

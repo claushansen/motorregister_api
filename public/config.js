@@ -31,6 +31,10 @@
                     templateUrl:"partials/login/login.view.html",
                     controller: "LoginController"
                 })
+                .when("/register",{
+                    templateUrl:"partials/register/register.view.html",
+                    controller: "RegisterController"
+                })
                 .when("/profile",{
                     templateUrl:"partials/profile/profile.view.html",
                     controller: "ProfileController",
@@ -144,7 +148,7 @@
             }
             deferred.resolve();
         });
-        $rootScope.errorMessage = 'test';
+
 
         return deferred.promise;
     };
