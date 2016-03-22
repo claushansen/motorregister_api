@@ -87,15 +87,6 @@
                 <li><a href="{{$location.url()}}">{{$location.url()}}</a></li>
             </ol>
             <mc-messages></mc-messages>
-            <div class="alert alert-danger" ng-show="errorMessage" >
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{errorMessage}}
-            </div>
-            <div class="alert alert-success" ng-show="successMessage" >
-                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{successMessage}}
-            </div>
-
 
             <div class="ng-view"></div>
 

@@ -1,6 +1,9 @@
 (function() {
     angular
         .module('MDRAPI')
+        .constant('appConfig',{
+            apiPath:'http://localhost:3000'
+        })
         .config(function($routeProvider){
             $routeProvider
                 .when("/",{
@@ -55,27 +58,27 @@
                     redirectTo:"/"
                 })
         })
-        .constant('treeConfig', {
-        treeClass: 'angular-ui-tree',
-        emptyTreeClass: 'angular-ui-tree-empty',
-        hiddenClass: 'angular-ui-tree-hidden',
-        nodesClass: 'angular-ui-tree-nodes',
-        nodeClass: 'angular-ui-tree-node',
-        handleClass: 'angular-ui-tree-handle',
-        placeholderClass: 'angular-ui-tree-placeholder',
-        dragClass: 'angular-ui-tree-drag',
-        dragThreshold: 3,
-        levelThreshold: 30,
-        defaultCollapsed: false
-    });
+    //    .constant('treeConfig', {
+    //    treeClass: 'angular-ui-tree',
+    //    emptyTreeClass: 'angular-ui-tree-empty',
+    //    hiddenClass: 'angular-ui-tree-hidden',
+    //    nodesClass: 'angular-ui-tree-nodes',
+    //    nodeClass: 'angular-ui-tree-node',
+    //    handleClass: 'angular-ui-tree-handle',
+    //    placeholderClass: 'angular-ui-tree-placeholder',
+    //    dragClass: 'angular-ui-tree-drag',
+    //    dragThreshold: 3,
+    //    levelThreshold: 30,
+    //    defaultCollapsed: false
+    //})
+    ;
 
-    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope)
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope, messageCenterService)
     {
         var deferred = $q.defer();
 
         $http.get('/api/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
             // User is Authenticated
             if (user !== '0')
             {
@@ -88,7 +91,7 @@
             // User is Not Authenticated
             else
             {
-                $rootScope.errorMessage = 'You need to log in.';
+                messageCenterService.add('danger', 'Log venlist ind', {status: messageCenterService.status.next});
                 deferred.reject();
                 $location.url('/login');
             }
@@ -97,13 +100,12 @@
         return deferred.promise;
     };
 
-    var checkAdmin = function($q, $timeout, $http, $location, $rootScope)
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope, messageCenterService)
     {
         var deferred = $q.defer();
 
         $http.get('/api/loggedin').success(function(user)
         {
-            $rootScope.errorMessage = null;
             // User is Authenticated
             if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
@@ -115,7 +117,7 @@
             // User is Not Admin
             else
             {
-                $rootScope.errorMessage = 'You do not have access to this resource.';
+                messageCenterService.add('danger', 'Du har ikke adgang til denne side', {status: messageCenterService.status.next});
                 deferred.reject();
                 $location.url('/');
             }

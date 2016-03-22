@@ -5,8 +5,8 @@
         .module('MDRAPI')
         .factory('userService', userService);
 
-    userService.$inject = ['$http', '$rootScope', '$timeout','$q'];
-    function userService($http,$rootScope,$timeout,$q) {
+    userService.$inject = ['$http', '$rootScope', '$timeout','$q' ,'appConfig'];
+    function userService($http,$rootScope,$timeout,$q,appConfig) {
         var service = {};
 
         service.Login = Login;
@@ -20,7 +20,7 @@
         return service;
 
         function Login(username, password, callback) {
-            $http.post('/api/login', { username: username, password: password })
+            $http.post(appConfig.apiPath+'/api/login', { username: username, password: password })
                 .success(function (response) {
                     callback(response);
                 })
@@ -33,7 +33,7 @@
         }
 
         function Logout(callback) {
-            $http.get('/api/logout')
+            $http.get(appConfig.apiPath+'/api/logout')
                 .success(function (response) {
                     ClearCredentials();
                     callback(response);
@@ -51,7 +51,7 @@
         function getAllUsers(){
             var deferred = $q.defer();
 
-            $http.get('/api/user')
+            $http.get(appConfig.apiPath+'/api/user')
                 .success(function (data) {
                     if(data.success){
                         deferred.resolve(data.users);
@@ -67,7 +67,7 @@
         function updateUser(user){
 
             var deferred = $q.defer();
-            $http.put('/api/user/'+user._id,user)
+            $http.put(appConfig.apiPath+'/api/user/'+user._id,user)
                 .success(function (data) {
                     if(data.success){
                         deferred.resolve(data);
@@ -83,7 +83,7 @@
         function createUser(user){
 
             var deferred = $q.defer();
-            $http.post('/api/user',user)
+            $http.post(appConfig.apiPath+'/api/user',user)
                 .success(function (data) {
                     if(data.success){
                         deferred.resolve(data);
