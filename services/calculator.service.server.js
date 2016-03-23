@@ -1,4 +1,4 @@
-module.exports = function(server, CalculatorModel,UserModel, passport)
+module.exports = function(server, CalculatorModel,UserModel, passport , mongoose)
 {
     //get all calculators only as Admin
     server.get("/api/calculator", function(req, res)
@@ -44,13 +44,13 @@ module.exports = function(server, CalculatorModel,UserModel, passport)
     });
 
     //create new calculator as admin or user
-    server.post("/api/calculator", function(req, res)
+    server.post("/api/:userid/calculator", function(req, res)
     {
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (user) {
                 if(user == 0)
                 {
-                    if(req.user._id !== req.body.user_id ){
+                    if(req.user._id !== req.params.userid ){
                         res.json({success:false,message:'Not administrator!'});
                         return;
                     }
@@ -59,7 +59,12 @@ module.exports = function(server, CalculatorModel,UserModel, passport)
                 var newcalc = req.body;
 
               CalculatorModel.create(newcalc, function (err, result) {
-                    res.json({success:true,item:result});
+                  if(err){
+                      res.json({success:false,message:'Error! - Calculator not created!'});
+                      return;
+                  }else{
+                      res.json({success:true,item:result});
+                  }
                 });
             });
         }
@@ -68,6 +73,56 @@ module.exports = function(server, CalculatorModel,UserModel, passport)
           res.json({success:false,message:'Not logged in!'});
         }
     });
+
+    //copy a calculator
+    //duplicate a single calculator by id- only admin or calculator owner
+    server.get("/api/:userid/calculator/:id/duplicate", function(req, res)
+    {
+        if(req.isAuthenticated()) {
+            isUserAdmin(req.user.username, function (user) {
+                if (user != '0' || req.user._id == req.params.userid) {
+                    CalculatorModel.findById(req.params.id, function (err, calculator) {
+                        if(err){
+                            res.json({success:false,message:'Error! - Calculator to duplicate not found!'});
+                            return;
+                        }else {
+                            //found the source calculator
+                            //creating a target calculator
+                            var copyCalc = new CalculatorModel(calculator);
+                            //updating _id and createDate
+                            copyCalc._id = mongoose.Types.ObjectId();
+                            copyCalc.dateCreated = new Date();
+                            //adding copytext to title
+                            copyCalc.title = copyCalc.title+'(copy)';
+                            //save our copy
+                            copyCalc.save(function (err, result) {
+                                if(err)
+                                {
+                                    res.json({success:false,message:'Error! - Calculator not duplicated!'});
+                                    return;
+                                }
+                                else
+                                {
+                                    res.json({success:true,item:result});
+                                }
+                            }
+                                );
+
+                            //res.json({success: true, item: calculator});
+                        }
+                    });
+                }
+                else {
+                    res.json({success: false, message: 'You dont have access to this resource!'});
+                }
+            });
+        }
+        else
+        {
+            res.json({success: false, message: 'Not logged in!'});
+        }
+    });
+
 
     //delete single calculator by id- only admin or calculator owner
     server.delete("/api/:userid/calculator/:id", function(req, res)
@@ -102,7 +157,7 @@ module.exports = function(server, CalculatorModel,UserModel, passport)
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (user) {
                 if (user != '0' || req.user._id == req.params.userid) {
-                    CalculatorModel.find({user_id:req.params.userid}, function (err, calculators) {
+                    CalculatorModel.find({user_id:req.params.userid},'title description dateCreated', function (err, calculators) {
                         res.json({success:true,items:calculators});
                     });
                 }

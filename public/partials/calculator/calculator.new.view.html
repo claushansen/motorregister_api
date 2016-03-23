@@ -11,8 +11,7 @@
 
         <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
                 class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
-                class="glyphicon glyphicon-plus"></span></a>
+
         <select ng-model="node.prisgruppe" ng-options="item.name for item in calculator.prisgrupper" class="pull-right prisgruppe-select">
         </select>
 
@@ -42,8 +41,13 @@
 
 </script>
 
-<h2>Prisberegner Setup</h2>
-<div class="row"></div>
+<h2>{{heading}}</h2>
+
+<div class="row">
+    <a class="btn btn-warning btn-large pull-right" href="#/dashboard">Annuller</a>
+    <button class="btn btn-primary btn-large pull-right" ng-disabled="outerForm.$invalid" ng-click="save()">Gem</button>
+</div>
+<div class="row">
 <form name="outerForm" class="tab-form-demo">
 
     <uib-tabset active="active">
@@ -61,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <label>Beskrivelse</label>
-                            <textarea class="form-control" ng-model="calculator.desc" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
+                            <textarea class="form-control" ng-model="calculator.description" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
                         </div>
                         <button class="btn btn-success" ng-disabled="outerForm.step1.title.$invalid" ng-click="setActive(1)">Næste</button>
                     </ng-form>
@@ -127,3 +131,5 @@
 
     </uib-tabset>
 </form>
+</div>
+{{outerForm}}

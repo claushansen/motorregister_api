@@ -8,8 +8,8 @@ module.exports = function(mongoose,db) {
             user_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'user'},
-            prisgrupper: {type: [String], required: true},
-            brands: {type: [String], required: true},
+            prisgrupper: {type: [mongoose.Schema.Types.Mixed], required: true},
+            brands: {type: [mongoose.Schema.Types.Mixed], required: true},
             dateCreated: {type: Date, default: new Date()}
         }, {collection: "calculators"});
 

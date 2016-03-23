@@ -15,7 +15,7 @@
                     userService.SetCredentials(response.user);
                     $location.path('/dashboard');
                 } else {
-                    messageCenterService.add('danger', response.message)
+                    messageCenterService.add('danger', response.message);
                     $scope.dataLoading = false;
                 }
             });

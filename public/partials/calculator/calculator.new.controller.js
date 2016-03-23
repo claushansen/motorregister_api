@@ -3,7 +3,30 @@
         .module("MDRAPI")
         .controller("CalculatorNewController",CalculatorNewController);
     //getting brands and models;
-    function CalculatorNewController($scope,$http){
+    function CalculatorNewController($scope, $http, $routeParams,$location, calculatorService, messageCenterService){
+        if($routeParams.id){
+            calculatorService.getCalculator($routeParams.id)
+                .then(function(result){
+                    $scope.calculator = result;
+                },function(result){
+                    messageCenterService.add('danger', result.message)
+
+                });
+            $scope.heading = 'Rediger Prisberegner';
+            $scope.save = function(){
+                updateCalculator();
+            }
+            $scope.thisis = 'Dette er en edit af:'+ $routeParams.id;
+        }else{
+            $scope.calculator = {};
+            $scope.save = $scope.save = function(){
+                createCalculator();
+            }
+            $scope.calculator.prisgrupper = [{name:'Prisgruppe 1'}];
+            $scope.heading = 'Opret Ny Prisberegner';
+
+            $scope.thisis = 'Dette er en ny prisberegner';
+        }
         $scope.getBrands = function(){
             if(!$scope.calculator.brands){
                 $http.get('http://localhost:3000/api/vehicle/brands/nested')
@@ -38,17 +61,7 @@
             $scope.data.splice(0, 0, a);
         };
 
-        $scope.newSubItem = function (scope) {
-            var nodeData = scope.$modelValue;
-            if(!nodeData.extra) {
-                nodeData.extra = [];
-            }
-            nodeData.extra.push({
-                id: nodeData.id + 10 + nodeData.extra.length,
-                name: nodeData.name + '.' + (nodeData.extra.length + 1),
-                extra: []
-            });
-        };
+
 
         $scope.newPrisgruppeItem = function (scope) {
             var nodeData = scope.$modelValue;
@@ -70,10 +83,27 @@
         };
 
 
-        $scope.calculator = {};
+
         $scope.setActive = function(activetab){
             $scope.active = activetab;
         }
-        $scope.calculator.prisgrupper = [{name:'Prisgruppe 1'}]
+
+        function updateCalculator(){
+            calculatorService.updateCalculator($scope.calculator)
+                .then(function(result){
+                    messageCenterService.add("success", "Prisberegneren er blevet opdateret", {status: messageCenterService.status.next});
+                    $location.path('/dashboard');
+                    //$scope.calculator = result;
+                },function(result){
+                    messageCenterService.add('danger', result.message)
+
+                });
+
+        }
+
+        function createCalculator(){
+
+        }
+
     }
 })();
