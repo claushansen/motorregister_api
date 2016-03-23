@@ -10,7 +10,8 @@ var mongoose      = require('mongoose');
 //var apiRoutes     = require("./routes/api.route.js")(express);
 //server.use('/api',apiRoutes);
 var db = mongoose.connect('mongodb://localhost/motorregister');
-server.use(bodyParser.json());
+//server.use(bodyParser.json());
+server.use(bodyParser.json({limit: '5mb'}));
 server.use(bodyParser.urlencoded({ extended: true }));
 //server.use(multer());
 server.use(session({ secret: 'this is my secret cat' }));
@@ -49,6 +50,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
 	User.model.findById(id, function(err, user) {
+		user.password = '*******';
 		done(err, user);
 	});
 });

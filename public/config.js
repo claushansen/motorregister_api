@@ -21,15 +21,15 @@
                     }
                 })
                 .when("/calculator/new",{
-                    templateUrl:"partials/calculator/calculator.new.view.html",
-                    controller: "CalculatorNewController",
+                    templateUrl:"partials/calculator/calculator.view.html",
+                    controller: "CalculatorController",
                     resolve: {
                         loggedin: checkLoggedin
                     }
                 })
                 .when("/calculator/edit/:id",{
-                    templateUrl:"partials/calculator/calculator.new.view.html",
-                    controller: "CalculatorNewController",
+                    templateUrl:"partials/calculator/calculator.view.html",
+                    controller: "CalculatorController",
                     resolve: {
                         loggedin: checkLoggedin
                     }

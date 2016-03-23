@@ -1,33 +1,43 @@
 (function(){
     angular
         .module("MDRAPI")
-        .controller("CalculatorNewController",CalculatorNewController);
+        .controller("CalculatorController",CalculatorController);
     //getting brands and models;
-    function CalculatorNewController($scope, $http, $routeParams,$location, calculatorService, messageCenterService){
+    function CalculatorController($scope,$rootScope, $http, $routeParams,$location, calculatorService, messageCenterService){
+        //is this an edit of an existing calculator
         if($routeParams.id){
+            //getting the existing calculator
             calculatorService.getCalculator($routeParams.id)
                 .then(function(result){
                     $scope.calculator = result;
                 },function(result){
                     messageCenterService.add('danger', result.message)
-
                 });
+            // setting headline to update
             $scope.heading = 'Rediger Prisberegner';
+            //Assigning save function to update
             $scope.save = function(){
                 updateCalculator();
             }
-            $scope.thisis = 'Dette er en edit af:'+ $routeParams.id;
-        }else{
+        }
+        // if no id, we are dealing with a new calculator
+        else{
+            //creating a new empty calculator object
             $scope.calculator = {};
+            //Setting userID on calculator
+            $scope.calculator.user_id = $rootScope.currentUser._id;
+            //Assigning save function to Create new
             $scope.save = $scope.save = function(){
                 createCalculator();
             }
+            //Creating the first prisgruppe on calculator
             $scope.calculator.prisgrupper = [{name:'Prisgruppe 1'}];
+            //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
-
-            $scope.thisis = 'Dette er en ny prisberegner';
         }
+
         $scope.getBrands = function(){
+            //TODO - create service for brands
             if(!$scope.calculator.brands){
                 $http.get('http://localhost:3000/api/vehicle/brands/nested')
                     .success(
@@ -38,13 +48,6 @@
                     );
             }
         }
-        //$http.get('http://localhost:3000/api/vehicle/brands/nested')
-        //    .success(
-        //        function(response) {
-        //            var brands = response;
-        //            $scope.brands = brands;
-        //        });
-        //getting models per brand
 
         //Functions for ui-tree
 
@@ -61,16 +64,12 @@
             $scope.data.splice(0, 0, a);
         };
 
-
-
         $scope.newPrisgruppeItem = function (scope) {
             var nodeData = scope.$modelValue;
-
             $scope.calculator.prisgrupper.push({
 
                 name: nodeData.name + '(kopi)' ,
                 pris: nodeData.pris,
-
             });
         };
 
@@ -82,12 +81,11 @@
             $scope.$broadcast('angular-ui-tree:expand-all');
         };
 
-
-
         $scope.setActive = function(activetab){
             $scope.active = activetab;
         }
 
+        //function for updating existing calculator in database
         function updateCalculator(){
             calculatorService.updateCalculator($scope.calculator)
                 .then(function(result){
@@ -96,14 +94,18 @@
                     //$scope.calculator = result;
                 },function(result){
                     messageCenterService.add('danger', result.message)
-
                 });
-
         }
-
+        //function for creating new calculator in database
         function createCalculator(){
-
+            calculatorService.createCalculator($scope.calculator)
+                .then(function(result){
+                    messageCenterService.add("success", "Prisberegneren er blevet oprettet", {status: messageCenterService.status.next});
+                    $location.path('/dashboard');
+                    //$scope.calculator = result;
+                },function(result){
+                    messageCenterService.add('danger', result.message)
+                });
         }
-
     }
 })();
