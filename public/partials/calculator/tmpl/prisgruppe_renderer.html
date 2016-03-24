@@ -1,0 +1,12 @@
+<div ui-tree-handle class="tree-node tree-node-content">
+
+    {{node.name}}
+
+    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-show="calculator.prisgrupper.length > 1" ng-click="remove(this)"><span
+            class="glyphicon glyphicon-remove"></span></a>
+    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newPrisgruppeItem(this)" style="margin-right: 8px;"><span
+            class="glyphicon glyphicon-plus"></span></a>
+    <input type="text" data-nodrag ng-model="node.name" required>
+    <input type="text" data-nodrag ng-model="node.pris" placeholder="F.eks 1000" required>
+
+</div>

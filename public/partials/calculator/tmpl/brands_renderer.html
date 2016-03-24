@@ -1,0 +1,20 @@
+<div ui-tree-handle class="tree-node tree-node-content" data-nodrag>
+    <a class="btn btn-success btn-xs" ng-if="node.models && node.models.length > 0" data-nodrag ng-click="renderModels(this)"><span
+            class="glyphicon"
+            ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+    {{node.name}}
+    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+            class="glyphicon glyphicon-remove"></span></a>
+    <select ng-model="node.prisgruppe" ng-change="updateModels(node.models)" ng-options="item.name for item in calculator.prisgrupper" class="pull-right prisgruppe-select">
+    </select>
+
+</div>
+<div ng-if="loadmodels == node.id">
+<ol ui-tree-nodes="" ng-model="node.models" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.models" ui-tree-node ng-include="'partials/calculator/tmpl/models_renderer.html'">
+    </li>
+</ol>
+</div>

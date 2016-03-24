@@ -3,7 +3,7 @@
         .module("MDRAPI")
         .controller("CalculatorController",CalculatorController);
     //getting brands and models;
-    function CalculatorController($scope,$rootScope, $http, $routeParams,$location, calculatorService, messageCenterService){
+    function CalculatorController($scope,$rootScope, $http, $routeParams, $location, calculatorService, messageCenterService){
         //is this an edit of an existing calculator
         if($routeParams.id){
             //getting the existing calculator
@@ -50,6 +50,29 @@
         }
 
         //Functions for ui-tree
+
+        //this function renders models only when the brand is toggled for quicker rendering
+        $scope.renderModels = function(scope){
+            //getting top position of the clicked element
+            var clickedElpos = angular.element('#'+scope.$modelValue.id).position();
+            //setting scope variable to place infobox where element clicked
+            $scope.clickedElTopPos = clickedElpos.top+'px';
+
+            //if loadmodels not the same as the clicked brand id
+            if($scope.loadmodels !== scope.$modelValue.id) {
+                // first collapse all
+                $scope.$broadcast('angular-ui-tree:collapse-all');
+                //then toggle the clicked element open
+                scope.toggle();
+                //finally Set the loadmodels so the models can be rendered
+                $scope.loadmodels = scope.$modelValue.id;
+
+            }
+            // else just toggle the clicked element to close
+            else{
+                scope.toggle();
+            }
+        }
 
         $scope.remove = function (scope) {
             scope.remove();

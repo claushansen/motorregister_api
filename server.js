@@ -111,6 +111,7 @@ var Calculator = require("./models/calculator.model.js")(mongoose, db);
 //testing models
 
 var UserService = require("./services/user.service.server.js")(server, User.model, passport);
+var BrandService = require("./services/brand.service.server.js")(server,  Brand.model, mongoose);
 var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model, passport, mongoose);
 
 //set up static
