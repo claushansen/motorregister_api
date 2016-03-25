@@ -117,3 +117,39 @@ body {
 .dashboard-call-to-action-box {
   text-align: center;
 }
+
+/*
+* mapping infobox
+*/
+
+#info_box {
+  position: relative;
+  background: #f8faff;
+  border: 1px solid #dae2ea;
+  min-height: 200px;
+}
+#info_box:after, #info_box:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+#info_box:after {
+  border-color: rgba(248, 250, 255, 0);
+  border-right-color: #f8faff;
+  border-width: 20px;
+  margin-top: -20px;
+}
+#info_box:before {
+  border-color: rgba(218, 226, 234, 0);
+  border-right-color: #dae2ea;
+  border-width: 21px;
+  margin-top: -21px;
+}
+.infobox-content{
+  margin: 10px;
+}

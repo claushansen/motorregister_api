@@ -60,9 +60,6 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Tildel prisgrupper til køretøjer</h3>
-
-            <button ng-click="expandAll()">Udvid alle</button>
-            <button ng-click="collapseAll()">Fold alle</button>
         </div>
     </div>
 
@@ -76,10 +73,12 @@
         </div>
 
         <div class="col-sm-6">
-            <div class="info" style="margin-top:{{toppos}}">
-                {{testOffset}}
+            <div id="info_box" style="margin-top:{{clickedElTopPos}}">
+                <div class="infobox-content">
+                <h3>Hjælp til mapping</h3>
+                </div>
             </div>
-            <pre class="code">{{ brands | json }}</pre>
+
         </div>
     </div>
 </section>

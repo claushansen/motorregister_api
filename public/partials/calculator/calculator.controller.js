@@ -54,9 +54,11 @@
         //this function renders models only when the brand is toggled for quicker rendering
         $scope.renderModels = function(scope){
             //getting top position of the clicked element
-            var clickedElpos = angular.element('#'+scope.$modelValue.id).position();
+            var clickedEl = angular.element('#'+scope.$modelValue.id);
+            var clickedElpos = clickedEl.position();
+            var infobox = angular.element('#info_box');
             //setting scope variable to place infobox where element clicked
-            $scope.clickedElTopPos = clickedElpos.top+'px';
+            $scope.clickedElTopPos = (clickedElpos.top - (infobox.height()/2)) + 25 +'px';
 
             //if loadmodels not the same as the clicked brand id
             if($scope.loadmodels !== scope.$modelValue.id) {
