@@ -31,7 +31,7 @@
                 createCalculator();
             }
             //Creating the first prisgruppe on calculator
-            $scope.calculator.prisgrupper = [{name:'Prisgruppe 1'}];
+            $scope.calculator.prisgrupper = [{id:'id' + (new Date()).getTime(),name:'Prisgruppe 1'}];
             //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
         }
@@ -47,6 +47,15 @@
                         }
                     );
             }
+        }
+
+         $scope.updateModels = function(models,prisgruppeId){
+             console.log('UpdateModels called');
+             console.log(models);
+             console.log(prisgruppeId);
+            angular.forEach(models, function(model,key){
+                model.prisgruppeId = prisgruppeId;
+            });
         }
 
         //Functions for ui-tree
@@ -92,7 +101,7 @@
         $scope.newPrisgruppeItem = function (scope) {
             var nodeData = scope.$modelValue;
             $scope.calculator.prisgrupper.push({
-
+                id: 'id' + (new Date()).getTime(),
                 name: nodeData.name + '(kopi)' ,
                 pris: nodeData.pris,
             });
@@ -132,5 +141,7 @@
                     messageCenterService.add('danger', result.message)
                 });
         }
+
+
     }
 })();

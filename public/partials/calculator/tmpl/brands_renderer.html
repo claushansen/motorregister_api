@@ -8,8 +8,11 @@
     {{node.name}}
     <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
             class="glyphicon glyphicon-remove"></span></a>
-    <select ng-model="node.prisgruppe" ng-change="updateModels(node.models)" ng-options="item.name for item in calculator.prisgrupper" class="pull-right prisgruppe-select">
+    <select ng-model="node.prisgruppeId" ng-change="updateModels(node.models,node.prisgruppeId)" class="pull-right prisgruppe-select">
+        <option data-ng-repeat="gruppe in calculator.prisgrupper" value="{{gruppe.id}}" ng-selected="node.prisgruppeId && (gruppe.id == node.prisgruppeId)">{{gruppe.name}}</option>
     </select>
+   <!-- <select ng-model="node.prisgruppe" ng-change="updateModels(node.models,node.prisgruppe)" ng-options="gruppe.name for gruppe in calculator.prisgrupper" class="pull-right prisgruppe-select">
+    </select>-->
 
 </div>
 <div ng-if="loadmodels == node.id">

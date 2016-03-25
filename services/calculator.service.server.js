@@ -207,6 +207,9 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
         }
     });
 
+
+
+
     function isUserAdmin(username, callback)
     {
         UserModel.findOne({username: username}, function(err, foundUser)
