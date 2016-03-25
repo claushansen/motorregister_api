@@ -177,7 +177,7 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
     {
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (adminuser) {
-                if (adminuser != '0' || req.user._id == req.params.userid) {
+                if (adminuser != '0' || ((req.user._id == req.params.userid) && (req.user._id == req.body.user_id)) ) {
                     var updatedCalc = req.body;
                     //getting the calculator to be updated
                     CalculatorModel.findById(req.params.id, function (err, foundCalculator) {
