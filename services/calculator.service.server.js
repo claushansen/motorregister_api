@@ -50,7 +50,9 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
             isUserAdmin(req.user.username, function (user) {
                 if(user == 0)
                 {
-                    if(req.user._id !== req.params.userid ){
+                    if(req.user._id != req.params.userid ){
+                        console.log(req.user._id);
+                        console.log(req.params.userid);
                         res.json({success:false,message:'Not administrator!'});
                         return;
                     }
