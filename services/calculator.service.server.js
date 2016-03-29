@@ -248,7 +248,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         var calcid = req.params.calcid;
         var modelId = req.params.modelid;
 
-        CalculatorModel.OfferByModel(calcid,modelId,function(err,data){
+        CalculatorModel.getOfferByModel(calcid,modelId,function(err,data){
             if(err){
                 res.json({success: false, message: 'Something went wrong'});
             }else{
