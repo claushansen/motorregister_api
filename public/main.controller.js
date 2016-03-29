@@ -1,9 +1,8 @@
 (function(){
     angular
         .module("MDRAPI")
-        .controller("navController",navController);
-    function navController($scope,userService,$location,$rootScope,$http,messageCenterService){
-        $scope.hello = "hi from navController";
+        .controller("mainController",mainController);
+    function mainController($scope,userService,$location,$rootScope,$http,messageCenterService){
 
         $scope.Logout = Logout;
         $scope.$location = $location;

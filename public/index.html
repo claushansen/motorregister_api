@@ -32,9 +32,9 @@
     <![endif]-->
 </head>
 
-<body>
+<body ng-controller="mainController">
 
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="navController">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -60,10 +60,10 @@
     </div>
 </nav>
 
-<div class="container-fluid" ng-controller="navController">
+<div class="container-fluid">
     <div class="row">
         <div ng-show="currentUser" class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar" ng-controller="navController">
+            <ul class="nav nav-sidebar" >
                 
                 <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Kontrolpanel</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/calculator/new'}">
@@ -107,7 +107,7 @@
 <script src="https://cdn.rawgit.com/e0ipso/message-center/master/message-center.js"></script>
 <script src="app.js"></script>
 <script src="config.js"></script>
-<script src="nav.controller.js"></script>
+<script src="main.controller.js"></script>
 <script src="services/auth.service.js"></script>
 <script src="services/user.service.js"></script>
 
