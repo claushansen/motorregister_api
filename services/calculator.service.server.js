@@ -1,4 +1,4 @@
-module.exports = function(server, CalculatorModel,UserModel, passport , mongoose)
+module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passport , mongoose)
 {
     //get all calculators only as Admin
     server.get("/api/calculator", function(req, res)
@@ -209,8 +209,30 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
         }
     });
 
+
+    /***********************************
+    * Functions for frontend calculators
+    ***********************************/
+
+    //get a price based on licensplate
+    //Redirects to /api/calculator/:calcid/offer/model/:modelid when modelid found
+    // Maybe we should return the vehicle to
+    server.get("/api/calculator/:calcid/offer/licensplate/:licensplate", function(req, res)
+    {
+        var calcid = req.params.calcid;
+        var licensplate = req.params.licensplate;
+        Vehiclemodel.getVehicleByLicensplate(licensplate)
+            .then(function(data){
+                var modelId = data.ModelId;
+                res.redirect('/api/calculator/'+calcid+'/offer/model/'+modelId);
+            },function(err){
+                 res.json({success: false, message: 'Something went wrong'});
+            }
+            );
+    });
+
     //get a price based on model ID
-    server.get("/api/calculator/:calcid/offer/:modelid", function(req, res)
+    server.get("/api/calculator/:calcid/offer/model/:modelid", function(req, res)
     {
         var calcid = req.params.calcid;
         var modelid = req.params.modelid;
@@ -251,7 +273,7 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
         );
             query.exec(function(err,offer){
                 if (err) {
-                    res.json({success: false, message: 'Error! something went wrong!'});;
+                    res.json({success: false, message: 'Error! something went wrong!'});
                 }else{
                     // if we have an offer on this model return success and price
                     if(offer.length > 0){

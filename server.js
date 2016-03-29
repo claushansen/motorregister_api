@@ -112,7 +112,7 @@ var Calculator = require("./models/calculator.model.js")(mongoose, db);
 
 var UserService = require("./services/user.service.server.js")(server, User.model, passport);
 var BrandService = require("./services/brand.service.server.js")(server,  Brand.model, mongoose);
-var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model, passport, mongoose);
+var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model,Vehicle, passport, mongoose);
 
 //set up static
 server.use(express.static(__dirname + '/public'));
