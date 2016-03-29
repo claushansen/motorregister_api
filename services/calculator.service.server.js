@@ -216,8 +216,6 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
     ***********************************/
 
     //get a price based on licensplate
-    //Redirects to /api/calculator/:calcid/offer/model/:modelid when modelid found
-    // Maybe we should return the vehicle to
     server.get("/api/calculator/:calcid/offer/licensplate/:licensplate", function(req, res)
     {
         var calcid = req.params.calcid;
@@ -226,7 +224,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
             .then(function(data){
                 var modelId = data.ModelId;
                 var vehicle = data;
-                CalculatorModel.OfferByModel(calcid,modelId,function(err,data){
+                CalculatorModel.getOfferByModel(calcid,modelId,function(err,data){
                     if(err){
                         res.json({success: false, message: 'Something went wrong'});
                     }else{

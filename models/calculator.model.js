@@ -13,7 +13,7 @@ module.exports = function(mongoose,db) {
             dateCreated: {type: Date, default: new Date()}
         }, {collection: "calculators"});
 
-    CalculatorSchema.statics.OfferByModel = function(calcid,modelId, callback){
+    CalculatorSchema.statics.getOfferByModel = function(calcid,modelId, callback){
 
         this.model('Calculator').aggregate(
             [
