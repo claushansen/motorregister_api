@@ -209,6 +209,64 @@ module.exports = function(server, CalculatorModel,UserModel, passport , mongoose
         }
     });
 
+    //get a price based on model ID
+    server.get("/api/calculator/:calcid/offer/:modelid", function(req, res)
+    {
+        var calcid = req.params.calcid;
+        var modelid = req.params.modelid;
+
+        var query = CalculatorModel.aggregate(
+            [
+                //matching calcid
+                { $match : {_id:mongoose.Types.ObjectId(calcid)}},
+                //only projecting the fields we need
+                { $project: {_id:0, brands: '$brands', prisgrupper: '$prisgrupper'} },
+                //unwinding brands
+                { $unwind: "$brands" },
+                //unwinding models
+                { $unwind: "$brands.models" },
+                //finding the model we need
+                { $match: {'brands.models.id':modelid } },
+                //only projecting the fields we need
+                { $project: {prisgruppeId: '$brands.models.prisgruppeId', prisgrupper: '$prisgrupper' } },
+                //unwinding prisgrupper
+                { $unwind: "$prisgrupper" },
+                // the tricky part -
+                // using $let to define variables so we can create the foundmatch field
+                // to see that we have the right field
+                { $project: { prisgruppeId: '$prisgruppeId', prisgrupper: '$prisgrupper',
+                        foundmatch: {
+                            $let: {
+                                vars: {prisgruppeId: '$prisgruppeId',prisgruppe: '$prisgrupper.id'},
+                                in: {$eq:['$$prisgruppe','$$prisgruppeId']  }
+                            }
+                        }
+                    }
+                },
+                // matching our new field: foundmatch
+                { $match: { foundmatch:true } },
+                // projecting price only
+                { $project: { price: '$prisgrupper.pris' } }
+            ]
+        );
+            query.exec(function(err,offer){
+                if (err) {
+                    res.json({success: false, message: 'Error! something went wrong!'});;
+                }else{
+                    // if we have an offer on this model return success and price
+                    if(offer.length > 0){
+                        res.json({success:true,offer:offer[0].price});
+                    }
+                    //else return success false
+                    else{
+                        res.json({success: false, message: 'No offer on this model'});
+                    }
+                    //res.json({success:true,offer:offer});
+                }
+            });
+
+    });
+
 
 
 
