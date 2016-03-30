@@ -2,7 +2,8 @@
     angular
         .module('MDRAPI')
         .constant('appConfig',{
-            apiPath:'http://localhost:3000'
+            //apiPath:'http://localhost:3000'
+            apiPath:''
         })
         .config(function($routeProvider){
             $routeProvider
