@@ -13,6 +13,7 @@ module.exports = function(mongoose,db) {
             dateCreated: {type: Date, default: new Date()}
         }, {collection: "calculators"});
 
+    //static method for getting priceoffer from model ID
     CalculatorSchema.statics.getOfferByModel = function(calcid,modelId, callback){
 
         this.model('Calculator').aggregate(
@@ -50,6 +51,24 @@ module.exports = function(mongoose,db) {
             ]
         )
         .exec(callback);
+    }
+
+    //static method for getting priceoffer from model ID
+    CalculatorSchema.statics.getBrandsList = function(calcid, callback){
+
+        this.model('Calculator').aggregate(
+            [
+                //matching calcid
+                { $match : {_id:mongoose.Types.ObjectId(calcid)}},
+                // only getting brands
+                { $project: {_id:0, brands: '$brands' } },
+                //Unwinding brands
+                { $unwind: "$brands" },
+                //only projecting id and name
+                { $project: {id:'$brands.id', name:'$brands.name' } }
+            ]
+            )
+            .exec(callback);
     }
 
     var CalculatorModel = mongoose.model("Calculator", CalculatorSchema);

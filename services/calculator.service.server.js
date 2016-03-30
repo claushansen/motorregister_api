@@ -216,7 +216,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
     ***********************************/
 
     //get a price based on licensplate
-    server.get("/api/calculator/:calcid/offer/licensplate/:licensplate", function(req, res)
+    server.get("/api/mycalculator/:calcid/offer/licensplate/:licensplate", function(req, res)
     {
         var calcid = req.params.calcid;
         var licensplate = req.params.licensplate;
@@ -243,7 +243,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
     });
 
     //get a price based on model ID
-    server.get("/api/calculator/:calcid/offer/model/:modelid", function(req, res)
+    server.get("/api/mycalculator/:calcid/offer/model/:modelid", function(req, res)
     {
         var calcid = req.params.calcid;
         var modelId = req.params.modelid;
@@ -258,6 +258,22 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                 }else{
                     res.json({success:true,hasoffer:false});
                 }
+            }
+        });
+    });
+
+    //get a brands list
+    server.get("/api/mycalculator/:calcid/brands", function(req, res)
+    {
+        var calcid = req.params.calcid;
+        var modelId = req.params.modelid;
+
+        CalculatorModel.getBrandsList(calcid,function(err,data){
+            if(err){
+                res.json({success: false, message: 'Something went wrong'});
+            }else{
+                //We have data, returning list?
+                res.json({success:true,brands:data});
             }
         });
     });
