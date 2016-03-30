@@ -278,6 +278,22 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         });
     });
 
+    //get a models list based on brand id
+    server.get("/api/mycalculator/:calcid/models/:brandid", function(req, res)
+    {
+        var calcid = req.params.calcid;
+        var brandid = req.params.brandid;
+
+        CalculatorModel.getModelsList(calcid,brandid,function(err,data){
+            if(err){
+                res.json({success: false, message: 'Something went wrong'});
+            }else{
+                //We have data, returning list?
+                res.json({success:true,models:data});
+            }
+        });
+    });
+
 
 
 

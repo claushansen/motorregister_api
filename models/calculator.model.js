@@ -71,6 +71,28 @@ module.exports = function(mongoose,db) {
             .exec(callback);
     }
 
+    //static method for getting priceoffer from model ID
+    CalculatorSchema.statics.getModelsList = function(calcid,brandid, callback){
+
+        this.model('Calculator').aggregate(
+            [
+                //matching calcid
+                { $match : {_id:mongoose.Types.ObjectId(calcid)}},
+                // only getting brands
+                { $project: {_id:0, brands: '$brands' } },
+                //Unwinding brands
+                { $unwind: "$brands" },
+                //matching brandid
+                { $match: { 'brands.id':brandid } },
+                //Unwinding models
+                { $unwind: "$brands.models" },
+                //only projecting id and name
+                { $project: { id: '$brands.models.id', name: '$brands.models.name' } }
+            ]
+            )
+            .exec(callback);
+    }
+
     var CalculatorModel = mongoose.model("Calculator", CalculatorSchema);
     return CalculatorModel;
 
