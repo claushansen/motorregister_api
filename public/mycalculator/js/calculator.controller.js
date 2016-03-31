@@ -4,6 +4,10 @@
         .controller("CalculatorController",CalculatorController);
 
     function CalculatorController($scope,$http,$routeParams){
+
+        //get settings on init
+        getSettings();
+
         $scope.manualSearch = false;
 
         $scope.setManual = function(){
@@ -64,6 +68,19 @@
                         $scope.modelsloading = false;
                     }
                 );
+            }
+        }
+        //getting the calculator settings
+        function getSettings(){
+            if(!$scope.settings) {
+                var calcid = $routeParams.calcid
+                $scope.settingsloading = true;
+                $http.get('http://localhost:3000/api/mycalculator/settings/' + calcid )
+                    .success(function (data) {
+                            $scope.settings = data.settings;
+                            $scope.settingsloading = false;
+                        }
+                    );
             }
         }
 
