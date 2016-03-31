@@ -46,6 +46,7 @@ module.exports = function(mongoose, db){
     }
 
     function createBrandCollection(){
+        //TODO - Maybe convert names to lovercase before sorting
 
         var deferred = q.defer();
         var query = VehicleModel.aggregate([
