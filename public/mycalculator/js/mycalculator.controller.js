@@ -1,9 +1,9 @@
 (function(){
     angular
         .module("mycalculator")
-        .controller("CalculatorController",CalculatorController);
+        .controller("MyCalculatorController",MyCalculatorController);
 
-    function CalculatorController($scope,$http,$routeParams){
+    function MyCalculatorController($scope,$http,$routeParams, mycalculatorService ,messageCenterService){
 
         //get settings on init
         getSettings();

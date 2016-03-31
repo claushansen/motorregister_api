@@ -13,11 +13,11 @@ angular
             })
             .when("/nocalculator", {
                 templateUrl: "views/calculator/nocalculator.view.html",
-                controller: "CalculatorController"
+                controller: "MyCalculatorController"
             })
             .when("/calculator/:calcid", {
                 templateUrl: "views/calculator/calculator.view.html",
-                controller: "CalculatorController"
+                controller: "MyCalculatorController"
             })
             .otherwise({
                 redirectTo: "/nocalculator"

@@ -1,4 +1,4 @@
 (function() {
     angular
-        .module('mycalculator',["ngRoute",'ui.bootstrap']);
+        .module('mycalculator',["ngRoute",'ui.bootstrap','MessageCenterModule']);
 })();
