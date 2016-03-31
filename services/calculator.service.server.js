@@ -215,6 +215,23 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
     * Functions for frontend calculators
     ***********************************/
 
+    //get calculator settings
+    server.get("/api/mycalculator/settings/:calcid", function(req, res)
+    {
+        var calcid = req.params.calcid;
+
+        CalculatorModel.findById(calcid,{brands:0,prisgrupper:0}, function (err, Calculator) {
+            if (err) {
+                res.json({success:false,message:'Something went wrong'});
+                return;
+            } else
+            {
+                res.json({success:true,settings:Calculator});
+
+            }
+        });
+    });
+
     //get a price based on licensplate
     server.get("/api/mycalculator/:calcid/offer/licensplate/:licensplate", function(req, res)
     {
