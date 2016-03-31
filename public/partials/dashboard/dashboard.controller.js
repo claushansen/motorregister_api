@@ -9,6 +9,10 @@
 
         $scope.copyCalc = copyCalc;
         $scope.removeCalc = removeCalc;
+        //TODO - create embed scripts modalfunction
+        $scope.openEmbedModal = function(){
+
+        }
 
         function copyCalc(scope){
             calculatorService.copyCalculator(scope.calculator._id)
