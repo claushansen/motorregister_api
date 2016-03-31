@@ -1,0 +1,94 @@
+<div class="offersearch-wrapper container">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="row">
+        <h3>Få en pris med det samme</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis eveniet facilis hic illo, iusto
+                laboriosam laborum magni minima natus nostrum nulla obcaecati odit quia quo repellendus vitae
+                voluptatibus voluptatum? Voluptatibus.</p>
+        </div>
+        <!--vehicle info -->
+        <div class="row vehicle-info" ng-show="offer.vehicle">
+            <h4>Køretøjets data</h4>
+            <div class="col-sm-8">
+                <span class="label label-success">Registreringsnummer : {{offer.vehicle.Licensplate}}</span>
+                <span class="label label-primary">Mærke : {{offer.vehicle.Brand}}</span>
+                <span class="label label-primary">Model : {{offer.vehicle.Model}}</span>
+                <span class="label label-primary">Variant : {{offer.vehicle.Variant}}</span>
+                <span class="label label-primary">Årgang : {{offer.vehicle.ModelYear}}</span>
+                <span class="label label-primary">Type : {{offer.vehicle.VehicleType}}</span>
+                <span class="label label-primary">Status : {{offer.vehicle.Regstatus}}</span>
+            </div>
+            <div class="col-sm-4 text-center"><button class="btn btn-link" ng-click="reset()"> Ny Søgning</button></div>
+        </div>
+        <!-- selected info -->
+        <div class="row selected-info" ng-show="manualSearch && offer">
+            <h4>Dine Valg</h4>
+            <div class="col-sm-8">
+                <span class="label label-primary">Mærke : {{search.brand.name}}</span>
+                <span class="label label-primary">Model : {{search.model.name}}</span>
+            </div>
+            <div class="col-sm-4 text-center"><button class="btn btn-link" ng-click="reset()"> Ny Søgning</button></div>
+        </div>
+        <div class="row" ng-show="!manualSearch && !offer">
+            <div class="row">
+                <form  id="licensplateform">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="licensplate">Registreringsnummer</label>
+                            <div class="input-group ">
+
+                                <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="search.licensplate" ng-change="search.licensplate = search.licensplate.toUpperCase();" required/>
+                                <div class="input-group-addon"><button class="btn  btn-primary" ng-disabled="!search.licensplate"  ng-click="findOfferLicensplate()"><span class="glyphicon glyphicon-search"></span></button> </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row"><hr></div>
+            <div class="row text-center">
+                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual();getBrands()">Eller vælg manuelt</button>
+            </div>
+        </div>
+        <div class="row" ng-show="manualSearch && !offer" >
+            <div class="row text-center">
+                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual()">Indtast Registreringsnummer</button>
+            </div>
+            <div class="row"><hr></div>
+            <div class="row">
+                <form  id="manualform">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="brandselect">Mærke</label>
+                            <select id="brandselect" ng-model="search.brand" ng-change="getModels()" ng-options="brand.name for brand in brands" class="form-control">
+                           </select>
+                                <!-- <select id="brandselect" ng-model="search.brand" ng-change="getModels()" class="form-control">
+                                    <option value="">Vælg Mærke</option>
+                                    <option ng-repeat="brand in brands" value="{{brand}}">{{brand.name}}</option>
+                                </select>-->
+                        </div>
+                        <div class="form-group" ng-show="search.brand">
+                            <label for="modelselect">Model</label>
+                            <select id="modelselect" ng-model="search.model" ng-change="findOfferManual()" ng-options="model.name for model in models" class="form-control">
+                            </select>
+                           <!-- <select id="modelselect" ng-model="search.model" class="form-control">
+                                <option value="">Vælg Model</option>
+                                <option ng-repeat="model in models" value="{{model}}">{{model.name}}</option>
+                            </select>-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- offer -->
+        <div class="row" ng-show="offer && offer.hasoffer">
+            <h2>Din pris {{offer.offer}} Kr.</h2>
+        </div>
+        <!-- No offer -->
+        <div class="row" ng-show="offer && !offer.hasoffer">
+            <h2>Vi kan desværre ikke give dig et tilbud på dette køretøj</h2>
+        </div>
+
+    </div>
+</div>
