@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("mainController",mainController);
     function mainController($scope,userService,$location,$rootScope,$http,messageCenterService){
 

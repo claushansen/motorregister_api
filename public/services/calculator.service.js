@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('MDRAPI')
+        .module('BILAPI')
         .factory('calculatorService', calculatorService);
 
     calculatorService.$inject = ['$http', '$rootScope', '$timeout','$q' ,'appConfig'];

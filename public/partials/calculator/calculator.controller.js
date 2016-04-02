@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("CalculatorController",CalculatorController);
     //getting brands and models;
     function CalculatorController($scope,$rootScope, $http, $routeParams, $location, calculatorService, messageCenterService){

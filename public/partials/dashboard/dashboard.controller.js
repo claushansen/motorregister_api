@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("DashboardController",DashboardController);
     //getting brands and models;
     function DashboardController($scope,$http,calculatorService,messageCenterService){

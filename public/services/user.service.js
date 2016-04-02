@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('MDRAPI')
+        .module('BILAPI')
         .factory('userService', userService);
 
     userService.$inject = ['$http', '$rootScope', '$timeout','$q' ,'appConfig'];

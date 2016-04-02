@@ -1,5 +1,5 @@
 (function(){
-angular.module('MDRAPI').controller('ModalAdminUserEditCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
+angular.module('BILAPI').controller('ModalAdminUserEditCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
     delete user.password;
     $scope.user = user;
     if(user._id){

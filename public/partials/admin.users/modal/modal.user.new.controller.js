@@ -1,5 +1,5 @@
 (function(){
-angular.module('MDRAPI').controller('ModalAdminUserNewCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
+angular.module('BILAPI').controller('ModalAdminUserNewCtrl', function ($scope, $uibModalInstance, user, userService,messageCenterService) {
 
     $scope.user = user;
     $scope.modaltitle = 'Opret Ny Bruger';

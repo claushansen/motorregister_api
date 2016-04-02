@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('MDRAPI')
+        .module('BILAPI')
         .constant('appConfig',{
             //apiPath:'http://localhost:3000'
             apiPath:''
