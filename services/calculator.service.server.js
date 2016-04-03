@@ -136,7 +136,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                     CalculatorModel.remove({_id: req.params.id}, function (err, count) {
                         if(err)
                         {
-                            res.json({success:false,message:'error! Something went wrong'})
+                            res.json({success:false,message:'error! Something went wrong'});
                             return;
                         }
                         res.json({success:true,message:'Calculator removed'});
@@ -181,6 +181,9 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (adminuser) {
                 if (adminuser != '0' || ((req.user._id == req.params.userid) && (req.user._id == req.body.user_id)) ) {
+                    //removing _id from req.body as it creates an error on openshift
+                    // as it uses mongo version 2.4 where you can't update on _id
+                    delete req.body._id;
                     var updatedCalc = req.body;
                     //getting the calculator to be updated
                     CalculatorModel.findById(req.params.id, function (err, foundCalculator) {
@@ -329,4 +332,4 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         });
     }
 
-}
+};
