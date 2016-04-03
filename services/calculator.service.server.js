@@ -91,12 +91,16 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                         }else {
                             //found the source calculator
                             //creating a target calculator
-                            var copyCalc = new CalculatorModel(calculator);
-                            //updating _id and createDate
-                            copyCalc._id = mongoose.Types.ObjectId();
-                            copyCalc.dateCreated = new Date();
-                            //adding copytext to title
-                            copyCalc.title = copyCalc.title+'(copy)';
+                            //needs to do it this way on openshift as we cant update on _id
+                            targetCalc = {};
+                            targetCalc.title = calculator.title+'(copy)';
+                            targetCalc.description = calculator.description;
+                            targetCalc.prisgrupper = calculator.prisgrupper;
+                            targetCalc.brands = calculator.brands;
+                            targetCalc.user_id = calculator.user_id;
+
+                            var copyCalc = new CalculatorModel(targetCalc);
+
                             //save our copy
                             copyCalc.save(function (err, result) {
                                 if(err)
