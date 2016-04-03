@@ -11,7 +11,7 @@ var mongoose      = require('mongoose');
 //setting up connection variables :Openshift/local
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-var connectString = process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/bilapi';
+var connectString = process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/calculator';
 
 //connecting to database
 var db = mongoose.connect(connectString);
