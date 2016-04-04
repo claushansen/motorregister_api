@@ -9,18 +9,13 @@
     function calculatorService($http,$rootScope,$timeout,$q,appConfig) {
         var service = {};
 
-        //service.Login = Login;
-        //service.Logout = Logout;
-        //service.SetCredentials = SetCredentials;
-        //service.ClearCredentials = ClearCredentials;
         service.getMyCalculators = getMyCalculators;
         service.getCalculator = getCalculator;
         service.updateCalculator = updateCalculator;
         service.createCalculator = createCalculator;
         service.copyCalculator = copyCalculator;
         service.removeCalculator = removeCalculator;
-        //service.createUser = createUser;
-        //service.registerUser = registerUser;
+
 
         return service;
 
