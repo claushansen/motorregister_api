@@ -14,7 +14,7 @@
     <table class="table table-striped">
         <thead>
         <th>Titel</th>
-        <th>beskrivelse</th>
+        <th>Muligheder</th>
         <th>Oprettet</th>
         <th>
             <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
@@ -25,7 +25,14 @@
         <tbody>
         <tr ng-repeat="calculator in calculators">
             <td>{{calculator.title}}</td>
-            <td>{{calculator.description}}</td>
+            <td class="small">
+                <strong>Link:</strong>
+                <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
+                <br>
+                <strong>Embed:</strong>
+                <a href="#" ng-click="openEmbedModal()" >Indsæt på hjemmeside</a>
+                <br>
+            </td>
             <td>{{calculator.dateCreated | date}}</td>
 
             <td>

@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("LoginController",LoginController);
     function LoginController($scope,userService,$location,$rootScope,messageCenterService){
 

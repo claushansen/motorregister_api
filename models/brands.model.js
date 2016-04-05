@@ -10,6 +10,19 @@ module.exports = function(mongoose, db){
 
         },{colletion: 'brands'}
     );
+    //static method for getting brandslist with models nested
+    brandSchema.statics.getAllBrandsWithModels = function(vehicletypesToInclude,brandsToExclude,callback){
+        //setting default values to arguments
+        vehicletypesToInclude = typeof vehicletypesToInclude !== 'undefined' ? vehicletypesToInclude : [];
+        brandsToExclude = typeof brandsToExclude !== 'undefined' ? brandsToExclude : [];
+
+        this.model('Brand').aggregate([
+            { $match : {vehicletype:{$in:vehicletypesToInclude},id:{$nin:brandsToExclude}}},
+            {$project : {id:'$id',name: '$name',_id:0}}
+        ])
+        .exec(callback);
+    };
+
     var BrandModel = mongoose.model('Brand', brandSchema);
     var api = {
         model : BrandModel,
@@ -40,7 +53,7 @@ module.exports = function(mongoose, db){
         });
 
         return deferred.promise;
-    };
+    }
 
     function getAllBrandsWithModels(vehicletypesToInclude,brandsToExclude){
         //setting default values to arguments
@@ -60,7 +73,7 @@ module.exports = function(mongoose, db){
         });
 
         return deferred.promise;
-    };
+    }
 
     function getModelsByBrandId(brandid){
 
@@ -79,9 +92,9 @@ module.exports = function(mongoose, db){
         });
 
         return deferred.promise;
-    };
+    }
 
 
 
 
-}
+};

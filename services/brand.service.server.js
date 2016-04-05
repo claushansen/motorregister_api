@@ -23,6 +23,8 @@ module.exports = function(server, BrandModel, mongoose)
         }
     });
 
+
+
     function isUserAdmin(username, callback)
     {
         UserModel.findOne({username: username}, function(err, foundUser)
@@ -38,4 +40,4 @@ module.exports = function(server, BrandModel, mongoose)
         });
     }
 
-}
+};

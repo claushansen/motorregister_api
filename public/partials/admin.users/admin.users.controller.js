@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("AdminUsersController",AdminUsersController);
     function AdminUsersController($scope,$http,$uibModal,userService,$rootScope,messageCenterService){
 

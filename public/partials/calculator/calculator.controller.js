@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("CalculatorController",CalculatorController);
     //getting brands and models;
     function CalculatorController($scope,$rootScope, $http, $routeParams, $location, calculatorService, messageCenterService){
@@ -39,7 +39,7 @@
         $scope.getBrands = function(){
             //TODO - create service for brands
             if(!$scope.calculator.brands){
-                $http.get('http://localhost:3000/api/vehicle/brands/nested')
+                $http.get('/api/vehicle/brands/nested')
                     .success(
                         function(response) {
                             var brands = response;

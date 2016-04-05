@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("MDRAPI")
+        .module("BILAPI")
         .controller("DashboardController",DashboardController);
     //getting brands and models;
     function DashboardController($scope,$http,calculatorService,messageCenterService){
@@ -9,6 +9,10 @@
 
         $scope.copyCalc = copyCalc;
         $scope.removeCalc = removeCalc;
+        //TODO - create embed scripts modalfunction
+        $scope.openEmbedModal = function(){
+
+        }
 
         function copyCalc(scope){
             calculatorService.copyCalculator(scope.calculator._id)

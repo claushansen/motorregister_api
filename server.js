@@ -7,15 +7,21 @@ var LocalStrategy = require('passport-local').Strategy;
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var mongoose      = require('mongoose');
-//var apiRoutes     = require("./routes/api.route.js")(express);
-//server.use('/api',apiRoutes);
-var db = mongoose.connect('mongodb://localhost/motorregister');
+
+//setting up connection variables :Openshift/local
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var connectString = process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME || 'mongodb://localhost/calculator';
+
+//connecting to database
+var db = mongoose.connect(connectString);
+
 //server.use(bodyParser.json());
 server.use(bodyParser.json({limit: '5mb'}));
 server.use(bodyParser.urlencoded({ extended: true }));
 //server.use(multer());
 server.use(session({ secret: 'this is my secret cat' }));
-server.use(cookieParser())
+server.use(cookieParser());
 server.use(passport.initialize());
 server.use(passport.session());
 
@@ -197,8 +203,8 @@ server.get('/admin/api/createcollection/brands',ensureAdmin, function(req,res){
 
 
 
- 
-server.listen(3000)
+
+server.listen(port, ipaddress);
 
 
 

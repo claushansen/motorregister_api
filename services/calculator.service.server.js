@@ -91,12 +91,16 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                         }else {
                             //found the source calculator
                             //creating a target calculator
-                            var copyCalc = new CalculatorModel(calculator);
-                            //updating _id and createDate
-                            copyCalc._id = mongoose.Types.ObjectId();
-                            copyCalc.dateCreated = new Date();
-                            //adding copytext to title
-                            copyCalc.title = copyCalc.title+'(copy)';
+                            //needs to do it this way on openshift as we cant update on _id
+                            targetCalc = {};
+                            targetCalc.title = calculator.title+'(copy)';
+                            targetCalc.description = calculator.description;
+                            targetCalc.prisgrupper = calculator.prisgrupper;
+                            targetCalc.brands = calculator.brands;
+                            targetCalc.user_id = calculator.user_id;
+
+                            var copyCalc = new CalculatorModel(targetCalc);
+
                             //save our copy
                             copyCalc.save(function (err, result) {
                                 if(err)
@@ -136,7 +140,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                     CalculatorModel.remove({_id: req.params.id}, function (err, count) {
                         if(err)
                         {
-                            res.json({success:false,message:'error! Something went wrong'})
+                            res.json({success:false,message:'error! Something went wrong'});
                             return;
                         }
                         res.json({success:true,message:'Calculator removed'});
@@ -181,6 +185,9 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (adminuser) {
                 if (adminuser != '0' || ((req.user._id == req.params.userid) && (req.user._id == req.body.user_id)) ) {
+                    //removing _id from req.body as it creates an error on openshift
+                    // as it uses mongo version 2.4 where you can't update on _id
+                    delete req.body._id;
                     var updatedCalc = req.body;
                     //getting the calculator to be updated
                     CalculatorModel.findById(req.params.id, function (err, foundCalculator) {
@@ -215,6 +222,23 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
     * Functions for frontend calculators
     ***********************************/
 
+    //get calculator settings
+    server.get("/api/mycalculator/settings/:calcid", function(req, res)
+    {
+        var calcid = req.params.calcid;
+
+        CalculatorModel.findById(calcid,{brands:0,prisgrupper:0}, function (err, Calculator) {
+            if (err) {
+                res.json({success:false,message:'Something went wrong'});
+                return;
+            } else
+            {
+                res.json({success:true,settings:Calculator});
+
+            }
+        });
+    });
+
     //get a price based on licensplate
     server.get("/api/mycalculator/:calcid/offer/licensplate/:licensplate", function(req, res)
     {
@@ -224,7 +248,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
             .then(function(data){
                 var modelId = data.ModelId;
                 var vehicle = data;
-                CalculatorModel.getOfferByModel(calcid,modelId,function(err,data){
+                CalculatorModel.getOfferByModel24(calcid,modelId,function(err,data){
                     if(err){
                         res.json({success: false, message: 'Something went wrong'});
                     }else{
@@ -248,7 +272,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         var calcid = req.params.calcid;
         var modelId = req.params.modelid;
 
-        CalculatorModel.getOfferByModel(calcid,modelId,function(err,data){
+        CalculatorModel.getOfferByModel24(calcid,modelId,function(err,data){
             if(err){
                 res.json({success: false, message: 'Something went wrong'});
             }else{
@@ -312,4 +336,4 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
         });
     }
 
-}
+};

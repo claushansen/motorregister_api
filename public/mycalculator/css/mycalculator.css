@@ -1,0 +1,23 @@
+#licensplateform  input{
+    min-height: 50px;
+    border-radius: 0px;
+}
+#licensplateform  .input-group-addon{
+    background-color:#337ab7;
+    border-radius: 0px;
+}
+#licensplateform  button{
+    border: none;
+}
+button.offersearch-manual-btn{
+    border-radius: 0px;
+}
+.selected-info,
+.vehicle-info{
+    background-color:#FDFDFD;
+    border : 1px solid #cccccc;
+    padding: 20px;
+}
+.my-description{
+    white-space: pre-wrap;
+}

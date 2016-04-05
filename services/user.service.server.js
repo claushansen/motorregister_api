@@ -157,6 +157,9 @@ module.exports = function(server, UserModel, passport)
     //TODO - check if username exists if it has changed
     server.put('/api/user/:id', function(req, res)
     {
+        //removing _id from req.body as it creates an error on openshift
+        // as it uses mongo version 2.4 where you can't update on _id
+        delete req.body._id;
         if(req.isAuthenticated()) {
             isUserAdmin(req.user.username, function (adminuser) {
                 if (adminuser != '0' || req.user._id == req.params.id) {

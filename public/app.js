@@ -1,4 +1,4 @@
 (function() {
 angular
-    .module('MDRAPI',["ngRoute",'ui.tree','ui.bootstrap','MessageCenterModule'])
+    .module('BILAPI',["ngRoute",'ui.tree','ui.bootstrap','MessageCenterModule'])
 })();

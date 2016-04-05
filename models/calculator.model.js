@@ -1,4 +1,4 @@
-var usermodel =
+
 module.exports = function(mongoose,db) {
 
     var CalculatorSchema = new mongoose.Schema(
@@ -51,7 +51,51 @@ module.exports = function(mongoose,db) {
             ]
         )
         .exec(callback);
-    }
+    };
+
+    /*************************************
+     * Function for mongo 2.4 on openshift
+     ************************************/
+    //static method for getting priceoffer from model ID
+    CalculatorSchema.statics.getOfferByModel24 = function(calcid,modelId, callback){
+
+        this.model('Calculator').aggregate(
+            [
+                //matching calcid
+                { $match : {_id:mongoose.Types.ObjectId(calcid)}},
+                //only projecting the fields we need
+                { $project: {_id:0, brands: '$brands', prisgrupper: '$prisgrupper'} },
+                //unwinding brands
+                { $unwind: "$brands" },
+                //unwinding models
+                { $unwind: "$brands.models" },
+                //finding the model we need
+                { $match: {'brands.models.id':modelId } },
+                //only projecting the fields we need
+                { $project: {prisgruppeId: '$brands.models.prisgruppeId', prisgrupper: '$prisgrupper' } },
+                //unwinding prisgrupper
+                { $unwind: "$prisgrupper" }
+            ]
+            )
+            .exec(function(err,data) {
+                if(err){
+                    callback(err,null);
+                }else{
+                    //we need to run over each pricegroup to get the one that match with the prisguppeId
+                    var pricearr = [];
+                    data.forEach(function(item, index){
+                        if(item.prisgruppeId == item.prisgrupper.id){
+                            //if we find the right one we push it to array
+                            pricearr.push ({price:item.prisgrupper.pris});
+                        }
+                    });
+
+                    callback(null,pricearr);
+                    }
+
+            //callback
+            });
+    };
 
     //static method for getting priceoffer from model ID
     CalculatorSchema.statics.getBrandsList = function(calcid, callback){
@@ -91,9 +135,9 @@ module.exports = function(mongoose,db) {
             ]
             )
             .exec(callback);
-    }
+    };
 
     var CalculatorModel = mongoose.model("Calculator", CalculatorSchema);
     return CalculatorModel;
 
-}
+};
