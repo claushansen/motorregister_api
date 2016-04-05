@@ -1,0 +1,19 @@
+<div ng-show="currentUser" class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar" >
+
+        <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Kontrolpanel</a></li>
+        <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/calculator/new'}">
+            <ul class="nav nav-sub-item">
+                <li ng-class="{'active' : $location.url() == '/calculator/new'}"><a href="#/calculator/new">Ny Prisberegner</a></li>
+            </ul>
+        </li>
+        <li ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profil</a></li>
+        <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+        <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}">
+            <ul class="nav nav-sub-item">
+                <li ng-class="{'active' : $location.url() == '/admin/users'}"><a href="#/admin/users">Brugere</a></li>
+            </ul>
+        </li>
+    </ul>
+    {{currentUser}}
+</div>
