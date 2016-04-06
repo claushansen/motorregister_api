@@ -43,6 +43,10 @@
                     templateUrl:"partials/register/register.view.html",
                     controller: "RegisterController"
                 })
+                .when("/help",{
+                    templateUrl:"partials/help/help.view.html",
+                    controller: "HelpController"
+                })
                 .when("/profile",{
                     templateUrl:"partials/profile/profile.view.html",
                     controller: "ProfileController",
