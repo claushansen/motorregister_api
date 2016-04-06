@@ -17,6 +17,7 @@
         service.updateUser = updateUser;
         service.createUser = createUser;
         service.registerUser = registerUser;
+        service.checkLoggedin = checkLoggedin;
 
         return service;
 
@@ -43,6 +44,9 @@
 
         function SetCredentials(user) {
            $rootScope.currentUser =  user;
+            if(user.roles.indexOf('admin') > -1 ){
+                $rootScope.currentUser.isadmin = true;
+            }
         }
 
         function ClearCredentials() {
@@ -111,6 +115,31 @@
 
             return deferred.promise;
 
+        }
+
+        function checkLoggedin()
+        {
+            var deferred = $q.defer();
+
+            $http.get(appConfig.apiPath+'/api/loggedin').success(function(user)
+            {
+                // User is Authenticated
+                if (user !== '0')
+                {
+                    $rootScope.currentUser = user;
+                    if(user.roles.indexOf('admin') > -1 ){
+                        $rootScope.currentUser.isadmin = true;
+                    }
+                    deferred.resolve();
+                }
+                // User is Not Authenticated
+                else
+                {
+                    deferred.reject();
+                }
+            });
+
+            return deferred.promise;
         }
 
 
