@@ -43,12 +43,9 @@
                     templateUrl:"partials/register/register.view.html",
                     controller: "RegisterController"
                 })
-                .when("/profile",{
-                    templateUrl:"partials/profile/profile.view.html",
-                    controller: "ProfileController",
-                    resolve: {
-                        loggedin: checkLoggedin
-                    }
+                .when("/help",{
+                    templateUrl:"partials/help/help.view.html",
+                    controller: "HelpController"
                 })
                 .when("/admin",{
                     templateUrl:"partials/admin/admin.view.html",

@@ -1,90 +1,95 @@
-<h2>{{heading}}</h2>
-<div class="row">
-    <a class="btn btn-warning btn-large pull-right" href="#/dashboard">Annuller</a>
-    <button class="btn btn-primary btn-large pull-right" ng-disabled="outerForm.$invalid" ng-click="save()">Gem</button>
-</div>
-<div class="row">
-<form name="outerForm" class="tab-form-demo">
-
-    <uib-tabset active="active">
-        <uib-tab index="0" heading="Titel og beskrivelse">
-            <div class="row">
-                <div class="col-md-6">
-                    <ng-form name="step1">
-                        <div class="form-group">
-                            <label>Titel</label>
-                            <input type="text" name="title" class="form-control" required ng-model="calculator.title" uib-tooltip="Skriv en titel på din prisberegner her" ng-minlength="3"/>
-                            <p class="help-block">
-                                <span ng-show="outerForm.step1.title.$invalid && !outerForm.step1.title.$pristine">Dette felt er krævet.</span>
-                                <span ng-show="outerForm.step1.title.$error.minlength">Titlen er for kort(min 3).</span>
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <label>Beskrivelse</label>
-                            <textarea class="form-control" ng-model="calculator.description" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
-                        </div>
-                        <button class="btn btn-success" ng-disabled="outerForm.step1.title.$invalid" ng-click="setActive(1)">Næste</button>
-                    </ng-form>
-                </div>
-            </div>
-        </uib-tab>
-        <uib-tab index="1" heading="Prisgrupper" disable="outerForm.step1.$invalid">
-            <div class="row">
-               <div class="col-sm-6">
-                    <ng-form name="step2">
-                        <div ui-tree id="tree-root2">
-                            <ol ui-tree-nodes ng-model="calculator.prisgrupper">
-                                <li ng-repeat="node in calculator.prisgrupper" ui-tree-node ng-include="'partials/calculator/tmpl/prisgruppe_renderer.html'"></li>
-                            </ol>
-                        </div>
-                    </ng-form>
-                    <button class="btn btn-success" ng-disabled="outerForm.step2.$invalid" ng-click="setActive(2); getBrands()">Næste</button>
-                </div>
-
-                <div class="col-sm-6">
-                    <div class="info">
-                        {{info}}
-                    </div>
-                    <pre class="code">{{ calculator | json }}</pre>
-                </div>
-            </div>
-        </uib-tab>
-        <uib-tab index="2" heading="mapping" disable="outerForm.step2.$invalid">
-
-
-<div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
-    <strong>Henter Data!</strong> vent venligst.
-</div>
-<section ng-show="calculator.brands">
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>Tildel prisgrupper til køretøjer</h3>
+<div class="container-fluid">
+    <div class="sidebar" ng-include="'partials/sidebar/sidemenu.html'"></div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <mc-messages></mc-messages>
+        <h2>{{heading}}</h2>
+        <div class="row">
+            <a class="btn btn-warning btn-large pull-right" href="#/dashboard">Annuller</a>
+            <button class="btn btn-primary btn-large pull-right" ng-disabled="outerForm.$invalid" ng-click="save()">Gem</button>
         </div>
-    </div>
+        <div class="row">
+            <form name="outerForm" class="tab-form-demo">
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div ui-tree id="tree-root">
-                <ol ui-tree-nodes ng-model="calculator.brands">
-                    <li id="{{node.id}}" ng-repeat="node in calculator.brands" collapsed="true" data-collapsed="true"  ui-tree-node ng-include="'partials/calculator/tmpl/brands_renderer.html'"></li>
-                </ol>
-            </div>
+                <uib-tabset active="active">
+                    <uib-tab index="0" heading="Titel og beskrivelse">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ng-form name="step1">
+                                    <div class="form-group">
+                                        <label>Titel</label>
+                                        <input type="text" name="title" class="form-control" required ng-model="calculator.title" uib-tooltip="Skriv en titel på din prisberegner her" ng-minlength="3"/>
+                                        <p class="help-block">
+                                            <span ng-show="outerForm.step1.title.$invalid && !outerForm.step1.title.$pristine">Dette felt er krævet.</span>
+                                            <span ng-show="outerForm.step1.title.$error.minlength">Titlen er for kort(min 3).</span>
+                                        </p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Beskrivelse</label>
+                                        <textarea class="form-control" ng-model="calculator.description" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
+                                    </div>
+                                    <button class="btn btn-success" ng-disabled="outerForm.step1.title.$invalid" ng-click="setActive(1)">Næste</button>
+                                </ng-form>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Prisgrupper" disable="outerForm.step1.$invalid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ng-form name="step2">
+                                    <div ui-tree id="tree-root2">
+                                        <ol ui-tree-nodes ng-model="calculator.prisgrupper">
+                                            <li ng-repeat="node in calculator.prisgrupper" ui-tree-node ng-include="'partials/calculator/tmpl/prisgruppe_renderer.html'"></li>
+                                        </ol>
+                                    </div>
+                                </ng-form>
+                                <button class="btn btn-success" ng-disabled="outerForm.step2.$invalid" ng-click="setActive(2); getBrands()">Næste</button>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="info">
+                                    {{info}}
+                                </div>
+                                <pre class="code">{{ calculator | json }}</pre>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="2" heading="mapping" disable="outerForm.step2.$invalid">
+
+
+                        <div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
+                            <strong>Henter Data!</strong> vent venligst.
+                        </div>
+                        <section ng-show="calculator.brands">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3>Tildel prisgrupper til køretøjer</h3>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div ui-tree id="tree-root">
+                                        <ol ui-tree-nodes ng-model="calculator.brands">
+                                            <li id="{{node.id}}" ng-repeat="node in calculator.brands" collapsed="true" data-collapsed="true"  ui-tree-node ng-include="'partials/calculator/tmpl/brands_renderer.html'"></li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div id="info_box" style="margin-top:{{clickedElTopPos}}">
+                                        <div class="infobox-content">
+                                            <h3>Hjælp til mapping</h3>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+                    </uib-tab>
+
+                </uib-tabset>
+            </form>
         </div>
-
-        <div class="col-sm-6">
-            <div id="info_box" style="margin-top:{{clickedElTopPos}}">
-                <div class="infobox-content">
-                <h3>Hjælp til mapping</h3>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-        </uib-tab>
-
-    </uib-tabset>
-</form>
-</div>
-{{outerForm}}
+        {{outerForm}}
+    </div></div>

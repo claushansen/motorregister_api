@@ -1,36 +1,42 @@
-<h2>Brugere</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequatur debitis
-    ducimus eius eveniet explicabo hic impedit minus nam neque, nesciunt obcaecati optio quae quis veniam vitae
-    voluptates. Incidunt, labore?</p>
+<div class="container-fluid">
+    <div class="sidebar" ng-include="'partials/sidebar/sidemenu.html'"></div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <mc-messages></mc-messages>
+        <h2>Brugere</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequatur debitis
+            ducimus eius eveniet explicabo hic impedit minus nam neque, nesciunt obcaecati optio quae quis veniam vitae
+            voluptates. Incidunt, labore?</p>
 
-<div class="row">
-    <table class="table table-striped">
-        <thead>
-            <th>Navn</th>
-            <th>Brugernavn</th>
-            <th>Email</th>
-            <th>Grupper</th>
-            <th>
-                <a class="pull-right btn btn-primary btn-xs" ng-click="newUser({})" style="margin-right: 8px;">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-            </th>
-        </thead>
-        <tbody>
-            <tr ng-repeat="user in users">
-                <td>{{user.firstName}} {{user.lastName}}</td>
-                <td>{{user.username}}</td>
-                <td>{{user.email}}</td>
-                <td><span ng-repeat="role in user.roles">{{role}} </span></td>
-                <td>
-                    <a class="pull-right btn btn-danger btn-xs" ng-click="removeUser(user)">
-                    <span class="glyphicon glyphicon-remove"></span>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <th>Navn</th>
+                <th>Brugernavn</th>
+                <th>Email</th>
+                <th>Grupper</th>
+                <th>
+                    <a class="pull-right btn btn-primary btn-xs" ng-click="newUser({})" style="margin-right: 8px;">
+                        <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <a class="pull-right btn btn-primary btn-xs" ng-click="edit(user)">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.firstName}} {{user.lastName}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td><span ng-repeat="role in user.roles">{{role}} </span></td>
+                    <td>
+                        <a class="pull-right btn btn-danger btn-xs" ng-click="removeUser(user)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a class="pull-right btn btn-primary btn-xs" ng-click="edit(user)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
