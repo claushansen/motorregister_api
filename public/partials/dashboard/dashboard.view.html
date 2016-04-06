@@ -1,59 +1,60 @@
 <div class="container-fluid">
     <div class="sidebar" ng-include="'partials/sidebar/sidemenu.html'"></div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-<h2>Kontrolpanel</h2>
-<h3>mine prisberegnere</h3>
+        <mc-messages></mc-messages>
+        <h2>Kontrolpanel</h2>
+        <h3>mine prisberegnere</h3>
 
-    <div ng-show="calculators && calculators.length < 1" class="row dashboard-call-to-action-box">
-        <div class="well well-lg">
-            <div>
-                <h3>Du har ikke oprettet nogen prisberegnere endnu</h3>
-                <a href="#/calculator/new" class="btn btn-success btn-large">Opret Prisberegner</a>
+        <div ng-show="calculators && calculators.length < 1" class="row dashboard-call-to-action-box">
+            <div class="well well-lg">
+                <div>
+                    <h3>Du har ikke oprettet nogen prisberegnere endnu</h3>
+                    <a href="#/calculator/new" class="btn btn-success btn-large">Opret Prisberegner</a>
+                </div>
             </div>
         </div>
-    </div>
 
-<div ng-show="calculators && calculators.length > 0" class="row">
-    <table class="table table-striped">
-        <thead>
-        <th>Titel</th>
-        <th>Muligheder</th>
-        <th>Oprettet</th>
-        <th>
-            <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-        </th>
-        </thead>
-        <tbody>
-        <tr ng-repeat="calculator in calculators">
-            <td>{{calculator.title}}</td>
-            <td class="small">
-                <strong>Link:</strong>
-                <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
-                <br>
-                <strong>Embed:</strong>
-                <a href="#" ng-click="openEmbedModal()" >Indsæt på hjemmeside</a>
-                <br>
-            </td>
-            <td>{{calculator.dateCreated | date}}</td>
+        <div ng-show="calculators && calculators.length > 0" class="row">
+            <table class="table table-striped">
+                <thead>
+                <th>Titel</th>
+                <th>Muligheder</th>
+                <th>Oprettet</th>
+                <th>
+                    <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="calculator in calculators">
+                    <td>{{calculator.title}}</td>
+                    <td class="small">
+                        <strong>Link:</strong>
+                        <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
+                        <br>
+                        <strong>Embed:</strong>
+                        <a href="#" ng-click="openEmbedModal()" >Indsæt på hjemmeside</a>
+                        <br>
+                    </td>
+                    <td>{{calculator.dateCreated | date}}</td>
 
-            <td>
-                <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
-                <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
-                <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
-                    <span class="glyphicon glyphicon-duplicate"></span>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-{{copytest}}
-{{calculators}}
+                    <td>
+                        <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
+                            <span class="glyphicon glyphicon-duplicate"></span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{copytest}}
+        {{calculators}}
     </div>
 </div>
