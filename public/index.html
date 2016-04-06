@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>BILAPI - prisberegnere for alle</title>
+    <title>Bilapi.dk - prisberegnere for alle</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -48,20 +48,29 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Kontrolpanel</a></li>
-                <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
-                <li ng-show="currentUser.isadmin" ng-class="{'active' : $location.url() == '/admin'}">
-                    <ul class="nav nav-sub-item">
+                <!-- admin menu-->
+                <li ng-show="currentUser.isadmin" class="dropdown">
+                    <a href="javascript(return false);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin Dashboard</a></li>
+                        <li role="separator" class="divider"></li>
                         <li ng-class="{'active' : $location.url() == '/admin/users'}"><a href="#/admin/users">Brugere</a></li>
                     </ul>
                 </li>
-                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/calculator/new'}">
-                    <ul class="nav nav-sub-item">
+                <!--dashboard-->
+                <li ng-show="currentUser" class="dropdown">
+                    <a href="javascript(return false);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kontrolpanel <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Mit Kontrolpanel</a></li>
+                        <li role="separator" class="divider"></li>
                         <li ng-class="{'active' : $location.url() == '/calculator/new'}"><a href="#/calculator/new">Ny Prisberegner</a></li>
                     </ul>
                 </li>
+                <!--profile-->
                 <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profil</a></li>
-                <li><a href="#">Hjælp</a></li>
+                <!--help-->
+                <li ng-class="{'active' : $location.url() == '/help'}"><a href="#/help">Hjælp</a></li>
+                <!--login/logout-->
                 <li ng-show="!currentUser" ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Log ind</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/login'}"><a ng-click="Logout()" href="#">Log ud</a></li>
             </ul>
@@ -70,17 +79,13 @@
     </div>
 </nav>
 
+<div class="main-wrapper" >
 
+    <mc-messages></mc-messages>
 
+    <div class="ng-view"></div>
 
-
-        <div class="" >
-
-            <mc-messages></mc-messages>
-
-            <div class="ng-view"></div>
-
-        </div>
+</div>
 
 
 <!-- Bootstrap core JavaScript
