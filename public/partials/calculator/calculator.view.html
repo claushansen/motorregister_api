@@ -84,15 +84,15 @@
                                     <div class="form-group">
                                         <!--style radio select-->
                                         <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.light" required>
+                                            <input name="style" ng-click="ensureStyleSwitch('light')" type="radio" ng-model="calculator.settings.style" ng-value="styles.light" required>
                                             <img src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.dark" required>
+                                            <input name="style" ng-click="ensureStyleSwitch('dark')" type="radio" ng-model="calculator.settings.style" ng-value="styles.dark" required>
                                             <img src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.grey" required>
+                                            <input name="style" ng-click="ensureStyleSwitch('grey')" type="radio" ng-model="calculator.settings.style" ng-value="styles.grey" required>
                                             <img src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>

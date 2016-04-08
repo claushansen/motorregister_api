@@ -165,9 +165,17 @@
                 textColor:'#333333',
                 buttonColor:'#8c8c8c',
                 buttonTextColor:'#ffffff'
+            },
+            custom:{
+                type:'custom'
             }
 
-        }
+        };
+        $scope.ensureStyleSwitch = function(style){
+            if($scope.calculator.settings.style.type == 'custom'){
+                $scope.calculator.settings.style.type = style;
+            }
+        };
 
 
     }
