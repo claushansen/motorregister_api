@@ -5,6 +5,7 @@ module.exports = function(mongoose,db) {
         {
             title: {type: String, required: true},
             description: {type: String},
+            settings: {type: mongoose.Schema.Types.Mixed, required: true},
             user_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'user'},

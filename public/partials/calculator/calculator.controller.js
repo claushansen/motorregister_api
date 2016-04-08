@@ -29,12 +29,13 @@
             //Assigning save function to Create new
             $scope.save = $scope.save = function(){
                 createCalculator();
-            }
+            };
             //Creating the first prisgruppe on calculator
             $scope.calculator.prisgrupper = [{id:'id' + (new Date()).getTime(),name:'Prisgruppe 1'}];
             //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
         }
+
 
         $scope.getBrands = function(){
             //TODO - create service for brands
@@ -47,7 +48,7 @@
                         }
                     );
             }
-        }
+        };
 
          $scope.updateModels = function(models,prisgruppeId){
              console.log('UpdateModels called');
@@ -56,7 +57,7 @@
             angular.forEach(models, function(model,key){
                 model.prisgruppeId = prisgruppeId;
             });
-        }
+        };
 
         //Functions for ui-tree
 
@@ -83,7 +84,7 @@
             else{
                 scope.toggle();
             }
-        }
+        };
 
         $scope.remove = function (scope) {
             scope.remove();
@@ -117,7 +118,7 @@
 
         $scope.setActive = function(activetab){
             $scope.active = activetab;
-        }
+        };
 
         //function for updating existing calculator in database
         function updateCalculator(){
@@ -140,6 +141,32 @@
                 },function(result){
                     messageCenterService.add('danger', result.message)
                 });
+        }
+
+        //style templates
+        $scope.styles = {
+            light:{
+                type:'light',
+                backgroundColor:'#ffffff',
+                textColor:'#333333',
+                buttonColor:'#337ab7',
+                buttonTextColor:'#ffffff'
+            },
+            dark:{
+                type:'dark',
+                backgroundColor:'#000000',
+                textColor:'#f2f2f2',
+                buttonColor:'#bd2c2c',
+                buttonTextColor:'#ffffff'
+            },
+            grey:{
+                type:'grey',
+                backgroundColor:'#f5f5f5',
+                textColor:'#333333',
+                buttonColor:'#8c8c8c',
+                buttonTextColor:'#ffffff'
+            }
+
         }
 
 
