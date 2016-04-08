@@ -179,9 +179,16 @@ body {
 /*
 * style thumbs
 */
+
+.stylethumb-radio{
+  visibility:hidden;
+}
 .stylethumb{
   width: 100px;
   height: 100px;
   border: 1px solid #cccccc;
-
+  cursor: pointer;
+}
+.stylethumb.active{
+  border: 3px solid #ff0000;
 }

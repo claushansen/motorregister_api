@@ -84,20 +84,20 @@
                                     <div class="form-group">
                                         <!--style radio select-->
                                         <label>
-                                            <input name="style" ng-click="ensureStyleSwitch('light')" type="radio" ng-model="calculator.settings.style" ng-value="styles.light" required>
-                                            <img src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
+                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('light')" required>
+                                            <img ng-class="{'active' : calculator.settings.style.type == 'light'}" src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>
-                                            <input name="style" ng-click="ensureStyleSwitch('dark')" type="radio" ng-model="calculator.settings.style" ng-value="styles.dark" required>
-                                            <img src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
+                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style" ng-click="setStyles('dark')" required>
+                                            <img ng-class="{'active' : calculator.settings.style.type == 'dark'}" src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>
-                                            <input name="style" ng-click="ensureStyleSwitch('grey')" type="radio" ng-model="calculator.settings.style" ng-value="styles.grey" required>
-                                            <img src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
+                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('grey')" required>
+                                            <img ng-class="{'active' : calculator.settings.style.type == 'grey'}" src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
                                         </label>
                                         <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style.type" value="custom" required>
-                                            <img src="images/stylethumbs/style-custom.png" class="stylethumb" uib-popover="Brugerdefineret"  popover-trigger="mouseenter" >
+                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('custom')" required>
+                                            <img ng-class="{'active' : calculator.settings.style.type == 'custom'}" src="images/stylethumbs/style-custom.png" class="stylethumb" uib-popover="Brugerdefineret"  popover-trigger="mouseenter" >
                                         </label>
                                     </div>
                                     <!--custom style settings-->

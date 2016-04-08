@@ -167,14 +167,18 @@
                 buttonTextColor:'#ffffff'
             },
             custom:{
-                type:'custom'
+                type:'custom',
+                backgroundColor:'',
+                textColor:'',
+                buttonColor:'',
+                buttonTextColor:''
             }
-
         };
-        $scope.ensureStyleSwitch = function(style){
-            if($scope.calculator.settings.style.type == 'custom'){
-                $scope.calculator.settings.style.type = style;
-            }
+
+        $scope.setStyles = function(style){
+               //console.log($scope.styles);
+                $scope.calculator.settings.style = $scope.styles[style];
+
         };
 
 
