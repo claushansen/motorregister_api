@@ -8,10 +8,14 @@
             <button class="btn btn-primary btn-large pull-right" ng-disabled="outerForm.$invalid" ng-click="save()">Gem</button>
         </div>
         <div class="row">
-            <form name="outerForm" class="tab-form-demo">
-
+            <form name="outerForm" class="tab-form" novalidate>
+                <!-- Tab 1 Title and description -->
                 <uib-tabset active="active">
                     <uib-tab index="0" heading="Titel og beskrivelse">
+                        <div class="row">
+                            <h2>Titel og beskrivelse</h2>
+                            <hr>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <ng-form name="step1">
@@ -25,37 +29,264 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Beskrivelse</label>
-                                        <textarea class="form-control" ng-model="calculator.description" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
+                                        <textarea class="form-control" name="description" ng-model="calculator.description" rows="3" uib-tooltip="Skriv en beskrivelse af din prisberegner her"></textarea>
                                     </div>
                                     <button class="btn btn-success" ng-disabled="outerForm.step1.title.$invalid" ng-click="setActive(1)">Næste</button>
                                 </ng-form>
                             </div>
+                            <div class="col-sm-6">
+                                <div id="info_box">
+                                    <div class="infobox-content">
+                                        <uib-progressbar animate="true" value="25" type="{{outerForm.step1.$invalid ? 'danger': 'success'}}"><b>25%</b></uib-progressbar>
+                                        <h4>Info til denne del</h4>
+                                        <p>Start med at skrive en titel og en beskrivelse til din prisberegner. Disse vises som overskrift og beskrivelse på din prisberegner.</p>
+                                        <!--example calculator-->
+                                        <strong>Eksempelvisning</strong><br>
+                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
+                                            <h2>{{calculator.title}}</h2>
+                                            <p class="my-description">{{calculator.description}}</p>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="licensplate">Registreringsnummer</label>
+                                                    <div class="input-group ">
+                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
+                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
+                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
+                                                                <span class="glyphicon glyphicon-search"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="text-center">
+                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
+                                            </div>
+                                        </div>
+                                        <!-- /example calculator-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </uib-tab>
-                    <uib-tab index="1" heading="Prisgrupper" disable="outerForm.step1.$invalid">
+                    <!-- Tab 2 settings -->
+
+                    <uib-tab index="1" heading="Indstillinger" disable="outerForm.step1.$invalid">
+                        <div class="row">
+                            <h2>Indstillinger</h2>
+                            <hr>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <ng-form name="step2">
+                                    <h3>Udseende</h3>
+                                    <p class="lead">Vælg udseende på din prisberegner, så den bedst kan implementeres i din hjemmeside.</p>
+                                    <div class="form-group">
+                                        <!--style radio select-->
+                                        <label>
+                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.light" required>
+                                            <img src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
+                                        </label>
+                                        <label>
+                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.dark" required>
+                                            <img src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
+                                        </label>
+                                        <label>
+                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.grey" required>
+                                            <img src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
+                                        </label>
+                                        <label>
+                                            <input name="style" type="radio" ng-model="calculator.settings.style.type" value="custom" required>
+                                            <img src="images/stylethumbs/style-custom.png" class="stylethumb" uib-popover="Brugerdefineret"  popover-trigger="mouseenter" >
+                                        </label>
+                                    </div>
+                                    <!--custom style settings-->
+                                    <div ng-if="calculator.settings.style.type =='custom'" class="well">
+                                        <p>Definer selv udseendet af Prisberegneren</p>
+                                        <!--background-color-->
+                                        <div class="form-group" ng-class="{ 'has-error': outerForm.step2.custom_background_color.$invalid && !outerForm.step2.custom_background_color.$pristine }">
+                                            <label>Baggrundsfarve</label>
+                                            <input colorpicker="hex" type="text" name="custom_background_color" class="form-control" ng-model="calculator.settings.style.backgroundColor" required />
+                                            <p class="help-block">
+                                                <span ng-show="outerForm.step2.custom_background_color.$invalid && !outerForm.step2.custom_background_color.$pristine">Dette felt er krævet.</span>
+                                            </p>
+                                        </div>
+                                        <!--color-->
+                                        <div class="form-group" ng-class="{ 'has-error': outerForm.step2.custom_text_color.$invalid && !outerForm.step2.custom_text_color.$pristine }">
+                                            <label>Farve på tekst</label>
+                                            <input colorpicker="hex" type="text" name="custom_text_color" class="form-control" ng-model="calculator.settings.style.textColor" required />
+                                            <p class="help-block">
+                                                <span ng-show="outerForm.step2.custom_text_color.$invalid && !outerForm.step2.custom_text_color.$pristine">Dette felt er krævet.</span>
+                                            </p>
+                                        </div>
+                                        <!--button color-->
+                                        <div class="form-group" ng-class="{ 'has-error': outerForm.step2.custom_button_color.$invalid && !outerForm.step2.custom_button_color.$pristine }">
+                                            <label>Farve på knapper</label>
+                                            <input colorpicker="hex" type="text" name="custom_button_color" class="form-control" ng-model="calculator.settings.style.buttonColor" required />
+                                            <p class="help-block">
+                                                <span ng-show="outerForm.step2.custom_button_color.$invalid && !outerForm.step2.custom_button_color.$pristine">Dette felt er krævet.</span>
+                                            </p>
+                                        </div>
+                                        <!--button text color-->
+                                        <div class="form-group" ng-class="{ 'has-error': outerForm.step2.custom_button_text_color.$invalid && !outerForm.step2.custom_button_text_color.$pristine }">
+                                            <label>Farve på knap tekst</label>
+                                            <input colorpicker="hex" type="text" name="custom_button_text_color" class="form-control" ng-model="calculator.settings.style.buttonTextColor" required />
+                                            <p class="help-block">
+                                                <span ng-show="outerForm.step2.custom_button_text_color.$invalid && !outerForm.step2.custom_button_text_color.$pristine">Dette felt er krævet.</span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                        <hr>
+
+                                    <h3>Call To Action</h3>
+                                    <p class="lead">Vælg hvad din kunde kan gøre efter han er blevet præsenteret for en pris for din ydelse.</p>
+                                    <div class="form-group">
+                                        <!--contact radio select-->
+                                        <label>
+                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="contact" required>
+                                            Vis Kontaktformular
+                                        </label><br/>
+                                        <div ng-if="calculator.settings.calltoaction.type =='contact'" class="well">
+                                            <p>Kunden vil blive præsenteret for en kontaktformular som han kan udfylde med sine kontaktinformationer.</p>
+                                            <p>Kundens informationer vil sammen med informationen om køretøjet samt den beregnede pris, blive sendt til den indtastede email adresse.</p>
+                                            <div class="form-group" ng-class="{ 'has-error': outerForm.step2.calltoactionemail.$invalid && !outerForm.step2.calltoactionemail.$pristine }">
+                                                <label>Email</label>
+                                                <input type="email" name="calltoactionemail" placeholder="min@mail.dk" class="form-control" ng-model="calculator.settings.calltoaction.email" required />
+                                                <p class="help-block">
+                                                    <span ng-show="outerForm.step2.calltoactionemail.$invalid && !outerForm.step2.calltoactionemail.$pristine">Dette felt er krævet.</span>
+                                                    <span ng-show="outerForm.step2.calltoactionemail.$error.email">Ikke en korrekt email.</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!--redirect radio select-->
+
+                                        <label>
+                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="redirect" required>
+                                            Gå til URL
+                                        </label><br/>
+                                        <div ng-if="calculator.settings.calltoaction.type =='redirect'" class="well">
+                                            <p>Kunden vil blive præsenteret for en knap med en tekst som du definerer.</p>
+                                            <p>Når kunden klikker på knappen vil han blive videresendt til den URL som du indtaster her.</p>
+                                            <p>Såfremt du vælger "Send bilinfo i URL", vil disse oplysninger blive tilføjet til url-adressen i form af GET parametre.
+                                            F.Eks.:(http://www.miteksempel.dk?licensplate=hh21321&price=999&brand=Opel&model=Corsa)</p>
+                                            <div class="form-group" ng-class="{ 'has-error': outerForm.step2.calltoactionurl.$invalid && !outerForm.step2.calltoactionurl.$pristine }">
+                                                <label>URL</label>
+                                                <input type="url" name="calltoactionurl" placeholder="http://www.minside.dk/produkter" class="form-control" ng-model="calculator.settings.calltoaction.redirecturl" required />
+                                                <p class="help-block">
+                                                    <span ng-show="outerForm.step2.calltoactionurl.$invalid && !outerForm.step2.calltoactionurl.$pristine">Dette felt er krævet.</span>
+                                                    <span ng-show="outerForm.step2.calltoactionurl.$error.url">Ikke en korrekt web-adresse.</span>
+                                                </p>
+                                            </div>
+                                            <div class="form-group" ng-class="{ 'has-error': outerForm.step2.cta_button_text.$invalid && !outerForm.step2.cta_button_text.$pristine }">
+                                                <label>Knap Tekst</label>
+                                                <input type="text" name="cta_button_text" placeholder="Se produkter" class="form-control" ng-minlength="2" ng-model="calculator.settings.calltoaction.redirectButtonText" required />
+                                                <p class="help-block">
+                                                    <span ng-show="outerForm.step2.cta_button_text.$invalid && !outerForm.step2.cta_button_text.$pristine">Dette felt er krævet.</span>
+                                                    <span ng-show="outerForm.step2.cta_button_text.$error.minlength">Knapteksten er for kort(min 2).</span>
+                                                </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input name="sendparams" ng-model="calculator.settings.calltoaction.sendParams" type="checkbox"> Send bilinfo i URL
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--none radio select-->
+
+                                        <label>
+                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="none" required>
+                                            Intet
+                                        </label><br/>
+
+                                    </div>
+
+
+                                </ng-form>
+                                <button
+                                        class="btn btn-success"
+                                        ng-disabled="outerForm.step2.$invalid"
+                                        ng-click="setActive(2);getProgress()">Næste</button>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div id="info_box">
+                                    <div class="infobox-content">
+                                        <uib-progressbar animate="true" value="50" type="{{outerForm.step2.$invalid ? 'danger': 'success'}}"><b>50%</b></uib-progressbar>
+                                        <h4>Info til denne del</h4>
+                                        <strong>Udseende</strong><br>
+                                        <p>Vælg udseende på din prisberegner her, så stilen passer til din hjemmeside.
+                                            Du kan både vælge efter en skabelon eller du kan selv definere farverne på din prisberegner ved at vælge "brugerdefineret".</p>
+                                        <strong>Call To Action</strong><br>
+                                        <p>Her kan du vælge hvilke muligheder din kunde skal have når de har fået præsenteret en pris for din ydelse.</p>
+                                        <p>Du kan enten lade kunden kontakte dig via en kontaktformular, som vises under den beregnede pris. Eller du kan videresende dem direkte til en URL med dine produkter.</p>
+                                        <!--example calculator-->
+                                        <strong>Eksempelvisning</strong><br>
+                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
+                                            <h2>{{calculator.title}}</h2>
+                                            <p class="my-description">{{calculator.description}}</p>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="licensplate">Registreringsnummer</label>
+                                                    <div class="input-group ">
+                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
+                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
+                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
+                                                            <span class="glyphicon glyphicon-search"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="text-center">
+                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
+                                            </div>
+                                        </div>
+                                        <!-- /example calculator-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+
+                    <!-- Tab 3 Price Groups -->
+                    <uib-tab index="2" heading="Prisgrupper" disable="outerForm.step2.$invalid">
+                        <div class="row">
+                            <h2>Prisgrupper</h2>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ng-form name="step3">
                                     <div ui-tree id="tree-root2">
                                         <ol ui-tree-nodes ng-model="calculator.prisgrupper">
                                             <li ng-repeat="node in calculator.prisgrupper" ui-tree-node ng-include="'partials/calculator/tmpl/prisgruppe_renderer.html'"></li>
                                         </ol>
                                     </div>
                                 </ng-form>
-                                <button class="btn btn-success" ng-disabled="outerForm.step2.$invalid" ng-click="setActive(2); getBrands()">Næste</button>
+                                <button class="btn btn-success" ng-disabled="outerForm.step3.$invalid" ng-click="setActive(3); getBrands()">Næste</button>
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="info">
-                                    {{info}}
+                                <div id="info_box">
+                                    <div class="infobox-content">
+                                        <uib-progressbar animate="true" value="75" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>75%</b></uib-progressbar>
+                                        <h4>Info til denne del</h4>
+                                        <strong>Udseende</strong><br>
+                                        <p>Vælg udseende på din prisberegner her, så stilen passer til din hjemmeside.
+                                            Du kan både vælge efter en skabelon eller du kan selv definere farverne på din prisberegner ved at vælge "brugerdefineret".</p>
+                                    </div>
                                 </div>
-                                <pre class="code">{{ calculator | json }}</pre>
                             </div>
                         </div>
                     </uib-tab>
-                    <uib-tab index="2" heading="mapping" disable="outerForm.step2.$invalid">
 
-
+                    <!-- Tab 3 Models/pricegroups mapping -->
+                    <uib-tab index="3" heading="mapping" disable="outerForm.step3.$invalid" ng-click="getBrands()">
                         <div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
                             <strong>Henter Data!</strong> vent venligst.
                         </div>
@@ -91,5 +322,5 @@
                 </uib-tabset>
             </form>
         </div>
-        {{outerForm}}
+
     </div></div>
