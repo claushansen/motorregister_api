@@ -24,6 +24,8 @@
         else{
             //creating a new empty calculator object
             $scope.calculator = {};
+            //creating a new empty calculator.settings object
+            $scope.calculator.settings = {};
             //Setting userID on calculator
             $scope.calculator.user_id = $rootScope.currentUser._id;
             //Assigning save function to Create new
@@ -32,6 +34,14 @@
             };
             //Creating the first prisgruppe on calculator
             $scope.calculator.prisgrupper = [{id:'id' + (new Date()).getTime(),name:'Prisgruppe 1'}];
+            //setting default style
+            $scope.calculator.settings.style = {
+                type:'light',
+                backgroundColor:'#ffffff',
+                textColor:'#333333',
+                buttonColor:'#337ab7',
+                buttonTextColor:'#ffffff'
+            };
             //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
         }
@@ -168,10 +178,10 @@
             },
             custom:{
                 type:'custom',
-                backgroundColor:'',
-                textColor:'',
-                buttonColor:'',
-                buttonTextColor:''
+                backgroundColor:'#ffffff',
+                textColor:'#000000',
+                buttonColor:'#ffffff',
+                buttonTextColor:'#000000'
             }
         };
 

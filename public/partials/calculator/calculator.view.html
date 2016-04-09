@@ -41,28 +41,7 @@
                                         <h4>Info til denne del</h4>
                                         <p>Start med at skrive en titel og en beskrivelse til din prisberegner. Disse vises som overskrift og beskrivelse på din prisberegner.</p>
                                         <!--example calculator-->
-                                        <strong>Eksempelvisning</strong><br>
-                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
-                                            <h2>{{calculator.title}}</h2>
-                                            <p class="my-description">{{calculator.description}}</p>
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="licensplate">Registreringsnummer</label>
-                                                    <div class="input-group ">
-                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
-                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
-                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
-                                                                <span class="glyphicon glyphicon-search"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="text-center">
-                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
-                                            </div>
-                                        </div>
+                                        <example-calculator></example-calculator>
                                         <!-- /example calculator-->
                                     </div>
                                 </div>
@@ -81,24 +60,38 @@
                                 <ng-form name="step2">
                                     <h3>Udseende</h3>
                                     <p class="lead">Vælg udseende på din prisberegner, så den bedst kan implementeres i din hjemmeside.</p>
-                                    <div class="form-group">
-                                        <!--style radio select-->
-                                        <label>
-                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('light')" required>
-                                            <img ng-class="{'active' : calculator.settings.style.type == 'light'}" src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style" ng-click="setStyles('dark')" required>
-                                            <img ng-class="{'active' : calculator.settings.style.type == 'dark'}" src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('grey')" required>
-                                            <img ng-class="{'active' : calculator.settings.style.type == 'grey'}" src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input class="stylethumb-radio" name="style" type="radio" ng-model="calculator.settings.style"  ng-click="setStyles('custom')" required>
-                                            <img ng-class="{'active' : calculator.settings.style.type == 'custom'}" src="images/stylethumbs/style-custom.png" class="stylethumb" uib-popover="Brugerdefineret"  popover-trigger="mouseenter" >
-                                        </label>
+                                    <!--stylethumbs-->
+                                    <div class="stylethumb-wrapper">
+                                        <img
+                                            ng-click="setStyles('light')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'light'}"
+                                            src="images/stylethumbs/style-light.png"
+                                            class="stylethumb"
+                                            uib-popover="Hvid baggrund, Sort tekst og blå knapper"
+                                            popover-trigger="mouseenter" >
+                                        <img
+                                            ng-click="setStyles('dark')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'dark'}"
+                                            src="images/stylethumbs/style-dark.png"
+                                            class="stylethumb"
+                                            uib-popover="Sort baggrund, hvid tekst og røde knapper"
+                                            popover-trigger="mouseenter" >
+                                        <img
+                                            ng-click="setStyles('grey')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'grey'}"
+                                            src="images/stylethumbs/style-grey.png"
+                                            class="stylethumb"
+                                            uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"
+                                            popover-trigger="mouseenter" >
+
+                                        <img
+                                            ng-click="setStyles('custom')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'custom'}"
+                                            src="images/stylethumbs/style-custom.png"
+                                            class="stylethumb"
+                                            uib-popover="Brugerdefineret"
+                                            popover-trigger="mouseenter" >
+
                                     </div>
                                     <!--custom style settings-->
                                     <div ng-if="calculator.settings.style.type =='custom'" class="well">
@@ -224,28 +217,7 @@
                                         <p>Her kan du vælge hvilke muligheder din kunde skal have når de har fået præsenteret en pris for din ydelse.</p>
                                         <p>Du kan enten lade kunden kontakte dig via en kontaktformular, som vises under den beregnede pris. Eller du kan videresende dem direkte til en URL med dine produkter.</p>
                                         <!--example calculator-->
-                                        <strong>Eksempelvisning</strong><br>
-                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
-                                            <h2>{{calculator.title}}</h2>
-                                            <p class="my-description">{{calculator.description}}</p>
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="licensplate">Registreringsnummer</label>
-                                                    <div class="input-group ">
-                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
-                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
-                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
-                                                            <span class="glyphicon glyphicon-search"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="text-center">
-                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
-                                            </div>
-                                        </div>
+                                        <example-calculator></example-calculator>
                                         <!-- /example calculator-->
                                     </div>
                                 </div>

@@ -180,14 +180,15 @@ body {
 * style thumbs
 */
 
-.stylethumb-radio{
-  visibility:hidden;
+.stylethumb-wrapper{
+  margin:20px 0px;
 }
 .stylethumb{
   width: 100px;
   height: 100px;
   border: 1px solid #cccccc;
   cursor: pointer;
+  margin: 5px;
 }
 .stylethumb.active{
   border: 3px solid #ff0000;
