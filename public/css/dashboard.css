@@ -122,13 +122,13 @@ body {
 * infobox
 */
 
-#info_box {
+.info_box {
   position: relative;
   background: #f8faff;
   border: 1px solid #dae2ea;
   min-height: 200px;
 }
-#info_box:after, #info_box:before {
+.info_box:after, .info_box:before {
   right: 100%;
   top: 50%;
   border: solid transparent;
@@ -138,13 +138,13 @@ body {
   position: absolute;
   pointer-events: none;
 }
-#info_box:after {
+.info_box:after {
   border-color: rgba(248, 250, 255, 0);
   border-right-color: #f8faff;
   border-width: 20px;
   margin-top: -20px;
 }
-#info_box:before {
+.info_box:before {
   border-color: rgba(218, 226, 234, 0);
   border-right-color: #dae2ea;
   border-width: 21px;
@@ -156,24 +156,24 @@ body {
 /*
 * infobox example calculator
 */
-#info_box .exampleSearch{
+.info_box .exampleSearch{
   background-color: #ffffff;
   border: 1px solid #dae2ea;
   padding: 10px;
   min-height: 300px;
 }
-#info_box  input{
+.info_box  input{
   min-height: 50px;
   border-radius: 0px;
 }
-#info_box  .input-group-addon{
+.info_box  .input-group-addon{
   background-color:#337ab7;
   border-radius: 0px;
 }
-#info_box  button{
+.info_box  button{
   border: none;
 }
-#info_box .my-description{
+.info_box .my-description{
   white-space: pre-wrap;
 }
 /*

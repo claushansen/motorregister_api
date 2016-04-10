@@ -35,7 +35,7 @@
                                 </ng-form>
                             </div>
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="25" type="{{outerForm.step1.$invalid ? 'danger': 'success'}}"><b>25%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
@@ -213,7 +213,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="50" type="{{outerForm.step2.$invalid ? 'danger': 'success'}}"><b>50%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
@@ -251,7 +251,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="75" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>75%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
@@ -266,6 +266,10 @@
 
                     <!-- Tab 3 Models/pricegroups mapping -->
                     <uib-tab index="3" heading="mapping" disable="outerForm.step3.$invalid" ng-click="getBrands()">
+                        <div class="row">
+                            <h2>Mapping</h2>
+                            <hr>
+                        </div>
                         <div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
                             <strong>Henter Data!</strong> vent venligst.
                         </div>
@@ -286,7 +290,7 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div id="info_box">
+                                    <div class="info_box">
                                         <div class="infobox-content">
                                             <h3>Hjælp til mapping</h3>
                                         </div>
