@@ -29,7 +29,7 @@
             //Setting userID on calculator
             $scope.calculator.user_id = $rootScope.currentUser._id;
             //Assigning save function to Create new
-            $scope.save = $scope.save = function(){
+            $scope.save = function(){
                 createCalculator();
             };
             //Creating the first prisgruppe on calculator
@@ -41,6 +41,10 @@
                 textColor:'#333333',
                 buttonColor:'#337ab7',
                 buttonTextColor:'#ffffff'
+            };
+            //setting default calltoaction
+            $scope.calculator.calltoaction = {
+                type:'contact'
             };
             //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
@@ -153,7 +157,7 @@
                 });
         }
 
-        //style templates
+        //style templates object
         $scope.styles = {
             light:{
                 type:'light',
@@ -185,9 +189,30 @@
             }
         };
 
+        /**
+         * setStyles
+         *
+         * Populates the calculator style in the calculator object
+         * with the corresponding style from our style object
+         *
+         * @param style String
+         */
+
         $scope.setStyles = function(style){
-               //console.log($scope.styles);
-                $scope.calculator.settings.style = $scope.styles[style];
+            $scope.calculator.settings.style = $scope.styles[style];
+
+        };
+
+        /**
+         * setCallToAction
+         *
+         * Sets the selected call to action in the calculator object
+         *
+         * @param action String
+         */
+
+        $scope.setCallToAction = function(action){
+            $scope.calculator.settings.calltoaction.type = action;
 
         };
 

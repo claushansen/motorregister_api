@@ -134,12 +134,30 @@
 
                                     <h3>Call To Action</h3>
                                     <p class="lead">Vælg hvad din kunde kan gøre efter han er blevet præsenteret for en pris for din ydelse.</p>
+                                    <ul class="list-unstyled list-inline cta-list">
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'contact'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('contact');" class="cta-list-link">
+                                            <span ng-if="calculator.settings.calltoaction.type == 'contact'" class="glyphicon glyphicon-check text-success"></span>
+                                            <span ng-if="calculator.settings.calltoaction.type != 'contact'" class="glyphicon glyphicon-unchecked"></span>
+                                            <span class="cta-list-link-text"> Vis Kontaktformular</span>
+                                            </a>
+                                        </li>
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'redirect'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('redirect');" class="cta-list-link">
+                                                <span ng-if="calculator.settings.calltoaction.type == 'redirect'" class="glyphicon glyphicon-check text-success"></span>
+                                                <span ng-if="calculator.settings.calltoaction.type != 'redirect'" class="glyphicon glyphicon-unchecked"></span>
+                                                <span class="cta-list-link-text">Gå til URL</span>
+                                            </a>
+                                        </li>
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'none'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('none');" class="cta-list-link">
+                                                <span ng-if="calculator.settings.calltoaction.type == 'none'" class="glyphicon glyphicon-check text-success"></span>
+                                                <span ng-if="calculator.settings.calltoaction.type != 'none'" class="glyphicon glyphicon-unchecked"></span>
+                                                <span class="cta-list-link-text">Intet</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <div class="form-group">
-                                        <!--contact radio select-->
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="contact" required>
-                                            Vis Kontaktformular
-                                        </label><br/>
                                         <div ng-if="calculator.settings.calltoaction.type =='contact'" class="well">
                                             <p>Kunden vil blive præsenteret for en kontaktformular som han kan udfylde med sine kontaktinformationer.</p>
                                             <p>Kundens informationer vil sammen med informationen om køretøjet samt den beregnede pris, blive sendt til den indtastede email adresse.</p>
@@ -152,12 +170,6 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <!--redirect radio select-->
-
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="redirect" required>
-                                            Gå til URL
-                                        </label><br/>
                                         <div ng-if="calculator.settings.calltoaction.type =='redirect'" class="well">
                                             <p>Kunden vil blive præsenteret for en knap med en tekst som du definerer.</p>
                                             <p>Når kunden klikker på knappen vil han blive videresendt til den URL som du indtaster her.</p>
@@ -187,14 +199,9 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!--none radio select-->
-
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="none" required>
-                                            Intet
-                                        </label><br/>
-
+                                        <div ng-if="calculator.settings.calltoaction.type =='none'" class="well">
+                                            <p>Når du vælger "Intet", vil din kunde blot blive præsenteret for en pris på din ydelse.</p>
+                                        </div>
                                     </div>
 
 
