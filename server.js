@@ -49,6 +49,17 @@ server.use(function(req, res, next) {
 	next();
 });
 
+//set up static
+server.use(express.static(__dirname + '/public'));
+
+// Setting no-cache to ensure browser doesn't caches especially IE
+server.use(function (req, res, next) {
+	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+	res.header('Expires', '-1');
+	res.header('Pragma', 'no-cache');
+	next()
+});
+
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
@@ -60,6 +71,7 @@ passport.deserializeUser(function(id, done) {
 		done(err, user);
 	});
 });
+
 
 //helper function for checking if user is loggedind
 function isloggedin(req, res, next){
@@ -120,8 +132,6 @@ var UserService = require("./services/user.service.server.js")(server, User.mode
 var BrandService = require("./services/brand.service.server.js")(server,  Brand.model, mongoose);
 var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model,Vehicle, passport, mongoose);
 
-//set up static
-server.use(express.static(__dirname + '/public'));
 
  
 //Setting filters here- TODO make settings collection for individuel settings
