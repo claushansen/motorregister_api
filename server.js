@@ -165,12 +165,12 @@ server.get('/api', function(req,res){
 		html: '<h1>Tillykke</h1><p>Den gik igennem!</p>'
 	};
 	console.log(mailOptions);
-	myMailer.sendMail(mailOptions, function(error, response){
+	myMailer.sendMail(mailOptions, function(error, info){
 		if(error){
 			console.log(error);
 			res.end("error");
 		}else{
-			console.log("Message sent: " + response);
+			console.log("Message sent: " + info.response);
 			res.end("sent");
 		}
 	});
