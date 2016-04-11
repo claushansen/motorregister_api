@@ -1,4 +1,4 @@
-module.exports = function(server, UserModel, passport)
+module.exports = function(server, UserModel, passport, myMailer)
 {
     //login
     server.post('/api/login',passport.authenticate('local'),
@@ -46,6 +46,29 @@ module.exports = function(server, UserModel, passport)
                     {
                         res.json({success:false,message:'Kunne ikke oprette bruger!'});
                     }
+                    //sending welcome mail with username and password
+                    var mailOptions={
+                        from:'claus@multimedion.dk',
+                        to : req.body.email,
+                        subject : 'Velkommen til bilapi.dk',
+                        //text : '',
+                        html: '<h1>Velkommen til Bilapi.dk</h1>' +
+                        '<p>Du er har nu oprettet din bruger og kan begynde at bruge vores service</p>' +
+                        '<p><strong>Log ind med:</strong><br>' +
+                        'Brugernavn :'+ req.body.username +'<br>' +
+                        'Password :'+ req.body.password +'</p>' +
+                        '<p><a href="https://calculator-bilapi.rhcloud.com/">Start med det samme</a> </p>'
+                    };
+                    myMailer.sendMail(mailOptions, function(error, response){
+                        if(error){
+                            console.log(error);
+                            //res.end("error");
+                        }else{
+                            console.log("Message sent: " + response);
+                            //res.end("sent");
+                        }
+                    });
+
                     res.json({success:true,user:user});
                 });
             });

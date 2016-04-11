@@ -8,6 +8,19 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var mongoose      = require('mongoose');
 
+//mailsettings
+var nodemailer = require("nodemailer");
+var smtpConfig = {
+	host: 'cp6.danhost.dk',
+	port: 465,
+	secure: true, // use SSL
+	auth: {
+		user: 'noreply@bilapi.dk',
+		pass: '!MyGreenTub0rg'
+	}
+};
+var myMailer = nodemailer.createTransport(smtpConfig);
+
 //setting up connection variables :Openshift/local
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
@@ -128,9 +141,9 @@ var Calculator = require("./models/calculator.model.js")(mongoose, db);
 //	});
 //testing models
 
-var UserService = require("./services/user.service.server.js")(server, User.model, passport);
+var UserService = require("./services/user.service.server.js")(server, User.model, passport, myMailer);
 var BrandService = require("./services/brand.service.server.js")(server,  Brand.model, mongoose);
-var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model,Vehicle, passport, mongoose);
+var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model,Vehicle, passport, mongoose, myMailer);
 
 
  
@@ -143,7 +156,28 @@ var brandsToExclude = ["15459","19999","0"];
 
 
 server.get('/api', function(req,res){
-res.json({apiname:'Motorregister API'})
+
+	var mailOptions={
+		from:'noreply@bilapi.dk',
+		to : 'multimedion@gmail.com',
+		subject : 'test af bilapimail',
+		text : 'Det lykkedes at sende til gmail fra bilapi.dk',
+		html: '<h1>Tillykke</h1><p>Den gik igennem!</p>'
+	};
+	console.log(mailOptions);
+	myMailer.sendMail(mailOptions, function(error, response){
+		if(error){
+			console.log(error);
+			res.end("error");
+		}else{
+			console.log("Message sent: " + response);
+			res.end("sent");
+		}
+	});
+
+
+
+//res.json({apiname:'Motorregister API'})
 
 });
 
