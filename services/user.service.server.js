@@ -48,7 +48,7 @@ module.exports = function(server, UserModel, passport, myMailer)
                     }
                     //sending welcome mail with username and password
                     var mailOptions={
-                        from:'claus@multimedion.dk',
+                        from:'bilapi@multimedion.dk',
                         to : req.body.email,
                         subject : 'Velkommen til bilapi.dk',
                         //text : '',

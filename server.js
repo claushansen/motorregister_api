@@ -15,7 +15,7 @@ var smtpConfig = {
 	port: 465,
 	secure: true, // use SSL
 	auth: {
-		user: 'noreply@bilapi.dk',
+		user: 'bilapi@multimedion.dk',
 		pass: '!MyGreenTub0rg'
 	}
 };
@@ -158,7 +158,7 @@ var brandsToExclude = ["15459","19999","0"];
 server.get('/api', function(req,res){
 
 	var mailOptions={
-		from:'noreply@bilapi.dk',
+		from:'bilapi@multimedion.dk',
 		to : 'multimedion@gmail.com',
 		subject : 'test af bilapimail',
 		text : 'Det lykkedes at sende til gmail fra bilapi.dk',
