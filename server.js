@@ -15,7 +15,7 @@ var smtpConfig = {
 	port: 465,
 	secure: true, // use SSL
 	auth: {
-		user: 'bilapi@multimedion.dk',
+		user: 'noreply@bilapi.dk',
 		pass: '!MyGreenTub0rg'
 	}
 };

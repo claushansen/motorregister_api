@@ -47,7 +47,7 @@ module.exports = function(server, UserModel, passport, myMailer)
                 if(err) { return res.json({success:false,message:'Kunne ikke oprette bruger!'}); }
                 //sending welcome mail with username and password
                 var mailOptions={
-                    from:'bilapi@multimedion.dk',
+                    from:'noreply@bilapi.dk',
                     to : req.body.email,
                     subject : 'Velkommen til bilapi.dk',
                     //text : '',

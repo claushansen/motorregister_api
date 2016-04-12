@@ -14,6 +14,8 @@
         service.getBrandsList = getBrandsList;
         service.getOfferLicensplate = getOfferLicensplate;
         service.getOfferModel = getOfferModel;
+        service.sendMessage = sendMessage;
+
 
         return service;
 
@@ -75,14 +77,42 @@
             return deferred.promise;
         }
 
-        //service for getting offer based on model ID
-        //returns object i.e {success:true,hasoffer:true,offer:195}
+        /**
+         * service for getting offer based on model ID
+         *
+         * returns object i.e {success:true,hasoffer:true,offer:195}
+         *
+         * @param calcid String
+         * @param modelid String
+         * @returns {*|promise}
+         */
         function getOfferModel(calcid,modelid){
             var deferred = $q.defer();
             $http.get(appConfig.apiPath+'/api/mycalculator/' + calcid + '/offer/model/' + modelid)
                 .success(function (data) {
                     if(data.success){
                         deferred.resolve(data);
+                    }else{
+                        deferred.reject(data.message);
+                    }
+                });
+            return deferred.promise;
+        }
+
+
+        /**
+         *service for sending message to calculator owner
+         *
+         * @param calcid String
+         * @param contactData Object
+         * @returns {*|promise}
+         */
+        function sendMessage(calcid,contactData){
+            var deferred = $q.defer();
+            $http.post(appConfig.apiPath+'/api/mycalculator/' + calcid + '/contact',contactData)
+                .success(function (data) {
+                    if(data.success){
+                        deferred.resolve(data.message);
                     }else{
                         deferred.reject(data.message);
                     }
