@@ -1,3 +1,10 @@
+.mycalculator-wrapper{
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+}
+
 #licensplateform  input{
     min-height: 50px;
     border-radius: 0px;
@@ -12,12 +19,17 @@
 button.offersearch-manual-btn{
     border-radius: 0px;
 }
-.selected-info,
+/*.selected-info,
 .vehicle-info{
     background-color:#FDFDFD;
+    color:#333;
     border : 1px solid #cccccc;
     padding: 20px;
-}
+}*/
 .my-description{
     white-space: pre-wrap;
+}
+.offer{
+    text-align: center;
+    margin: 40px 0px;
 }

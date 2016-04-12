@@ -103,5 +103,29 @@
 
         }
 
+        //sending message and data to calculator owner
+         $scope.sendContact = function(){
+            var contactObj = {};
+            contactObj.name = $scope.contact.name;
+            contactObj.email = $scope.contact.email;
+            contactObj.phone = $scope.contact.phone;
+            contactObj.message = $scope.contact.message;
+            contactObj.offer = $scope.offer;
+            if($scope.manualSearch){
+                contactObj.search = $scope.search;
+            }
+            var calcid = $routeParams.calcid;
+            $scope.sendmsgloading = true;
+            mycalculatorService.sendMessage(calcid,contactObj)
+                .then(function success(message){
+                    messageCenterService.add('success', message);
+                    $scope.sendmsgloading = false;
+                },function error(message){
+                    $scope.sendmsgloading = false;
+                    messageCenterService.add('danger', message);
+                });
+
+        }
+
     }
 })();

@@ -353,10 +353,10 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                     html: '<h1>Henvendelse fra din prisberegner</h1>' +
                     '<p>En bruger har udfyldt kontaktformularen på din prisberegner.</p>' +
                     '<ul>' +
-                    '<li><strong>Navn: </strong><br>'+ req.body.name+'</li>' +
-                    '<li><strong>Email: </strong><br>'+ req.body.email+'</li>' +
-                    '<li><strong>Telefon: </strong><br>'+ req.body.phone+'</li>' +
-                    '<li><strong>Besked: </strong><br>'+ req.body.message+'</li>' +
+                    '<li><strong>Navn: </strong> '+ req.body.name+'</li>' +
+                    '<li><strong>Email: </strong> '+ req.body.email+'</li>' +
+                    '<li><strong>Telefon: </strong> '+ req.body.phone+'</li>' +
+                    '<li><strong>Besked: </strong> '+ req.body.message+'</li>' +
                     '</ul>' +
                     '<p>Brugerens køretøj</p>' +
                     '<ul> ' + vehicledata + '</ul>'
@@ -373,14 +373,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                     }
                 });
             }
-
-
-
         });
-
-
-
-
     });
 
 
