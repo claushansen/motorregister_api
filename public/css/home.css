@@ -40,7 +40,7 @@
 .demostyle {
     background: linear-gradient(#f5f7f9, #f5f7f9) no-repeat 100% 0;
     border-left: none;
-    color: #eee;
+    color: #1c2334;
     margin: 0 0 30px 0;
     padding: 10px;
     position: relative;
@@ -48,9 +48,23 @@
     box-shadow: 0 3px 0 rgba(182, 196, 209, 0.3);
     box-shadow: 0 3px 0 rgba(182, 196, 209, 0.3);
 }
-.btn-lg-space {
+.btn-header {
+    background: linear-gradient(#008cba, royalblue) no-repeat 100% 0;
+    text-transform: uppercase;
+}
+.btn-header,
+.btn-case,
+.btn-demo  {
     margin-top: 15px;
     margin-bottom: 10px;
+    font-weight: 300;
+    border-radius: 5px;
+}
+.btn-case{
+    background: linear-gradient(#008cba, royalblue) no-repeat 100% 0;
+}
+.btn-demo {
+    background: linear-gradient(#43ac6a, seagreen) no-repeat 100% 0;
 }
 .bgSizeCover {
     padding-top: 9em;
