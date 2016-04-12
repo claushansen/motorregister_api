@@ -24,14 +24,28 @@
         else{
             //creating a new empty calculator object
             $scope.calculator = {};
+            //creating a new empty calculator.settings object
+            $scope.calculator.settings = {};
             //Setting userID on calculator
             $scope.calculator.user_id = $rootScope.currentUser._id;
             //Assigning save function to Create new
-            $scope.save = $scope.save = function(){
+            $scope.save = function(){
                 createCalculator();
             };
             //Creating the first prisgruppe on calculator
             $scope.calculator.prisgrupper = [{id:'id' + (new Date()).getTime(),name:'Prisgruppe 1'}];
+            //setting default style
+            $scope.calculator.settings.style = {
+                type:'light',
+                backgroundColor:'#ffffff',
+                textColor:'#333333',
+                buttonColor:'#337ab7',
+                buttonTextColor:'#ffffff'
+            };
+            //setting default calltoaction
+            $scope.calculator.calltoaction = {
+                type:'contact'
+            };
             //setting headline to create new
             $scope.heading = 'Opret Ny Prisberegner';
         }
@@ -63,13 +77,6 @@
 
         //this function renders models only when the brand is toggled for quicker rendering
         $scope.renderModels = function(scope){
-            //getting top position of the clicked element
-            var clickedEl = angular.element('#'+scope.$modelValue.id);
-            var clickedElpos = clickedEl.position();
-            var infobox = angular.element('#info_box');
-            //setting scope variable to place infobox where element clicked
-            $scope.clickedElTopPos = (clickedElpos.top - (infobox.height()/2)) + 25 +'px';
-
             //if loadmodels not the same as the clicked brand id
             if($scope.loadmodels !== scope.$modelValue.id) {
                 // first collapse all
@@ -143,7 +150,7 @@
                 });
         }
 
-        //style templates
+        //style templates object
         $scope.styles = {
             light:{
                 type:'light',
@@ -165,9 +172,42 @@
                 textColor:'#333333',
                 buttonColor:'#8c8c8c',
                 buttonTextColor:'#ffffff'
+            },
+            custom:{
+                type:'custom',
+                backgroundColor:'#ffffff',
+                textColor:'#000000',
+                buttonColor:'#ffffff',
+                buttonTextColor:'#000000'
             }
+        };
 
-        }
+        /**
+         * setStyles
+         *
+         * Populates the calculator style in the calculator object
+         * with the corresponding style from our style object
+         *
+         * @param style String
+         */
+
+        $scope.setStyles = function(style){
+            $scope.calculator.settings.style = $scope.styles[style];
+
+        };
+
+        /**
+         * setCallToAction
+         *
+         * Sets the selected call to action in the calculator object
+         *
+         * @param action String
+         */
+
+        $scope.setCallToAction = function(action){
+            $scope.calculator.settings.calltoaction.type = action;
+
+        };
 
 
     }

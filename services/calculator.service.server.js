@@ -1,5 +1,5 @@
 var q = require("q");
-module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passport , mongoose)
+module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passport , mongoose, myMailer)
 {
     //get all calculators only as Admin
     server.get("/api/calculator", function(req, res)

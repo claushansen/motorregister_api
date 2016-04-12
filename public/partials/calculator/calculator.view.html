@@ -35,34 +35,13 @@
                                 </ng-form>
                             </div>
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="25" type="{{outerForm.step1.$invalid ? 'danger': 'success'}}"><b>25%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
                                         <p>Start med at skrive en titel og en beskrivelse til din prisberegner. Disse vises som overskrift og beskrivelse på din prisberegner.</p>
                                         <!--example calculator-->
-                                        <strong>Eksempelvisning</strong><br>
-                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
-                                            <h2>{{calculator.title}}</h2>
-                                            <p class="my-description">{{calculator.description}}</p>
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="licensplate">Registreringsnummer</label>
-                                                    <div class="input-group ">
-                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
-                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
-                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
-                                                                <span class="glyphicon glyphicon-search"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="text-center">
-                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
-                                            </div>
-                                        </div>
+                                        <example-calculator></example-calculator>
                                         <!-- /example calculator-->
                                     </div>
                                 </div>
@@ -81,24 +60,38 @@
                                 <ng-form name="step2">
                                     <h3>Udseende</h3>
                                     <p class="lead">Vælg udseende på din prisberegner, så den bedst kan implementeres i din hjemmeside.</p>
-                                    <div class="form-group">
-                                        <!--style radio select-->
-                                        <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.light" required>
-                                            <img src="images/stylethumbs/style-light.png" class="stylethumb" uib-popover="Hvid baggrund, Sort tekst og blå knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.dark" required>
-                                            <img src="images/stylethumbs/style-dark.png" class="stylethumb" uib-popover="Sort baggrund, hvid tekst og røde knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style" ng-value="styles.grey" required>
-                                            <img src="images/stylethumbs/style-grey.png" class="stylethumb" uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"  popover-trigger="mouseenter" >
-                                        </label>
-                                        <label>
-                                            <input name="style" type="radio" ng-model="calculator.settings.style.type" value="custom" required>
-                                            <img src="images/stylethumbs/style-custom.png" class="stylethumb" uib-popover="Brugerdefineret"  popover-trigger="mouseenter" >
-                                        </label>
+                                    <!--stylethumbs-->
+                                    <div class="stylethumb-wrapper">
+                                        <img
+                                            ng-click="setStyles('light')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'light'}"
+                                            src="images/stylethumbs/style-light.png"
+                                            class="stylethumb"
+                                            uib-popover="Hvid baggrund, Sort tekst og blå knapper"
+                                            popover-trigger="mouseenter" >
+                                        <img
+                                            ng-click="setStyles('dark')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'dark'}"
+                                            src="images/stylethumbs/style-dark.png"
+                                            class="stylethumb"
+                                            uib-popover="Sort baggrund, hvid tekst og røde knapper"
+                                            popover-trigger="mouseenter" >
+                                        <img
+                                            ng-click="setStyles('grey')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'grey'}"
+                                            src="images/stylethumbs/style-grey.png"
+                                            class="stylethumb"
+                                            uib-popover="grå baggrund, Sort tekst og mørkegrå knapper"
+                                            popover-trigger="mouseenter" >
+
+                                        <img
+                                            ng-click="setStyles('custom')"
+                                            ng-class="{'active' : calculator.settings.style.type == 'custom'}"
+                                            src="images/stylethumbs/style-custom.png"
+                                            class="stylethumb"
+                                            uib-popover="Brugerdefineret"
+                                            popover-trigger="mouseenter" >
+
                                     </div>
                                     <!--custom style settings-->
                                     <div ng-if="calculator.settings.style.type =='custom'" class="well">
@@ -141,12 +134,30 @@
 
                                     <h3>Call To Action</h3>
                                     <p class="lead">Vælg hvad din kunde kan gøre efter han er blevet præsenteret for en pris for din ydelse.</p>
+                                    <ul class="list-unstyled list-inline cta-list">
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'contact'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('contact');" class="cta-list-link">
+                                            <span ng-if="calculator.settings.calltoaction.type == 'contact'" class="glyphicon glyphicon-check text-success"></span>
+                                            <span ng-if="calculator.settings.calltoaction.type != 'contact'" class="glyphicon glyphicon-unchecked"></span>
+                                            <span class="cta-list-link-text"> Vis Kontaktformular</span>
+                                            </a>
+                                        </li>
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'redirect'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('redirect');" class="cta-list-link">
+                                                <span ng-if="calculator.settings.calltoaction.type == 'redirect'" class="glyphicon glyphicon-check text-success"></span>
+                                                <span ng-if="calculator.settings.calltoaction.type != 'redirect'" class="glyphicon glyphicon-unchecked"></span>
+                                                <span class="cta-list-link-text">Gå til URL</span>
+                                            </a>
+                                        </li>
+                                        <li class="cta-list-item" ng-class="{'selected' : calculator.settings.calltoaction.type == 'none'}">
+                                            <a href="#" ng-click="$event.preventDefault(); setCallToAction('none');" class="cta-list-link">
+                                                <span ng-if="calculator.settings.calltoaction.type == 'none'" class="glyphicon glyphicon-check text-success"></span>
+                                                <span ng-if="calculator.settings.calltoaction.type != 'none'" class="glyphicon glyphicon-unchecked"></span>
+                                                <span class="cta-list-link-text">Intet</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <div class="form-group">
-                                        <!--contact radio select-->
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="contact" required>
-                                            Vis Kontaktformular
-                                        </label><br/>
                                         <div ng-if="calculator.settings.calltoaction.type =='contact'" class="well">
                                             <p>Kunden vil blive præsenteret for en kontaktformular som han kan udfylde med sine kontaktinformationer.</p>
                                             <p>Kundens informationer vil sammen med informationen om køretøjet samt den beregnede pris, blive sendt til den indtastede email adresse.</p>
@@ -159,12 +170,6 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <!--redirect radio select-->
-
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="redirect" required>
-                                            Gå til URL
-                                        </label><br/>
                                         <div ng-if="calculator.settings.calltoaction.type =='redirect'" class="well">
                                             <p>Kunden vil blive præsenteret for en knap med en tekst som du definerer.</p>
                                             <p>Når kunden klikker på knappen vil han blive videresendt til den URL som du indtaster her.</p>
@@ -194,14 +199,9 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!--none radio select-->
-
-                                        <label>
-                                            <input name="calltoaction" type="radio" ng-model="calculator.settings.calltoaction.type" value="none" required>
-                                            Intet
-                                        </label><br/>
-
+                                        <div ng-if="calculator.settings.calltoaction.type =='none'" class="well">
+                                            <p>Når du vælger "Intet", vil din kunde blot blive præsenteret for en pris på din ydelse.</p>
+                                        </div>
                                     </div>
 
 
@@ -213,7 +213,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="50" type="{{outerForm.step2.$invalid ? 'danger': 'success'}}"><b>50%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
@@ -224,28 +224,7 @@
                                         <p>Her kan du vælge hvilke muligheder din kunde skal have når de har fået præsenteret en pris for din ydelse.</p>
                                         <p>Du kan enten lade kunden kontakte dig via en kontaktformular, som vises under den beregnede pris. Eller du kan videresende dem direkte til en URL med dine produkter.</p>
                                         <!--example calculator-->
-                                        <strong>Eksempelvisning</strong><br>
-                                        <div class="exampleSearch" style="background-color:{{calculator.settings.style.backgroundColor}};color:{{calculator.settings.style.textColor}};">
-                                            <h2>{{calculator.title}}</h2>
-                                            <p class="my-description">{{calculator.description}}</p>
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="licensplate">Registreringsnummer</label>
-                                                    <div class="input-group ">
-                                                        <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="example.search.licensplate" ng-change="example.search.licensplate = example.search.licensplate.toUpperCase();" />
-                                                        <div class="input-group-addon" style="background-color:{{calculator.settings.style.buttonColor}};">
-                                                            <button class="btn  btn-primary" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" ng-disabled="!example.search.licensplate" >
-                                                            <span class="glyphicon glyphicon-search"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="text-center">
-                                                <button class="btn  btn-primary col-sm-6 col-sm-offset-3" style="background-color:{{calculator.settings.style.buttonColor}};color:{{calculator.settings.style.buttonTextColor}};" >Eller vælg manuelt</button>
-                                            </div>
-                                        </div>
+                                        <example-calculator></example-calculator>
                                         <!-- /example calculator-->
                                     </div>
                                 </div>
@@ -272,7 +251,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div id="info_box">
+                                <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="75" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>75%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
@@ -287,6 +266,10 @@
 
                     <!-- Tab 3 Models/pricegroups mapping -->
                     <uib-tab index="3" heading="mapping" disable="outerForm.step3.$invalid" ng-click="getBrands()">
+                        <div class="row">
+                            <h2>Mapping</h2>
+                            <hr>
+                        </div>
                         <div class="alert alert-success" ng.show="!calculator.brands" ng-hide="calculator.brands">
                             <strong>Henter Data!</strong> vent venligst.
                         </div>
@@ -307,9 +290,11 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div id="info_box" style="margin-top:{{clickedElTopPos}}">
+                                    <div class="info_box" keep-in-sight>
                                         <div class="infobox-content">
-                                            <h3>Hjælp til mapping</h3>
+                                            <uib-progressbar animate="true" value="99" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>99%</b></uib-progressbar>
+                                            <h4>Hjælp til mapping</h4>
+                                            <p>Du er nu nået til den vigtigeste del af opsætningen af din prisberegner.</p>
                                         </div>
                                     </div>
 

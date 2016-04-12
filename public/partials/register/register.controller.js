@@ -11,8 +11,8 @@
 
             userService.registerUser($scope.user)
                 .then(function(result){
-                    messageCenterService.add("success", "Velkommen til BILAPI "+ result.user.firstName , {status: messageCenterService.status.next});
-                    $location.path('/dashboard');
+                    messageCenterService.add("success", "Du er nu oprettet som bruger og vi har sendt en mail med dit brugernavn og password " , {status: messageCenterService.status.next});
+                    $location.path('/login');
                 },function(result){
                     messageCenterService.add('danger', result.message, { timeout: 5000 });
                 });
