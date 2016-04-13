@@ -340,9 +340,20 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                 var mailfrom = req.body.email;
                 //setting vehicledata up in a list
                 var vehicledata = '';
-                for (key in req.body.offer.vehicle){
-                    vehicledata += '<li>'+key+': '+ req.body.offer.vehicle[key]+'</li>';
+                //if we have vehicledata
+                if("vehicle" in  req.body.offer) {
+                    for (key in req.body.offer.vehicle) {
+                        vehicledata += '<li>' + key + ': ' + req.body.offer.vehicle[key] + '</li>';
+                    }
                 }
+                //if we have manual search data
+                if("search" in  req.body) {
+                    vehicledata += '<li>Mærke : ' + req.body.search.brand.name + '</li>';
+                    vehicledata += '<li>Model : ' + req.body.search.model.name + '</li>';
+                }
+                //output offer
+                var offer = req.body.offer.hasoffer ? req.body.offer.offer : 'Intet';
+
                 //setting up mail options
                 //TODO - make use of html templates instead of hardcoding it here
                 var mailOptions={
@@ -358,6 +369,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                     '<li><strong>Telefon: </strong> '+ req.body.phone+'</li>' +
                     '<li><strong>Besked: </strong> '+ req.body.message+'</li>' +
                     '</ul>' +
+                    '<p>Beregnet tilbud: '+ offer +'</p>' +
                     '<p>Brugerens køretøj</p>' +
                     '<ul> ' + vehicledata + '</ul>'
 
