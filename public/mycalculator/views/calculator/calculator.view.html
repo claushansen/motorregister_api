@@ -84,7 +84,9 @@
         <!--contact form-->
         <div class="row" ng-show="offer && settings.settings.calltoaction.type == 'contact'">
             <hr>
+            <div class="col-sm-10 col-sm-offset-2">
             <h4>Kontakt os om dette tilbud</h4>
+            </div>
             <form name="contactform" role="form" class="form-horizontal">
                 <div class="form-group" ng-class="{ 'has-error': contactform.name.$dirty && contactform.name.$error.required }">
                     <label for="name" class="col-sm-2 control-label">Dit navn</label>
@@ -124,7 +126,7 @@
                         </p>
                     </div>
                 </div>
-                <button class="btn  btn-primary col-sm-6 col-sm-offset-3"  ng-disabled="contactform.$invalid" ng-click="sendContact()">Send Besked</button>
+                <button class="btn  btn-primary col-sm-10 col-xs-12 col-sm-offset-2"  ng-disabled="contactform.$invalid" ng-click="sendContact()">Send Besked</button>
             </form>
         </div>
     </div>
