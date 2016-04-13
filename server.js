@@ -15,7 +15,7 @@ var smtpConfig = {
 	port: 465,
 	secure: true, // use SSL
 	auth: {
-		user: 'bilapi@multimedion.dk',
+		user: 'noreply@bilapi.dk',
 		pass: '!MyGreenTub0rg'
 	}
 };
@@ -133,30 +133,22 @@ var User = require("./models/user.model.js")(mongoose, db);
 var Brand = require("./models/brands.model.js")(mongoose, db);
 var Vehicle = require("./models/vehicle.model.js")(mongoose, db);
 var Calculator = require("./models/calculator.model.js")(mongoose, db);
-//Calculator.find({})
-//	.populate('user_id')
-//
-//	.exec(function(error, calcs) {
-//		console.log(JSON.stringify(calcs, null, "\t"))
-//	});
-//testing models
 
+//server Services
 var UserService = require("./services/user.service.server.js")(server, User.model, passport, myMailer);
 var BrandService = require("./services/brand.service.server.js")(server,  Brand.model, mongoose);
 var CalculatorService = require("./services/calculator.service.server.js")(server, Calculator, User.model,Vehicle, passport, mongoose, myMailer);
-
-
  
 //Setting filters here- TODO make settings collection for individuel settings
 var vehicletypesToInclude = ['Personbil'];
 var brandsToExclude = ["15459","19999","0"];
-//var ModelsToInclude = ['Personbil']
 
 //Routes
 
 
 server.get('/api', function(req,res){
 
+/*
 	var mailOptions={
 		from:'bilapi@multimedion.dk',
 		to : 'multimedion@gmail.com',
@@ -174,10 +166,11 @@ server.get('/api', function(req,res){
 			res.end("sent");
 		}
 	});
+*/
 
 
 
-//res.json({apiname:'Motorregister API'})
+res.json({apiname:'Motorregister API'})
 
 });
 

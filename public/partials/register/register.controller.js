@@ -4,9 +4,6 @@
         .controller("RegisterController",RegisterController);
     function RegisterController($scope , userService ,$location,  messageCenterService){
 
-
-
-
         $scope.register = function () {
 
             userService.registerUser($scope.user)

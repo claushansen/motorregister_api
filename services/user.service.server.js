@@ -32,21 +32,22 @@ module.exports = function(server, UserModel, passport, myMailer)
             if(err) { return res.json({success:false,message:'Kunne ikke oprette bruger!'}); }
             if(user)
             {
-                return res.json({success:false,message:'Username exists!'});
-
+                return res.json({success:false,message:'Brugernavn eksisterer allerede!'});
             }
             //make sure no one posts anything in roles array
             delete req.body.roles;
             //generating password
             var randomstring = Math.random().toString(36).slice(-8);
             req.body.password = randomstring;
+            //creating new user
             var newUser = new UserModel(req.body);
+            //Saving user
             newUser.save(function(err, user)
             {
                 if(err) { return res.json({success:false,message:'Kunne ikke oprette bruger!'}); }
                 //sending welcome mail with username and password
                 var mailOptions={
-                    from:'bilapi@multimedion.dk',
+                    from:'noreply@bilapi.dk',
                     to : req.body.email,
                     subject : 'Velkommen til bilapi.dk',
                     //text : '',
@@ -61,69 +62,15 @@ module.exports = function(server, UserModel, passport, myMailer)
                 myMailer.sendMail(mailOptions, function(error, info){
                     if(error){
                         console.log(error);
-                        return res.json({success:false,message:'cant send mail!'});
+                        return res.json({success:false,message:'Kunne ikke sende mail! Kontakt administrator'});
                     }else{
-                        console.log("Message sent: " + info.response);
+                        //console.log("Message sent: " + info.response);
                         res.json({success:true,user:user});
                     }
                 });
-
-                //res.json({success:true,user:user});
             });
         });
     });
-/*    server.post('/api/register', function(req, res)
-    {
-        var newUser = req.body;
-
-        UserModel.findOne({username: newUser.username}, function(err, user)
-        {
-            if(err) { return res.json({success:false,message:'Kunne ikke oprette bruger!'}); }
-            if(user)
-            {
-                return res.json({success:false,message:'Username exists!'});
-
-            }
-            //make sure no one posts anything in roles array
-            delete req.body.roles;
-            var newUser = new UserModel(req.body);
-            newUser.save(function(err, user)
-            {
-                if(err) { return res.json({success:false,message:'Kunne ikke oprette bruger!'}); }
-                req.login(user, function(err)
-                {
-                    if(err)
-                    {
-                        res.json({success:false,message:'Kunne ikke oprette bruger!'});
-                    }
-                    //sending welcome mail with username and password
-                    var mailOptions={
-                        from:'bilapi@multimedion.dk',
-                        to : req.body.email,
-                        subject : 'Velkommen til bilapi.dk',
-                        //text : '',
-                        html: '<h1>Velkommen til Bilapi.dk</h1>' +
-                        '<p>Du er har nu oprettet din bruger og kan begynde at bruge vores service</p>' +
-                        '<p><strong>Log ind med:</strong><br>' +
-                        'Brugernavn :'+ req.body.username +'<br>' +
-                        'Password :'+ req.body.password +'</p>' +
-                        '<p><a href="https://calculator-bilapi.rhcloud.com/">Start med det samme</a> </p>'
-                    };
-                    myMailer.sendMail(mailOptions, function(error, info){
-                        if(error){
-                            console.log(error);
-                            //res.end("error");
-                        }else{
-                            console.log("Message sent: " + info.response);
-                            //res.end("sent");
-                        }
-                    });
-
-                    res.json({success:true,user:user});
-                });
-            });
-        });
-    });*/
 
     //get all users as admin only
     server.get("/api/user", function(req, res)

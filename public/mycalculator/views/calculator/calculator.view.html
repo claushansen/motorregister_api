@@ -1,7 +1,8 @@
-<div class="mycalculator-wrapper container">
-    <div ng-show="settings" class="col-sm-6 col-sm-offset-3">
-        <div class="row">
-        <h3>{{settings.title}}</h3>
+<div class="mycalculator-wrapper" apply-styles>
+    <mc-messages></mc-messages>
+    <div ng-show="settings" class="col-sm-12">
+        <div ng-show="!offer" class="row">
+            <h3>{{settings.title}}</h3>
             <p class="my-description">{{settings.description}}</p>
         </div>
         <!--vehicle info -->
@@ -27,12 +28,13 @@
             </div>
             <div class="col-sm-4 text-center"><button class="btn btn-link" ng-click="reset()"> Ny Søgning</button></div>
         </div>
+        <!--search by licensplate-->
         <div class="row" ng-show="!manualSearch && !offer">
             <div class="row">
                 <form  id="licensplateform">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="licensplate">Registreringsnummer</label>
+                            <label for="licensplate">Indtast nummerplade</label>
                             <div class="input-group ">
 
                                 <input type="text" class="form-control col-sm-6 text-uppercase" id="licensplate" placeholder="AA12345" ng-minlength="7" ng-model="search.licensplate" ng-change="search.licensplate = search.licensplate.toUpperCase();" required/>
@@ -48,9 +50,10 @@
                 <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual();getBrands()">Eller vælg manuelt</button>
             </div>
         </div>
+        <!--Manual search-->
         <div class="row" ng-show="manualSearch && !offer" >
             <div class="row text-center">
-                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual()">Indtast Registreringsnummer</button>
+                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual()">Eller Indtast nummerplade</button>
             </div>
             <div class="row"><hr></div>
             <div class="row">
@@ -60,33 +63,71 @@
                             <label for="brandselect">Mærke</label>
                             <select id="brandselect" ng-model="search.brand" ng-change="getModels()" ng-options="brand.name for brand in brands" class="form-control">
                            </select>
-                                <!-- <select id="brandselect" ng-model="search.brand" ng-change="getModels()" class="form-control">
-                                    <option value="">Vælg Mærke</option>
-                                    <option ng-repeat="brand in brands" value="{{brand}}">{{brand.name}}</option>
-                                </select>-->
                         </div>
                         <div class="form-group" ng-show="search.brand">
                             <label for="modelselect">Model</label>
                             <select id="modelselect" ng-model="search.model" ng-change="findOfferManual()" ng-options="model.name for model in models" class="form-control">
                             </select>
-                           <!-- <select id="modelselect" ng-model="search.model" class="form-control">
-                                <option value="">Vælg Model</option>
-                                <option ng-repeat="model in models" value="{{model}}">{{model.name}}</option>
-                            </select>-->
                         </div>
                     </div>
                 </form>
             </div>
-
         </div>
-        <!-- offer -->
+        <!-- has offer -->
         <div class="row" ng-show="offer && offer.hasoffer">
-            <h2>Din pris {{offer.offer}} Kr.</h2>
+            <h2 class="offer">Din pris {{offer.offer}} Kr.</h2>
         </div>
         <!-- No offer -->
         <div class="row" ng-show="offer && !offer.hasoffer">
-            <h2>Vi kan desværre ikke give dig et tilbud på dette køretøj</h2>
+            <h2 class="offer">Vi kan desværre ikke give dig et tilbud på dette køretøj</h2>
         </div>
+        <!--contact form-->
+        <div class="row" ng-show="offer && settings.settings.calltoaction.type == 'contact'">
+            <hr>
+            <div class="col-sm-10 col-sm-offset-2">
+            <h4>Kontakt os om dette tilbud</h4>
+            </div>
+            <form name="contactform" role="form" class="form-horizontal">
+                <div class="form-group" ng-class="{ 'has-error': contactform.name.$dirty && contactform.name.$error.required }">
+                    <label for="name" class="col-sm-2 control-label">Dit navn</label>
+                    <div class="col-sm-10">
+                        <input name="name" type="text" ng-model="contact.name" class="form-control" id="name" placeholder="Dit navn" required />
+                        <p class="help-block">
+                            <span ng-show="contactform.name.$invalid && !contactform.name.$pristine">Dette felt er krævet.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': contactform.email.$dirty && contactform.email.$error.required || contactform.email.$dirty && contactform.email.$error.email }">
+                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input name="email" type="email" ng-model="contact.email" class="form-control" id="email" placeholder="Email" required />
+                        <p class="help-block">
+                            <span ng-show="contactform.email.$invalid && !contactform.email.$pristine">Dette felt er krævet.</span>
+                            <span ng-show="contactform.email.$invalid && contactform.email.$error.email">Ikke en korrekt email.</span>
 
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': contactform.phone.$dirty && contactform.phone.$error.required }">
+                    <label for="phone" class="col-sm-2 control-label">Telefon</label>
+                    <div class="col-sm-10">
+                        <input name="phone" type="text" ng-model="contact.phone" class="form-control" id="phone" placeholder="Telefon nummer" required />
+                        <p class="help-block">
+                            <span ng-show="contactform.phone.$invalid && !contactform.phone.$pristine">Dette felt er krævet.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="col-sm-2 control-label">Besked</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="message" ng-model="contact.message" rows="3" id="message" required></textarea>
+                        <p class="help-block">
+                            <span ng-show="contactform.message.$invalid && !contactform.message.$pristine">Dette felt er krævet.</span>
+                        </p>
+                    </div>
+                </div>
+                <button class="btn  btn-primary col-sm-10 col-xs-12 col-sm-offset-2"  ng-disabled="contactform.$invalid" ng-click="sendContact()">Send Besked</button>
+            </form>
+        </div>
     </div>
 </div>
