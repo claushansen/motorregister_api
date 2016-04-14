@@ -95,6 +95,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                             targetCalc = {};
                             targetCalc.title = calculator.title+'(copy)';
                             targetCalc.description = calculator.description;
+                            targetCalc.settings = calculator.settings;
                             targetCalc.prisgrupper = calculator.prisgrupper;
                             targetCalc.brands = calculator.brands;
                             targetCalc.user_id = calculator.user_id;
@@ -105,7 +106,7 @@ module.exports = function(server, CalculatorModel,UserModel,Vehiclemodel, passpo
                             copyCalc.save(function (err, result) {
                                 if(err)
                                 {
-                                    res.json({success:false,message:'Error! - Calculator not duplicated!'});
+                                    res.json({success:false,message:'Error! - Calculator not duplicated!'+err});
                                     return;
                                 }
                                 else
