@@ -1,8 +1,8 @@
 (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = false;
     po.src = 'https://cdn.rawgit.com/claushansen/iframe-resizer/master/js/iframeResizer.min.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();
+
 
 iFrameResize({
     log                     : true,                  // Enable console logging
@@ -29,3 +29,5 @@ iFrameResize({
         );
     }
 });
+
+})();
