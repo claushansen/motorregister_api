@@ -91,6 +91,15 @@ body {
   margin-top: 0;
 }
 
+/*
+* calculator table content
+*/
+.embedbox-code{
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  word-wrap: break-word;
+}
 
 /*
  * Placeholder dashboard ideas

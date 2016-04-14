@@ -9,10 +9,14 @@
 
         $scope.copyCalc = copyCalc;
         $scope.removeCalc = removeCalc;
-        //TODO - create embed scripts modalfunction
-        $scope.openEmbedModal = function(){
 
-        }
+        $scope.toogleEmbed = function(calcid){
+            if(calcid == $scope.embedId){
+                $scope.embedId = null;
+            }else{
+                $scope.embedId = calcid;
+            }
+        };
 
         function copyCalc(scope){
             calculatorService.copyCalculator(scope.calculator._id)
@@ -45,6 +49,8 @@
                     messageCenterService.add('danger', message);
                 });
         }
+
+
 
         //$scope.calculators = calculatorService.getAllCalculators();
 
