@@ -15,46 +15,57 @@
         </div>
 
         <div ng-show="calculators && calculators.length > 0" class="row">
-            <table class="table table-striped">
-                <thead>
-                <th>Titel</th>
-                <th>Muligheder</th>
-                <th>Oprettet</th>
-                <th>
-                    <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
-                </th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="calculator in calculators">
-                    <td>{{calculator.title}}</td>
-                    <td class="small">
-                        <strong>Link:</strong>
-                        <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
-                        <br>
-                        <strong>Embed:</strong>
-                        <a href="#" ng-click="openEmbedModal()" >Indsæt på hjemmeside</a>
-                        <br>
-                    </td>
-                    <td>{{calculator.dateCreated | date}}</td>
-
-                    <td>
-                        <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
-                            <span class="glyphicon glyphicon-remove"></span>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Titel</th>
+                    <th>Muligheder</th>
+                    <th>Oprettet</th>
+                    <th>
+                        <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
+                            <span class="glyphicon glyphicon-plus"></span>
                         </a>
-                        <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                        <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
-                            <span class="glyphicon glyphicon-duplicate"></span>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="calculator in calculators | orderBy:'-dateCreated'"">
+                            <td>{{calculator.title}}</td>
+                            <td >
+                                <strong>Link:</strong>
+                                <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
+                                <br>
+                                <strong>Embed:</strong>
+                                <a href="#" ng-click="$event.preventDefault(); toogleEmbed(calculator._id)" >Indsæt på hjemmeside</a>
+                                <br>
+                                <div ng-if="embedId && embedId == calculator._id" class="embedbox">
+                                    <h5>Indsæt denne kode på din hjemmeside</h5>
+                                    <div class="embedbox-code">
+                                        &lt;iframe id=&quot;{{calculator._id}}&quot;<br>
+                                        src=&quot;https://calculator-bilapi.rhcloud.com/mycalculator/#/calculator/{{calculator._id}}&quot;<br>
+                                        width=&quot;100%&quot;<br>
+                                        frameborder=&quot;0&quot;<br>
+                                        scrolling=&quot;no&quot;&gt;<br>
+                                        &lt;/iframe&gt;<br>
+                                        &lt;script src=&quot;https://calculator-bilapi.rhcloud.com/static/mycalculator.helper.min.js&quot;&gt;&lt;/script&gt;
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{calculator.dateCreated | date}}</td>
+                            <td>
+                                <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
+                                    <span class="glyphicon glyphicon-duplicate"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        {{copytest}}
-        {{calculators}}
     </div>
 </div>

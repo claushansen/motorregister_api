@@ -47,7 +47,8 @@
             </div>
             <div class="row"><hr></div>
             <div class="row text-center">
-                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual();getBrands()">Eller vælg manuelt</button>
+                <button class="btn  btn-primary col-sm-6 col-sm-offset-3 offersearch-manual-btn" ng-click="setManual();getBrands()">
+                    <i ng-show="brandsloading" class="fa fa-spinner fa-spin fa-lg fa-fw margin-bottom"></i> Eller vælg manuelt</button>
             </div>
         </div>
         <!--Manual search-->
@@ -126,8 +127,16 @@
                         </p>
                     </div>
                 </div>
-                <button class="btn  btn-primary col-sm-10 col-xs-12 col-sm-offset-2"  ng-disabled="contactform.$invalid" ng-click="sendContact()">Send Besked</button>
+                <div class="form-group">
+                    <button class="btn  btn-primary col-sm-10 col-xs-12 col-sm-offset-2"  ng-disabled="contactform.$invalid" ng-click="sendContact()">
+                    <i ng-show="sendmsgloading" class="fa fa-spinner fa-spin fa-lg fa-fw margin-bottom"></i> Send Besked</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    window.iFrameResizer = {
+
+    };
+</script>

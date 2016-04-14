@@ -43,7 +43,7 @@
                 buttonTextColor:'#ffffff'
             };
             //setting default calltoaction
-            $scope.calculator.calltoaction = {
+            $scope.calculator.settings.calltoaction = {
                 type:'contact'
             };
             //setting headline to create new
