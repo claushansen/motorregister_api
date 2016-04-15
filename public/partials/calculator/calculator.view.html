@@ -217,15 +217,15 @@
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="50" type="{{outerForm.step2.$invalid ? 'danger': 'success'}}"><b>50%</b></uib-progressbar>
                                         <h4>Info til denne del</h4>
-                                        <strong>Udseende</strong><br>
-                                        <p>Vælg udseende på din prisberegner her, så stilen passer til din hjemmeside.
+
+                                        <p><strong>Udseende</strong><br>Vælg udseende på din prisberegner her, så stilen passer til din hjemmeside.
                                             Du kan både vælge efter en skabelon eller du kan selv definere farverne på din prisberegner ved at vælge "brugerdefineret".</p>
-                                        <strong>Call To Action</strong><br>
-                                        <p>Her kan du vælge hvilke muligheder din kunde skal have når de har fået præsenteret en pris for din ydelse.</p>
-                                        <p>Du kan enten lade kunden kontakte dig via en kontaktformular, som vises under den beregnede pris. Eller du kan videresende dem direkte til en URL med dine produkter.</p>
                                         <!--example calculator-->
                                         <example-calculator></example-calculator>
                                         <!-- /example calculator-->
+
+                                        <p><strong>Call To Action</strong><br>Her kan du vælge hvilke muligheder din kunde skal have når de har fået præsenteret en pris for din ydelse.</p>
+                                        <p>Du kan enten lade kunden kontakte dig via en kontaktformular, som vises under den beregnede pris. Eller du kan videresende dem direkte til en URL med dine produkter.</p>
                                     </div>
                                 </div>
                             </div>
@@ -254,10 +254,14 @@
                                 <div class="info_box">
                                     <div class="infobox-content">
                                         <uib-progressbar animate="true" value="75" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>75%</b></uib-progressbar>
-                                        <h4>Info til denne del</h4>
-                                        <strong>Udseende</strong><br>
-                                        <p>Vælg udseende på din prisberegner her, så stilen passer til din hjemmeside.
-                                            Du kan både vælge efter en skabelon eller du kan selv definere farverne på din prisberegner ved at vælge "brugerdefineret".</p>
+                                        <h4>Info til Prisgrupper</h4>
+                                        <strong>Opret prisgrupper</strong><br>
+                                        <p>Her opretter du prisgrupper til dine ydelser.</p>
+                                        <p>Disse prisgrupper skal du bruge i næste trin, hvor du tildeler de forskellige mærker og modeller en prisgruppe.</p>
+                                        <p>Du skal minimum have 1 prisgruppe og du kan oprette alle de prisgrupper du har brug for.
+                                            Du kan endvidere ændre rækkefølgen på dine prisgrupper ved at trække og slippe.</p>
+                                        <p>Det første felt i prisgruppen definerer titlen på din prisgruppe, det andet beløbet på din ydelse i denne prisgruppe.
+                                            Du opretter en ny prisgruppe ved at klikke på ikonet til højre.</p>
                                     </div>
                                 </div>
                             </div>
@@ -292,9 +296,14 @@
                                 <div class="col-sm-6">
                                     <div class="info_box" keep-in-sight>
                                         <div class="infobox-content">
-                                            <uib-progressbar animate="true" value="99" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>99%</b></uib-progressbar>
+                                            <uib-progressbar animate="true" value="100" type="{{outerForm.step3.$invalid ? 'danger': 'success'}}"><b>100%</b></uib-progressbar>
                                             <h4>Hjælp til mapping</h4>
                                             <p>Du er nu nået til den vigtigeste del af opsætningen af din prisberegner.</p>
+                                            <p>Det er her du tildeler hver mærkes modeller en prisgruppe<br>
+                                            For at se et mærkes tilhørende modeller klikker du på den grønne pil til ventre.</p>
+                                            <p>Herefter kan du nu vælge hvilken prisgruppe det enkelte mærke tilhører.(Du kan vælge alle modeller fra et mærke på en gang ved at ændre prisgruppen på mærket.)</p>
+                                            <p>Hvis der er et mærke eller model som du ikke ønsker at tilbyde dine ydelser til, kan du fjerne dem fra listen ved at trykke på det røde kryds til højre.</p>
+                                            <p>OBS! Du kan ikke fortryde hvis du fjerner mærker eller modeller fra listen og du vil være nødt til at lave en ny beregner hvis du vil inkludere dem igen.</p>
                                         </div>
                                     </div>
 
