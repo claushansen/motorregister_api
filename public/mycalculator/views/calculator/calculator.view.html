@@ -133,10 +133,13 @@
                 </div>
             </form>
         </div>
+        <!-- redirect button-->
+        <div class="row" ng-show="offer && settings.settings.calltoaction.type == 'redirect'">
+            <button class="btn  btn-primary btn-lg col-md-6 col-xs-12 col-md-offset-3" ng-click="redirect()">{{settings.settings.calltoaction.redirectButtonText}}</button>
+        </div>
     </div>
 </div>
 <script>
     window.iFrameResizer = {
-
     };
 </script>

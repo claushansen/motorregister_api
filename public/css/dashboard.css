@@ -222,3 +222,28 @@ body {
 .cta-list-item.selected .cta-list-link{
   color: #333;
 }
+
+/*
+*responsive calculator list in dashboard
+*/
+
+.calc-list-item{
+  border: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.calc-list-item-header{
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  background-color: #eee;
+}
+.calc-list-item-header .btn{
+  margin-top : 8px;
+}
+.calc-list-item-label{
+  font-weight: 300;
+  font-size: 90%;
+}
+.calc-list-item-link{
+  word-wrap: break-word;
+}

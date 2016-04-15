@@ -14,6 +14,48 @@
             $scope.manualSearch = !$scope.manualSearch;
         };
 
+        //function for redirecting to calltoaction url
+        $scope.redirect = function(){
+            //calltoactionUrl
+            var calltoactionUrl = $scope.settings.settings.calltoaction.redirecturl;
+            //do we need GET params
+            if(('sendParams' in $scope.settings.settings.calltoaction) && $scope.settings.settings.calltoaction.sendParams == true ) {
+                //Creating queryobject
+                var queryobj = {};
+                //do we have a vehicle i.e searched by licensplate
+                if (("vehicle" in $scope.offer)) {
+                    queryobj = $scope.offer.vehicle;
+                } else {
+                    queryobj.brand = $scope.search.brand.name;
+                    queryobj.model = $scope.search.model.name;
+                }
+                //do we have an offer
+                if ($scope.offer.hasoffer) {
+                    queryobj.hasoffer = $scope.offer.hasoffer;
+                    queryobj.offer = $scope.offer.offer;
+                } else {
+                    queryobj.hasoffer = $scope.offer.hasoffer;
+                }
+                //Creating querystring with jQuery
+                var querystring = $.param( queryobj );
+                //appending it to call to action url
+                calltoactionUrl += '?' + querystring;
+            }
+
+            //console.log($.param( $scope.offer ));
+            //Are we in an iframe?
+            if ('parentIFrame' in window){
+                redirectcommand = {redirect:true,targetUrl:calltoactionUrl};
+                //console.log(redirectcommand);
+                //sending command to parent window
+                window.parentIFrame.sendMessage(redirectcommand);
+            }
+            // If not in iframe, just redirect this window
+            else{
+                window.location = calltoactionUrl;
+            }
+        };
+
         //resetting everything = start a new calculation
         $scope.reset = function(){
             $scope.manualSearch = false;
