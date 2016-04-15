@@ -54,6 +54,8 @@
 }
 .btn-header {
     text-transform: uppercase;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 .btn-demo {
     background: linear-gradient(#43ac6a, seagreen) no-repeat 100% 0;
@@ -80,4 +82,10 @@
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
+}
+.socials {
+    font-size:35px;
+    color:#fff;
+    margin-left:10px;
+    padding-bottom:5px;
 }
