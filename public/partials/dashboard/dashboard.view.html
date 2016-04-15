@@ -3,7 +3,9 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <mc-messages></mc-messages>
         <h2>Kontrolpanel</h2>
-        <h3>mine prisberegnere</h3>
+        <h3>mine prisberegnere <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a></h3>
 
         <div ng-show="calculators && calculators.length < 1" class="row dashboard-call-to-action-box">
             <div class="well well-lg">
@@ -14,58 +16,60 @@
             </div>
         </div>
 
-        <div ng-show="calculators && calculators.length > 0" class="row">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <th>Titel</th>
-                    <th>Muligheder</th>
-                    <th>Oprettet</th>
-                    <th>
-                        <a class="pull-right btn btn-primary btn-xs" href="#/calculator/new"  style="margin-right: 8px;">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                    </th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="calculator in calculators | orderBy:'-dateCreated'"">
-                            <td>{{calculator.title}}</td>
-                            <td >
-                                <strong>Link:</strong>
-                                <a href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
-                                <br>
-                                <strong>Embed:</strong>
-                                <a href="#" ng-click="$event.preventDefault(); toogleEmbed(calculator._id)" >Indsæt på hjemmeside</a>
-                                <br>
-                                <div ng-if="embedId && embedId == calculator._id" class="embedbox">
-                                    <h5>Indsæt denne kode på din hjemmeside</h5>
-                                    <div class="embedbox-code">
-                                        &lt;iframe id=&quot;{{calculator._id}}&quot;<br>
-                                        src=&quot;https://calculator-bilapi.rhcloud.com/mycalculator/#/calculator/{{calculator._id}}&quot;<br>
-                                        width=&quot;100%&quot;<br>
-                                        frameborder=&quot;0&quot;<br>
-                                        scrolling=&quot;no&quot;&gt;<br>
-                                        &lt;/iframe&gt;<br>
-                                        &lt;script src=&quot;https://calculator-bilapi.rhcloud.com/static/mycalculator.helper.min.js&quot;&gt;&lt;/script&gt;
-                                    </div>
-                                </div>
-                            </td>
-                            <td>{{calculator.dateCreated | date}}</td>
-                            <td>
-                                <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                                <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                                <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
-                                    <span class="glyphicon glyphicon-duplicate"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!--responsive calculator list-->
+        <section ng-show="calculators && calculators.length > 0" class="calc-list-section">
+
+            <div class="row calc-list-item" ng-repeat="calculator in calculators | orderBy:'-dateCreated'">
+                <div class="col-xs-12 calc-list-item-header" >
+                    <div class="col-xs-12 col-lg-6 pull-right calc-list-item-actions">
+                    <a class="pull-right btn btn-danger btn-xs" ng-click="removeCalc(this)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="pull-right btn btn-primary btn-xs" href="#/calculator/edit/{{calculator._id}}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <a class="pull-right btn btn-danger btn-xs" ng-click="copyCalc(this)">
+                        <span class="glyphicon glyphicon-duplicate"></span>
+                    </a>
+                    </div>
+                    <div class="col-xs-12 col-lg-6">
+                    <h4 class="calc-list-item-headline">{{calculator.title}}</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <span class="calc-list-item-label">Titel:</span><br>
+                    <span class="calc-list-item-titel">{{calculator.title}}</span>
+                </div>
+                <div class="col-md-7"><span class="calc-list-item-label">muligheder:</span><br>
+                    <span class="calc-list-item-label">Link:</span>
+                    <a class="calc-list-item-link" href="mycalculator/#/calculator/{{calculator._id}}" target="_blank">mycalculator/#/calculator/{{calculator._id}}</a>
+                    <br>
+                    <span class="calc-list-item-label">Embed:</span>
+                    <a class="calc-list-item-link" href="#" ng-click="$event.preventDefault(); toogleEmbed(calculator._id)" >Indsæt på hjemmeside</a>
+                    <br>
+                    <div ng-if="embedId && embedId == calculator._id" class="embedbox">
+                        <h5>Indsæt denne kode på din hjemmeside</h5>
+                        <div class="embedbox-code">
+                            &lt;iframe id=&quot;{{calculator._id}}&quot;<br>
+                            src=&quot;https://calculator-bilapi.rhcloud.com/mycalculator/#/calculator/{{calculator._id}}&quot;<br>
+                            width=&quot;100%&quot;<br>
+                            frameborder=&quot;0&quot;<br>
+                            scrolling=&quot;no&quot;&gt;<br>
+                            &lt;/iframe&gt;<br>
+                            &lt;script src=&quot;https://calculator-bilapi.rhcloud.com/static/mycalculator.helper.min.js&quot;&gt;&lt;/script&gt;
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-2"><span class="calc-list-item-label">Oprettet:</span><br>
+                <span class="calc-list-item-date">{{calculator.dateCreated | date}}</span>
+                </div>
+
             </div>
-        </div>
+
+        </section>
+        <!--/responsive calculator list-->
+
+
     </div>
 </div>
