@@ -170,6 +170,7 @@ body {
   border: 1px solid #dae2ea;
   padding: 10px;
   min-height: 300px;
+  margin-bottom: 20px;
 }
 .info_box  input{
   min-height: 50px;
