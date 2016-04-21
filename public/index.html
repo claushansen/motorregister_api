@@ -55,29 +55,28 @@
                 <li ng-show="currentUser.isadmin" class="dropdown">
                     <a href="#" ng-click="$event.preventDefault();" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin" data-toggle="collapse" data-target="#navbar">Admin Dashboard</a></li>
+                        <li ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin Dashboard</a></li>
                         <li role="separator" class="divider"></li>
-                        <li ng-class="{'active' : $location.url() == '/admin/users'}"><a href="#/admin/users" data-toggle="collapse" data-target="#navbar">Brugere</a></li>
+                        <li ng-class="{'active' : $location.url() == '/admin/users'}"><a href="#/admin/users">Brugere</a></li>
                     </ul>
                 </li>
                 <!--dashboard-->
                 <li ng-show="currentUser" class="dropdown">
                     <a href="#" ng-click="$event.preventDefault();" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kontrolpanel <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard" data-toggle="collapse" data-target="#navbar">Mit Kontrolpanel</a></li>
+                        <li ng-class="{'active' : $location.url() == '/dashboard'}"><a href="#/dashboard">Mit Kontrolpanel</a></li>
                         <li role="separator" class="divider"></li>
-                        <li ng-class="{'active' : $location.url() == '/calculator/new'}"><a href="#/calculator/new" data-toggle="collapse" data-target="#navbar">Ny Prisberegner</a></li>
+                        <li ng-class="{'active' : $location.url() == '/calculator/new'}"><a href="#/calculator/new">Ny Prisberegner</a></li>
                     </ul>
                 </li>
                 <!--profile-->
-                <li ng-show="currentUser"><a href="#" ng-click="$event.preventDefault();editProfile()" data-toggle="collapse" data-target="#navbar">Profil</a></li>
+                <li ng-show="currentUser"><a href="#" ng-click="$event.preventDefault();editProfile()">Profil</a></li>
                 <!--help-->
-                <li ng-class="{'active' : $location.url() == '/help'}"><a href="#/help" data-toggle="collapse" data-target="#navbar">Hjælp</a></li>
+                <li ng-class="{'active' : $location.url() == '/help'}"><a href="#/help">Hjælp</a></li>
                 <!--login/logout-->
-                <li ng-show="!currentUser" ng-class="{'active' : $location.url() == '/login'}"><a href="#/login" data-toggle="collapse" data-target="#navbar">Log ind</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/login'}"><a ng-click="Logout()" href="#" data-toggle="collapse" data-target="#navbar">Log ud</a></li>
+                <li ng-show="!currentUser" ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Log ind</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : $location.url() == '/login'}"><a ng-click="Logout()">Log ud</a></li>
             </ul>
-
         </div>
     </div>
 </nav>
@@ -93,12 +92,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.15.0/angular-ui-tree.min.js"></script>
 <script src="https://cdn.rawgit.com/claushansen/message-center/master/message-center.js"></script>
 <script src="https://cdn.rawgit.com/claushansen/angular-bootstrap-colorpicker/master/js/bootstrap-colorpicker-module.min.js"></script>
+
 
 <script src="app.js"></script>
 <script src="config.js"></script>
@@ -121,6 +122,12 @@
 <script src="directives/keepinsight/keepinsight.js"></script>
 
 
-
+<script>
+    $(document).ready(function(){
+        $("#navbar a:not(.dropdown-toggle)").click(function(){
+            $(".collapse").collapse('hide');
+        });
+    });
+</script>
 </body>
 </html>
