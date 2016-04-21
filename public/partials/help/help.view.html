@@ -1,3 +1,86 @@
-<h2>{{hello}}</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequatur debitis
-    ducimus eius eveniet explicabo hic impedit minus nam neque, nesciunt obcaecati optio quae quis veniam vitae
-    voluptates. Incidunt, labore?</p>
+<!--<h2>{{hello}}</h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consequatur debitis-->
+    <!--ducimus eius eveniet explicabo hic impedit minus nam neque, nesciunt obcaecati optio quae quis veniam vitae-->
+    <!--voluptates. Incidunt, labore?</p>-->
+<div ng-controller="HelpController">
+    <script type="text/ng-template" id="group-template.html">
+        <div class="panel {{panelClass || 'panel-default'}}">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="color:#fa39c3">
+                    <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+                            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+                </h4>
+            </div>
+            <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                <div class="panel-body" style="text-align: right" ng-transclude></div>
+            </div>
+        </div>
+    </script>
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
+                    <div class="header">
+                        <h1>Har du brug for hjælp&nbsp{{currentUser.firstName}}?</h1>
+                    </div>
+                    <lead>Så er du kommet til det rette sted!</lead>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="oneAtATime">
+                            Åben kun et spørgsmål ad gangen.
+                        </label>
+                    </div>
+                    <uib-accordion close-others="oneAtATime">
+                        <uib-accordion-group is-open="status.opened1" panel-class="panel-primary">
+                            <uib-accordion-heading>
+                                FAQ<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.opened1, 'glyphicon-chevron-right': !status.opened1}"></i>
+                            </uib-accordion-heading>
+                            Herunder finder du ofte stillede spørgsmål.
+                        </uib-accordion-group>
+                        <uib-accordion-group is-open="status.opened2" ng-repeat="group in groups" panel-class="panel-info">
+                            <uib-accordion-heading>
+                                {{group.title}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.opened2, 'glyphicon-chevron-right': !status.opened2}"></i>
+                            </uib-accordion-heading>
+                            <div  style="line-height: 23px;">
+                                {{group.content}}
+                            </div>
+                        </uib-accordion-group>
+                        <uib-accordion-group is-open="status.opened3" panel-class="panel-success">
+                            <uib-accordion-heading>
+                                Video hjælp<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.opened3, 'glyphicon-chevron-right': !status.opened3}"></i>
+                            </uib-accordion-heading>
+                            <p>Se videon herunder for at blive klogere.</p>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen></iframe>
+                            </div>
+                        </uib-accordion-group>
+                        <uib-accordion-group is-open="status.opened4" panel-class="panel-warning">
+                            <uib-accordion-heading>
+                                Hvordan ændre jeg mine kontooplysninger<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.opened4, 'glyphicon-chevron-right': !status.opened4}"></i>
+                            </uib-accordion-heading>
+                            <div ng-if="!currentUser.username">
+                                <p>Du bedes logge ind på den konto du ønskes skal ændres.</p>
+                            </div>
+                            <div ng-if="currentUser.username">
+                                <p>Vælg menupunktet <a href="#" ng-click="$event.preventDefault();editProfile()">Profil</a></p>
+                            </div>
+                        </uib-accordion-group>
+                        <uib-accordion-group is-open="status.opened5" panel-class="panel-danger">
+                            <uib-accordion-heading>
+                                Hvordan sletter jeg min konto?<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.opened5, 'glyphicon-chevron-right': !status.opened5}"></i>
+                            </uib-accordion-heading>
+                            <div ng-if="!currentUser.username">
+                                <p>Du bedes logge ind på den konto du ønskes skal slettes.</p>
+                            </div>
+                            <div ng-if="currentUser.username">
+                                <p>For at slette din konto bedes du kontakte en admin. Dette kan du gøre ved at klikke herunder.</p>
+                                <a class="btn btn-danger" href="mailto:admin@bilapi.dk?subject=Anmodning%20om%20sletning%20af%20konto%20med%20brugernavnet%20'{{currentUser.username}}'
+                                &body=Jeg%20ønsker%20at%20slette%20min%20konto.%0D%0AMvh.%20{{currentUser.firstName}}%20{{currentUser.lastName}}">Slet min konto
+                                </a>
+                            </div>
+                        </uib-accordion-group>
+                    </uib-accordion>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
