@@ -1,4 +1,4 @@
 (function() {
 angular
-    .module('BILAPI',["ngRoute",'ui.tree','ui.bootstrap','MessageCenterModule','colorpicker.module'])
+    .module('BILAPI',["ngRoute",'ui.tree','ui.bootstrap','MessageCenterModule','colorpicker.module','ngAnimate'])
 })();
